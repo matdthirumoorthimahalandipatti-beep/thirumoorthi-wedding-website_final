@@ -198,14 +198,14 @@ export async function renderPersonalizedInvitationCanvas({
     21
   );
 
-  // 6. Engagement Ceremony Box (Nichayathartham — Saturday 21 Nov 2026)
+  // 6. Engagement Ceremony Box (Nichayathartham — Saturday 21 Nov 2026) — Dress line removed
   y += 10;
   ctx.save();
   ctx.fillStyle = 'rgba(255, 245, 219, 0.96)';
   ctx.strokeStyle = '#c9932d';
   ctx.lineWidth = 2;
   ctx.beginPath();
-  ctx.roundRect(298, y, 484, 146, 14);
+  ctx.roundRect(298, y, 484, 118, 14);
   ctx.fill();
   ctx.stroke();
   ctx.restore();
@@ -226,54 +226,59 @@ export async function renderPersonalizedInvitationCanvas({
     y + 52
   );
 
-  ctx.fillStyle = '#3a0815';
-  ctx.font = '600 14px "Noto Sans Tamil", "Plus Jakarta Sans", sans-serif';
-  ctx.fillText(
-    lang === 'ta' ? WEDDING_CONFIG.engagementDressTa : WEDDING_CONFIG.engagementDressEn,
-    W / 2,
-    y + 76
-  );
-
   ctx.fillStyle = '#4e2318';
   ctx.font = '600 14px "Noto Sans Tamil", "Plus Jakarta Sans", sans-serif';
   drawWrappedText(
     ctx,
     lang === 'ta' ? WEDDING_CONFIG.engagementDescTa : WEDDING_CONFIG.engagementDescEn,
     W / 2,
-    y + 102,
+    y + 78,
     452,
     20
   );
 
-  // 7. Muhurtham & Venue Pill (kept strictly inside x: 295..785)
-  y += 162;
+  // 7. Highlighted Sacred Muhurtham (திருமாங்கல்ய தாரணம் — சுப முகூர்த்தம்) Badge Box
+  y += 134;
   ctx.save();
-  ctx.fillStyle = '#631226';
-  ctx.strokeStyle = '#d4a237';
-  ctx.lineWidth = 2;
+  const muhurthamGrad = ctx.createLinearGradient(294, y, 786, y + 108);
+  muhurthamGrad.addColorStop(0, '#7c1428');
+  muhurthamGrad.addColorStop(0.5, '#631226');
+  muhurthamGrad.addColorStop(1, '#7c1428');
+  ctx.fillStyle = muhurthamGrad;
+  ctx.strokeStyle = '#f7df94';
+  ctx.lineWidth = 3;
   ctx.beginPath();
-  ctx.roundRect(298, y, 484, 82, 14);
+  ctx.roundRect(294, y, 492, 108, 16);
   ctx.fill();
   ctx.stroke();
   ctx.restore();
 
   ctx.fillStyle = '#f7df94';
-  ctx.font = '700 17px "Noto Sans Tamil", "Plus Jakarta Sans", sans-serif';
+  ctx.font = '700 18px "Noto Sans Tamil", "Plus Jakarta Sans", sans-serif';
   ctx.fillText(
     lang === 'ta'
-      ? 'முகூர்த்தம்: 22.11.2026 · காலை 6:15 – 7:15'
-      : 'Muhurtham: 22 Nov 2026 · 6:15 – 7:15 AM',
+      ? '✨ திருமாங்கல்ய தாரணம் — சுப முகூர்த்தம் ✨'
+      : '✨ SACRED MUHURTHAM — THIRUMANGALYAM ✨',
     W / 2,
     y + 30
   );
   ctx.fillStyle = '#ffffff';
+  ctx.font = '700 17px "Noto Sans Tamil", "Plus Jakarta Sans", sans-serif';
+  ctx.fillText(
+    lang === 'ta'
+      ? 'ஞாயிறு, 22.11.2026 · காலை 6:15 – 7:15'
+      : 'Sunday, 22 Nov 2026 · 6:15 – 7:15 AM',
+    W / 2,
+    y + 58
+  );
+  ctx.fillStyle = '#ffefa8';
   ctx.font = '600 15px "Noto Sans Tamil", "Plus Jakarta Sans", sans-serif';
   ctx.fillText(
     lang === 'ta'
       ? 'MATD திருமூர்த்தி மஹால், டி. வாடிப்பட்டி, மதுரை'
       : 'MATD Thirumoorthi Mahal, T. Vadipatti, Madurai',
     W / 2,
-    y + 60
+    y + 88
   );
 
   // 8. Optional Royal Game Score & Oracle Blessing
@@ -325,7 +330,7 @@ export async function renderPersonalizedInvitationCanvas({
   ctx.fillStyle = '#631226';
   ctx.font = '700 18px "Noto Sans Tamil", "Plus Jakarta Sans", sans-serif';
   ctx.fillText(
-    lang === 'ta' ? '📲 3D அழைப்பிதழ் தளம்' : '📲 OPEN 3D WEBSITE',
+    lang === 'ta' ? '📲 திருமண அழைப்பிதழ் தளம்' : '📲 OPEN WEDDING WEBSITE',
     478,
     qrBoxY + 52
   );

@@ -61,6 +61,12 @@ export interface DirectoryPerson {
   groupEn: string;
   locationTa: string;
   locationEn: string;
+  friendCategory?:
+    | 'thaai_school'
+    | 'kalasalingam_mentors'
+    | 'kalasalingam_seniors'
+    | 'kalasalingam_friends';
+  isSenior?: boolean;
 }
 
 export interface BlessingEntry {
@@ -86,8 +92,8 @@ export const HERITAGE_ASSETS = {
   garlandPoster: '/assets/aistudio/garland-video-poster_27772393.jpg',
   heroMandapamCouple: '/assets/aistudio/hero-mandapam-couple_49d38ac9.webp',
   heroTempleDay: '/assets/aistudio/page2-temple-day_c5eabb40.webp',
-  bridePhoto: '/assets/aistudio/bride-photo_a8ad7109.webp',
-  groomPhoto: '/assets/aistudio/groom-photo_a8ad7109.webp',
+  bridePhoto: '/assets/aistudio/bride_photo_b0c6d03a.png',
+  groomPhoto: '/assets/aistudio/groom_photo_1619e017.png',
   coupleTemple: '/assets/aistudio/bride-groom-temple_49d38ac9.webp',
   coupleSectionBg: '/assets/aistudio/couple-section-wedding_fd409aac.webp',
   venueBg: '/assets/aistudio/temple-aerial-sunset_5438eeba.webp',
@@ -255,7 +261,7 @@ export const FAMILY_MEMBERS: FamilyMemberPhotoCard[] = [
     roleTa: 'மணமகள் தந்தை',
     detailEn: 'Founder & Chairperson, Thirumoorthi Groups',
     detailTa: 'நிறுவனர் & தலைவர், திருமூர்த்தி குழுமம்',
-    photo: '/assets/aistudio/portrait-placeholder_a8ad7109.webp',
+    photo: '/assets/aistudio/bride_father_ea95bf23.png',
   },
   {
     id: 'bf-mother',
@@ -266,7 +272,7 @@ export const FAMILY_MEMBERS: FamilyMemberPhotoCard[] = [
     roleTa: 'மணமகள் தாய்',
     detailEn: 'Founder & CEO, Thirumoorthi Groups',
     detailTa: 'நிறுவனர் & CEO, திருமூர்த்தி குழுமம்',
-    photo: '/assets/aistudio/portrait-placeholder_a8ad7109.webp',
+    photo: '/assets/aistudio/bride_mother_fa349240.png',
   },
   {
     id: 'bf-brother',
@@ -277,7 +283,7 @@ export const FAMILY_MEMBERS: FamilyMemberPhotoCard[] = [
     roleTa: 'மணமகள் சகோதரர்',
     detailEn: 'B.Tech ECE · Embedded Engineer & Minors UAV',
     detailTa: 'B.Tech ECE · எம்பெடெட் பொறியாளர் & Minors UAV',
-    photo: '/assets/aistudio/relative-001_a8ad7109.webp',
+    photo: '/assets/aistudio/image_ec79226f.png',
   },
   {
     id: 'gf-father',
@@ -288,7 +294,7 @@ export const FAMILY_MEMBERS: FamilyMemberPhotoCard[] = [
     roleTa: 'மணமகன் தந்தை',
     detailEn: 'Owner, Venkatesh Grocery Shop',
     detailTa: 'உரிமையாளர், வெங்கடேஷ் மளிகைக் கடை',
-    photo: '/assets/aistudio/portrait-placeholder_a8ad7109.webp',
+    photo: '/assets/aistudio/groom_father_6b080c57.jpeg',
   },
   {
     id: 'gf-mother',
@@ -299,7 +305,147 @@ export const FAMILY_MEMBERS: FamilyMemberPhotoCard[] = [
     roleTa: 'மணமகன் தாய்',
     detailEn: 'Co-owner, Venkatesh Grocery Shop',
     detailTa: 'இணை உரிமையாளர், வெங்கடேஷ் மளிகைக் கடை',
-    photo: '/assets/aistudio/portrait-placeholder_a8ad7109.webp',
+    photo: '/assets/aistudio/groom_mother_eb8d6156.jpeg',
+  },
+];
+
+export interface WeddingAudioTrack {
+  id: string;
+  src: string;
+  titleTa: string;
+  titleEn: string;
+  tagTa: string;
+  tagEn: string;
+}
+
+export const WEDDING_AUDIO_COLLECTION: WeddingAudioTrack[] = [
+  {
+    id: 'wa-1',
+    src: '/assets/aistudio/hayyoda_ca2618a1.mp3',
+    titleTa: 'ஹைய்யோடா (Hayyoda)',
+    titleEn: 'Hayyoda (Jawan)',
+    tagTa: 'திருமண கொண்டாட்டப் பாடல்',
+    tagEn: 'Wedding Celebration Hit',
+  },
+  {
+    id: 'wa-2',
+    src: '/assets/aistudio/pavazha-malli_e4aeee42.mp3',
+    titleTa: 'பவழ மல்லி (Pavazha Malli)',
+    titleEn: 'Pavazha Malli',
+    tagTa: 'மதுரை சங்கீத் இசை',
+    tagEn: 'Madurai Sangeet Vibe',
+  },
+  {
+    id: 'wa-3',
+    src: '/assets/aistudio/radhimaa_76edb335.mp3',
+    titleTa: 'ரதிமா (Radhimaa)',
+    titleEn: 'Radhimaa',
+    tagTa: 'மணமக்கள் சிறப்புப் பாடல்',
+    tagEn: 'Couple Romantic Mix',
+  },
+  {
+    id: 'wa-4',
+    src: '/assets/aistudio/thangame-thangame_9bd34bca.mp3',
+    titleTa: 'தங்கமே தங்கமே (Thangame)',
+    titleEn: 'Thangame Thangame',
+    tagTa: 'மங்களக் கொண்டாட்டம்',
+    tagEn: 'Festive Joy Track',
+  },
+  {
+    id: 'wa-5',
+    src: '/assets/aistudio/vikram-title-track_9fb3bdeb.mp3',
+    titleTa: 'விக்ரம் மாஸ் தீம் (Vikram Track)',
+    titleEn: 'Vikram Title Track',
+    tagTa: 'மாப்பிள்ளை என்ட்ரி ஸ்பெஷல்',
+    tagEn: 'Grand Entry Beat',
+  },
+  {
+    id: 'wa-6',
+    src: '/assets/aistudio/WhatsApp_Audio_2026-11-13_at_02.05.53_6a182b7e.mpeg',
+    titleTa: 'பாக்கு வெத்தல / கல்யாண ரீமிக்ஸ் 1',
+    titleEn: 'Kalyana Sangeet Special 1',
+    tagTa: 'குடும்ப சிறப்புப் பாடல்',
+    tagEn: 'Family Curated Track',
+  },
+  {
+    id: 'wa-7',
+    src: '/assets/aistudio/WhatsApp_Audio_2026-11-13_at_02.05.54_03c35ec2.mpeg',
+    titleTa: 'மங்கள இசை ராகம் — 2',
+    titleEn: 'Kalyana Sangeet Special 2',
+    tagTa: 'குடும்ப சிறப்புப் பாடல்',
+    tagEn: 'Family Curated Track',
+  },
+  {
+    id: 'wa-8',
+    src: '/assets/aistudio/WhatsApp_Audio_2026-11-13_at_02.05.59_78d58d2f.mpeg',
+    titleTa: 'மேகம் கருக்காதா / மெல்லிசை — 3',
+    titleEn: 'Kalyana Sangeet Special 3',
+    tagTa: 'குடும்ப சிறப்புப் பாடல்',
+    tagEn: 'Family Curated Track',
+  },
+  {
+    id: 'wa-9',
+    src: '/assets/aistudio/WhatsApp_Audio_2026-11-13_at_02.05.59__1__da56004f.mpeg',
+    titleTa: 'மணமக்கள் சிறப்புப் பாடல் — 4',
+    titleEn: 'Kalyana Sangeet Special 4',
+    tagTa: 'குடும்ப சிறப்புப் பாடல்',
+    tagEn: 'Family Curated Track',
+  },
+  {
+    id: 'wa-10',
+    src: '/assets/aistudio/WhatsApp_Audio_2026-11-13_at_02.05.59__2__5db403a6.mpeg',
+    titleTa: 'மதுரை சங்கீத் டிராக் — 5',
+    titleEn: 'Kalyana Sangeet Special 5',
+    tagTa: 'குடும்ப சிறப்புப் பாடல்',
+    tagEn: 'Family Curated Track',
+  },
+  {
+    id: 'wa-11',
+    src: '/assets/aistudio/WhatsApp_Audio_2026-11-13_at_02.05.59__3__018161a7.mpeg',
+    titleTa: 'கல்யாண விருந்து தாளம் — 6',
+    titleEn: 'Kalyana Sangeet Special 6',
+    tagTa: 'குடும்ப சிறப்புப் பாடல்',
+    tagEn: 'Family Curated Track',
+  },
+  {
+    id: 'wa-12',
+    src: '/assets/aistudio/WhatsApp_Audio_2026-11-13_at_02.06.00_907b4906.mpeg',
+    titleTa: 'கும்மி அடி கொண்டாட்டம் — 7',
+    titleEn: 'Kalyana Sangeet Special 7',
+    tagTa: 'குடும்ப சிறப்புப் பாடல்',
+    tagEn: 'Family Curated Track',
+  },
+  {
+    id: 'wa-13',
+    src: '/assets/aistudio/WhatsApp_Audio_2026-11-13_at_02.06.00__1__e6a83e87.mpeg',
+    titleTa: 'வீர ராஜ வீர — அரச இசை — 8',
+    titleEn: 'Kalyana Sangeet Special 8',
+    tagTa: 'குடும்ப சிறப்புப் பாடல்',
+    tagEn: 'Family Curated Track',
+  },
+  {
+    id: 'wa-14',
+    src: '/assets/aistudio/WhatsApp_Audio_2026-11-13_at_02.06.00__2__02525b40.mpeg',
+    titleTa: 'மதுரை மண்வாசனை இசை — 9',
+    titleEn: 'Kalyana Sangeet Special 9',
+    tagTa: 'குடும்ப சிறப்புப் பாடல்',
+    tagEn: 'Family Curated Track',
+  },
+  {
+    id: 'wa-15',
+    src: '/assets/aistudio/WhatsApp_Audio_2026-11-13_at_02.06.01_9ff7ea16.mpeg',
+    titleTa: 'விழி வீக்குற சிறப்புப் பாடல் — 10',
+    titleEn: 'Kalyana Sangeet Special 10',
+    tagTa: 'குடும்ப சிறப்புப் பாடல்',
+    tagEn: 'Family Curated Track',
+  },
+  {
+    id: 'wa-16',
+    src: '/assets/aistudio/WhatsApp_Audio_2026-11-13_at_02.06.01__1__53870cc5.mpeg',
+    titleTa: 'சிங்காரி சங்கீத் நடனம் — 11',
+    titleEn: 'Kalyana Sangeet Special 11',
+    tagTa: 'குடும்ப சிறப்புப் பாடல்',
+    tagEn: 'Family Curated Track',
   },
 ];
 
@@ -503,6 +649,8 @@ type RawSeedRow = {
   nameEn: string;
   locTa: string;
   locEn: string;
+  friendCategory?: DirectoryPerson['friendCategory'];
+  isSenior?: boolean;
 };
 
 const RAW_DIRECTORY_SEED: RawSeedRow[] = [
@@ -638,6 +786,85 @@ const RAW_DIRECTORY_SEED: RawSeedRow[] = [
   // 10. FRIENDS & VILLAGE COMMUNITY (நண்பர்கள் & ஊர் பொதுமக்கள்)
   { side: 'both', ageGroup: 'friends', groupTa: 'உங்களை அன்புடன் வரவேற்கும்', groupEn: 'Welcoming You with Love', nameTa: 'இளைஞர் நற்பணி மன்றம் & கிராம பொதுமக்கள்', nameEn: 'Youth Welfare Association (Ilaignar Narpani Mandram) & Village Public', locTa: 'யாதவர் பொதிகுளம்', locEn: 'Yadavar Pothikulam' },
   { side: 'both', ageGroup: 'friends', groupTa: 'தொடரும் உறவுகளும் ...... வளரும் நட்புகளும் ....... ', groupEn: 'Continuing relationships ...... Growing friendships ....... ', nameTa: 'கலசலிங்கம் மாணவர்கள், தாய் பள்ளி & செந்தாமரை கல்லூரி நண்பர்கள்', nameEn: 'Kalasalingam University Students, Thaai School & Senthamarai College Friends', locTa: 'மதுரை & அனைத்து ஊர் நண்பர்கள்', locEn: 'Madurai & Friends Worldwide' },
+
+  // 10A. BRIDE'S BROTHER'S FRIENDS — THAAI SCHOOL (மணமகள் சகோதரர் நண்பர்கள் · தாய் பள்ளி)
+  { side: 'both', ageGroup: 'friends', friendCategory: 'thaai_school', groupTa: 'மணமகள் சகோதரர் நண்பர்கள் · தாய் பள்ளி', groupEn: "Bride's Brother's Friends · Thaai School", nameTa: 'விஷால்', nameEn: 'Vishal', locTa: 'தாய் பள்ளி', locEn: 'Thaai School' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'thaai_school', groupTa: 'மணமகள் சகோதரர் நண்பர்கள் · தாய் பள்ளி', groupEn: "Bride's Brother's Friends · Thaai School", nameTa: 'யோகேஷ்', nameEn: 'Yogesh', locTa: 'தாய் பள்ளி', locEn: 'Thaai School' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'thaai_school', groupTa: 'மணமகள் சகோதரர் நண்பர்கள் · தாய் பள்ளி', groupEn: "Bride's Brother's Friends · Thaai School", nameTa: 'மாதவ்', nameEn: 'Madhav', locTa: 'தாய் பள்ளி', locEn: 'Thaai School' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'thaai_school', groupTa: 'மணமகள் சகோதரர் நண்பர்கள் · தாய் பள்ளி', groupEn: "Bride's Brother's Friends · Thaai School", nameTa: 'ஹரி பிரசாத்', nameEn: 'Hari Prasad', locTa: 'தாய் பள்ளி', locEn: 'Thaai School' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'thaai_school', groupTa: 'மணமகள் சகோதரர் நண்பர்கள் · தாய் பள்ளி', groupEn: "Bride's Brother's Friends · Thaai School", nameTa: 'சரண்', nameEn: 'Sharan', locTa: 'தாய் பள்ளி', locEn: 'Thaai School' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'thaai_school', groupTa: 'மணமகள் சகோதரர் நண்பர்கள் · தாய் பள்ளி', groupEn: "Bride's Brother's Friends · Thaai School", nameTa: 'அஹ்மத்', nameEn: 'Ahmad', locTa: 'தாய் பள்ளி', locEn: 'Thaai School' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'thaai_school', groupTa: 'மணமகள் சகோதரர் நண்பர்கள் · தாய் பள்ளி', groupEn: "Bride's Brother's Friends · Thaai School", nameTa: 'கிஷாந்த்', nameEn: 'Kishanth', locTa: 'தாய் பள்ளி', locEn: 'Thaai School' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'thaai_school', groupTa: 'மணமகள் சகோதரர் நண்பர்கள் · தாய் பள்ளி', groupEn: "Bride's Brother's Friends · Thaai School", nameTa: 'சந்தோஷ்', nameEn: 'Santhosh', locTa: 'தாய் பள்ளி', locEn: 'Thaai School' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'thaai_school', groupTa: 'மணமகள் சகோதரர் நண்பர்கள் · தாய் பள்ளி', groupEn: "Bride's Brother's Friends · Thaai School", nameTa: 'ஹரிபிரசன்னா', nameEn: 'Hariprasanna', locTa: 'தாய் பள்ளி', locEn: 'Thaai School' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'thaai_school', groupTa: 'மணமகள் சகோதரர் நண்பர்கள் · தாய் பள்ளி', groupEn: "Bride's Brother's Friends · Thaai School", nameTa: 'செல்வா', nameEn: 'Selva', locTa: 'தாய் பள்ளி', locEn: 'Thaai School' },
+
+  // 10B. KALASALINGAM UNIVERSITY — MENTORS (கலசலிங்கம் பல்கலைக்கழகம் · வழிகாட்டிகள்)
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_mentors', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · வழிகாட்டிகள்', groupEn: 'Kalasalingam University · Mentors', nameTa: 'Dr. ஜெனிபால் சாம்சன்', nameEn: 'Dr. Jenyfal Sampson', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_mentors', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · வழிகாட்டிகள்', groupEn: 'Kalasalingam University · Mentors', nameTa: 'Dr. மணிகண்டன்', nameEn: 'Dr. Manikandan', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_mentors', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · வழிகாட்டிகள்', groupEn: 'Kalasalingam University · Mentors', nameTa: 'Dr. முனீஸ்வரன்', nameEn: 'Dr. Muneeswaran', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_mentors', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · வழிகாட்டிகள்', groupEn: 'Kalasalingam University · Mentors', nameTa: 'Dr. ஆரத்தி', nameEn: 'Dr. Aarathi', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_mentors', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · வழிகாட்டிகள்', groupEn: 'Kalasalingam University · Mentors', nameTa: 'Dr. சார்லஸ் பிரவின்', nameEn: 'Dr. Charles Pravin', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+
+  // 10C. KALASALINGAM UNIVERSITY — SENIORS (கலசலிங்கம் பல்கலைக்கழகம் · சீனியர்கள்)
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_seniors', isSenior: true, groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · சீனியர்கள்', groupEn: 'Kalasalingam University · Seniors', nameTa: 'சந்தோஷ்', nameEn: 'Santhosh', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_seniors', isSenior: true, groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · சீனியர்கள்', groupEn: 'Kalasalingam University · Seniors', nameTa: 'சங்கர்', nameEn: 'Sankar', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_seniors', isSenior: true, groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · சீனியர்கள்', groupEn: 'Kalasalingam University · Seniors', nameTa: 'சரவணா', nameEn: 'Saravana', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_seniors', isSenior: true, groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · சீனியர்கள்', groupEn: 'Kalasalingam University · Seniors', nameTa: 'வெங்கடேஷ்', nameEn: 'Venkatesh', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_seniors', isSenior: true, groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · சீனியர்கள்', groupEn: 'Kalasalingam University · Seniors', nameTa: 'ஜெனிட்டா ஏஞ்சலின்', nameEn: 'Jenita Angeline', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_seniors', isSenior: true, groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · சீனியர்கள்', groupEn: 'Kalasalingam University · Seniors', nameTa: 'முத்துச்செல்வி', nameEn: 'Muthuselvi', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_seniors', isSenior: true, groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · சீனியர்கள்', groupEn: 'Kalasalingam University · Seniors', nameTa: 'கோபி', nameEn: 'Gopi', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_seniors', isSenior: true, groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · சீனியர்கள்', groupEn: 'Kalasalingam University · Seniors', nameTa: 'மதன்', nameEn: 'Mathan', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_seniors', isSenior: true, groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · சீனியர்கள்', groupEn: 'Kalasalingam University · Seniors', nameTa: 'பாலா', nameEn: 'Bala', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_seniors', isSenior: true, groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · சீனியர்கள்', groupEn: 'Kalasalingam University · Seniors', nameTa: 'கார்த்திக் தீபன்', nameEn: 'Karthik Deepan', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_seniors', isSenior: true, groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · சீனியர்கள்', groupEn: 'Kalasalingam University · Seniors', nameTa: 'சூர்யா வேலன்', nameEn: 'Suriya Velan', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_seniors', isSenior: true, groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · சீனியர்கள்', groupEn: 'Kalasalingam University · Seniors', nameTa: 'சையத் இப்ராஹிம்', nameEn: 'Syad Ibrahim', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_seniors', isSenior: true, groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · சீனியர்கள்', groupEn: 'Kalasalingam University · Seniors', nameTa: 'ரஸ்ஸல்', nameEn: 'Russel', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_seniors', isSenior: true, groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · சீனியர்கள்', groupEn: 'Kalasalingam University · Seniors', nameTa: 'மதுமிதா', nameEn: 'Mathumitha', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_seniors', isSenior: true, groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · சீனியர்கள்', groupEn: 'Kalasalingam University · Seniors', nameTa: 'அருண்', nameEn: 'Arun', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_seniors', isSenior: true, groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · சீனியர்கள்', groupEn: 'Kalasalingam University · Seniors', nameTa: 'சிவராம்', nameEn: 'Sivaram', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_seniors', isSenior: true, groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · சீனியர்கள்', groupEn: 'Kalasalingam University · Seniors', nameTa: 'சிவகுருநாதன்', nameEn: 'Sivagurunathan', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_seniors', isSenior: true, groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · சீனியர்கள்', groupEn: 'Kalasalingam University · Seniors', nameTa: 'கருப்பசாமி', nameEn: 'Karuppasamy', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_seniors', isSenior: true, groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · சீனியர்கள்', groupEn: 'Kalasalingam University · Seniors', nameTa: 'விஜய்', nameEn: 'Vijay', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_seniors', isSenior: true, groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · சீனியர்கள்', groupEn: 'Kalasalingam University · Seniors', nameTa: 'சஞ்சய்', nameEn: 'Sanjay', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_seniors', isSenior: true, groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · இறுதி ஆண்டு சீனியர்கள்', groupEn: 'Kalasalingam University · Final Year Seniors', nameTa: 'Ms. செல்வ ஜோதிஹா C A', nameEn: 'Ms. Selva Jotheha C A', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_seniors', isSenior: true, groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · இறுதி ஆண்டு சீனியர்கள்', groupEn: 'Kalasalingam University · Final Year Seniors', nameTa: 'Mr. தினேஷ் நாயுடு ராமினேனி', nameEn: 'Mr Dinesh Naidu Ramineni', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_seniors', isSenior: true, groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · இறுதி ஆண்டு சீனியர்கள்', groupEn: 'Kalasalingam University · Final Year Seniors', nameTa: 'தவுலூரி சாய் சித்தார்த்தா', nameEn: 'Davuluri Sai Siddardha', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+
+  // 10D. KALASALINGAM UNIVERSITY — FRIENDS (கலசலிங்கம் பல்கலைக்கழகம் · நண்பர்கள்)
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_friends', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · நண்பர்கள்', groupEn: 'Kalasalingam University · Friends', nameTa: 'நீலகண்டேஸ்வர் ரெட்டி பொல்லாவரம்', nameEn: 'Neelakanteswar Reddy Bollavaram', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_friends', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · நண்பர்கள்', groupEn: 'Kalasalingam University · Friends', nameTa: 'S ரோஹித் குமார்', nameEn: 'S Rohith Kumar', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_friends', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · நண்பர்கள்', groupEn: 'Kalasalingam University · Friends', nameTa: 'Ms. கன்னிகா M', nameEn: 'Ms. Kanniga M', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_friends', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · நண்பர்கள்', groupEn: 'Kalasalingam University · Friends', nameTa: 'ஆர்த்திகா S', nameEn: 'Aarthika S', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_friends', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · நண்பர்கள்', groupEn: 'Kalasalingam University · Friends', nameTa: 'ஸ்ரீசுபஸ்ரீ. S', nameEn: 'Srisubasri.S', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_friends', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · நண்பர்கள்', groupEn: 'Kalasalingam University · Friends', nameTa: 'அஸ்மிதா ஸ்ரீ V', nameEn: 'Asmitha Shree V', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_friends', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · நண்பர்கள்', groupEn: 'Kalasalingam University · Friends', nameTa: 'முகமது அப்ரார் S K', nameEn: 'Mohamed Abrar S K', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_friends', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · நண்பர்கள்', groupEn: 'Kalasalingam University · Friends', nameTa: 'பொம்மிடி கணேஷ்', nameEn: 'Bommidi Ganesh', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_friends', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · நண்பர்கள்', groupEn: 'Kalasalingam University · Friends', nameTa: 'சாய் சித்தார்த் S', nameEn: 'Sai Siddarth S', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_friends', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · நண்பர்கள்', groupEn: 'Kalasalingam University · Friends', nameTa: 'Mr முகிலன் S P', nameEn: 'Mr Mugilan S P', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_friends', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · நண்பர்கள்', groupEn: 'Kalasalingam University · Friends', nameTa: 'நிவாஷ் S', nameEn: 'Nivash S', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_friends', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · நண்பர்கள்', groupEn: 'Kalasalingam University · Friends', nameTa: 'Mr வைஷ்ணவ தனுஷ் D', nameEn: 'Mr Vaishnava Dhanush D', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_friends', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · நண்பர்கள்', groupEn: 'Kalasalingam University · Friends', nameTa: 'Mr கைலாஷ் ரவிச்சந்திரன்', nameEn: 'Mr Kailash Ravichandran', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_friends', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · நண்பர்கள்', groupEn: 'Kalasalingam University · Friends', nameTa: 'ஜெயனிதா J', nameEn: 'Jeyanitha J', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_friends', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · நண்பர்கள்', groupEn: 'Kalasalingam University · Friends', nameTa: 'கார்த்திகா G', nameEn: 'Karthika G', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_friends', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · நண்பர்கள்', groupEn: 'Kalasalingam University · Friends', nameTa: 'Ms. புவனேஸ்வரி R', nameEn: 'Ms. Bhuvaneshwari R', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_friends', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · நண்பர்கள்', groupEn: 'Kalasalingam University · Friends', nameTa: 'Mr ஸ்ரீமன் ராஜ் T', nameEn: 'Mr Shriman Raj T', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_friends', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · நண்பர்கள்', groupEn: 'Kalasalingam University · Friends', nameTa: 'Mr கியாதப்பகரி ரோஹித்', nameEn: 'Mr Kyathappagari Rohith', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_friends', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · நண்பர்கள்', groupEn: 'Kalasalingam University · Friends', nameTa: 'Mr சுரேஷ் தீபக்', nameEn: 'Mr Suresh Dheepak', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_friends', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · நண்பர்கள்', groupEn: 'Kalasalingam University · Friends', nameTa: 'குருஅசோகன் G', nameEn: 'Guruashokan G', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_friends', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · நண்பர்கள்', groupEn: 'Kalasalingam University · Friends', nameTa: 'Ms. ஷிரின் மேரி. P', nameEn: 'Ms. Shirin Mary. P', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_friends', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · நண்பர்கள்', groupEn: 'Kalasalingam University · Friends', nameTa: 'Mr விஷ்வக் சாய் முதிவர்த்தி', nameEn: 'Mr Vishwak Sai Mudivarthi', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_friends', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · நண்பர்கள்', groupEn: 'Kalasalingam University · Friends', nameTa: 'ஹரிஷ்குமரன் V', nameEn: 'Harishkumaran V', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_friends', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · நண்பர்கள்', groupEn: 'Kalasalingam University · Friends', nameTa: 'செந்தூர் வேலன் B G A', nameEn: 'Chendhoor Velan B G A', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_friends', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · நண்பர்கள்', groupEn: 'Kalasalingam University · Friends', nameTa: 'ஆரோமல் S. குமார்', nameEn: 'Aaromal S. Kumar', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_friends', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · நண்பர்கள்', groupEn: 'Kalasalingam University · Friends', nameTa: 'ஹரி சாய் சுபாஷ் அலுமோலு', nameEn: 'Hari Sai Subhash Alumolu', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_friends', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · நண்பர்கள்', groupEn: 'Kalasalingam University · Friends', nameTa: 'L.S லோகேஷ்', nameEn: 'L.S Lokesh', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_friends', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · நண்பர்கள்', groupEn: 'Kalasalingam University · Friends', nameTa: 'நவீன் கரண் R S', nameEn: 'Naveen Karan R S', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_friends', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · நண்பர்கள்', groupEn: 'Kalasalingam University · Friends', nameTa: 'வெண்ணிமுத்து V', nameEn: 'Vennimuthu V', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_friends', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · நண்பர்கள்', groupEn: 'Kalasalingam University · Friends', nameTa: 'ஆனந்து பிரதீப்', nameEn: 'Anandu Pradeep', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_friends', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · நண்பர்கள்', groupEn: 'Kalasalingam University · Friends', nameTa: 'V ஆதித்யா', nameEn: 'V Adhithiyaa', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_friends', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · நண்பர்கள்', groupEn: 'Kalasalingam University · Friends', nameTa: 'கார்த்திகேயன் G', nameEn: 'Karthikeyen G', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
+  { side: 'both', ageGroup: 'friends', friendCategory: 'kalasalingam_friends', groupTa: 'கலசலிங்கம் பல்கலைக்கழகம் · நண்பர்கள்', groupEn: 'Kalasalingam University · Friends', nameTa: 'பெத்தபுடி ரூபேஷ்', nameEn: 'Bethapudi Rupesh', locTa: 'கலசலிங்கம் பல்கலைக்கழகம்', locEn: 'Kalasalingam University' },
 ];
 
 export const DIRECTORY_PERSONS: DirectoryPerson[] = RAW_DIRECTORY_SEED.map((row, idx) => ({
@@ -650,6 +877,8 @@ export const DIRECTORY_PERSONS: DirectoryPerson[] = RAW_DIRECTORY_SEED.map((row,
   groupEn: row.groupEn,
   locationTa: row.locTa,
   locationEn: row.locEn,
+  friendCategory: row.friendCategory,
+  isSenior: row.isSenior,
 }));
 
 export const INITIAL_BLESSINGS: BlessingEntry[] = [

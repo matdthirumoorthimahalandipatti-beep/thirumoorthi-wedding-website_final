@@ -297,8 +297,9 @@ export function HeritageUpperSections({
             </div>
           </div>
 
-          <div className="mx-auto mb-8 grid max-w-4xl gap-6 md:grid-cols-2">
-            <figure className="card-3d-tilt overflow-hidden rounded-2xl border-4 border-white bg-[#fffdf7] shadow-2xl ring-2 ring-[#c9932d]">
+          <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-2">
+            {/* Bride Card with Description Box Under Image */}
+            <article className="overflow-hidden rounded-3xl border-2 border-[#c9932d]/80 bg-[#fffaf0]/95 shadow-2xl">
               <div className="aspect-[3/4] w-full overflow-hidden bg-[#f4e5c5]">
                 <img
                   src={couplePhotos.bridePhoto}
@@ -307,39 +308,10 @@ export function HeritageUpperSections({
                   onError={(e) => {
                     e.currentTarget.src = HERITAGE_ASSETS.coupleTemple;
                   }}
-                  className="h-full w-full object-cover object-top transition-transform duration-500 hover:scale-105"
+                  className="h-full w-full object-cover object-top"
                 />
               </div>
-              <figcaption className="border-t border-[#c9932d]/30 bg-[#fff8eb] px-4 py-3 text-center font-display text-base font-bold text-[#3a0815]">
-                {lang === 'ta' ? 'M. திரிஷா · மணமகள்' : 'M. Thirisha · The Bride'}
-              </figcaption>
-            </figure>
-
-            <figure className="card-3d-tilt overflow-hidden rounded-2xl border-4 border-white bg-[#fffdf7] shadow-2xl ring-2 ring-[#c9932d]">
-              <div className="aspect-[3/4] w-full overflow-hidden bg-[#f4e5c5]">
-                <img
-                  src={couplePhotos.groomPhoto}
-                  alt={lang === 'ta' ? 'மணமகன் S. சிவசங்கர்' : 'Siva Shankar, the groom'}
-                  loading="lazy"
-                  onError={(e) => {
-                    e.currentTarget.src = HERITAGE_ASSETS.coupleTemple;
-                  }}
-                  className="h-full w-full object-cover object-top transition-transform duration-500 hover:scale-105"
-                />
-              </div>
-              <figcaption className="border-t border-[#c9932d]/30 bg-[#fff8eb] px-4 py-3 text-center font-display text-base font-bold text-[#3a0815]">
-                {lang === 'ta' ? 'S. சிவசங்கர் · மணமகன்' : 'S. Siva Shankar · The Groom'}
-              </figcaption>
-            </figure>
-          </div>
-
-          <div className="card-3d-tilt relative overflow-hidden rounded-3xl border border-[#c9932d]/60 bg-[#fff8eb]/95 p-6 shadow-xl sm:p-10">
-            <div
-              aria-hidden="true"
-              className="absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r from-[#f7df94] via-[#c9932d] to-[#8c6418]"
-            />
-            <div className="grid items-center gap-6 md:grid-cols-[1fr_auto_1fr]">
-              <div className="rounded-2xl border border-[#c9932d]/35 bg-white/95 p-6 text-center shadow-sm">
+              <div className="border-t-2 border-[#c9932d]/50 bg-[#fff8eb] p-6 text-center">
                 <p className="text-xs font-bold tracking-[0.18em] text-[#631226] uppercase">
                   {lang === 'ta' ? 'மணமகள் · The Bride' : 'The Bride · மணமகள்'}
                 </p>
@@ -349,34 +321,44 @@ export function HeritageUpperSections({
                 <p className="mt-1 text-sm font-semibold text-[#8c6418]">
                   {lang === 'ta' ? WEDDING_CONFIG.brideQualificationTa : WEDDING_CONFIG.brideQualification}
                 </p>
-                <p className="mt-3 text-sm leading-relaxed text-[#3b1d16]">
+                <p className="mt-3 rounded-xl border border-[#c9932d]/30 bg-white/95 p-4 text-sm leading-relaxed text-[#3b1d16] shadow-sm">
                   {lang === 'ta'
                     ? 'A. மூர்த்தி மற்றும் M. அலமேலு ஆகிய திருமூர்த்தி குழும நிறுவனர்களின் அன்பு மகள். ஆங்கில இலக்கியத்தில் முதுகலைப் பட்டம் பெற்றவர்.'
                     : 'Daughter of A. Moorthi and M. Alamelu, founders of Thirumoorthi Groups. Graduate with M.A. in English Literature.'}
                 </p>
               </div>
+            </article>
 
-              <div aria-hidden="true" className="text-center font-display text-5xl italic text-[#c9932d]">
-                &amp;
+            {/* Groom Card with Description Box Under Image */}
+            <article className="overflow-hidden rounded-3xl border-2 border-[#c9932d]/80 bg-[#fffaf0]/95 shadow-2xl">
+              <div className="aspect-[3/4] w-full overflow-hidden bg-[#f4e5c5]">
+                <img
+                  src={couplePhotos.groomPhoto}
+                  alt={lang === 'ta' ? 'மணமகன் S. சிவசங்கர்' : 'Siva Shankar, the groom'}
+                  loading="lazy"
+                  onError={(e) => {
+                    e.currentTarget.src = HERITAGE_ASSETS.coupleTemple;
+                  }}
+                  className="h-full w-full object-cover object-top"
+                />
               </div>
-
-              <div className="rounded-2xl border border-[#c9932d]/35 bg-white/95 p-6 text-center shadow-sm">
+              <div className="border-t-2 border-[#c9932d]/50 bg-[#fff8eb] p-6 text-center">
                 <p className="text-xs font-bold tracking-[0.18em] text-[#631226] uppercase">
                   {lang === 'ta' ? 'மணமகன் · The Groom' : 'The Groom · மணமகன்'}
                 </p>
                 <h3 className="mt-2 font-display text-3xl font-bold text-[#3a0815]">
-                  {lang === 'ta' ? WEDDING_CONFIG.groomTa : WEDDING_CONFIG.groom}
+                  {lang === 'ta' ? WEDDING_CONFIG.groomTa : WEDDING_CONFIG.groomShort}
                 </h3>
                 <p className="mt-1 text-sm font-semibold text-[#8c6418]">
                   {lang === 'ta' ? WEDDING_CONFIG.groomQualificationTa : WEDDING_CONFIG.groomQualification}
                 </p>
-                <p className="mt-3 text-sm leading-relaxed text-[#3b1d16]">
+                <p className="mt-3 rounded-xl border border-[#c9932d]/30 bg-white/95 p-4 text-sm leading-relaxed text-[#3b1d16] shadow-sm">
                   {lang === 'ta'
                     ? 'S. சுரேஷ் மற்றும் வள்ளி (வெங்கடேஷ் மளிகைக் கடை) அவர்களின் அன்பு மகன். பொறியியல் பட்டதாரி மற்றும் தமிழ்நாடு தீயணைப்புத்துறையில் பணியாற்றுகிறார்.'
                     : 'Son of S. Suresh and Valli, owners of Venkatesh Grocery Shop. B.E. Graduate serving in Tamil Nadu Fire and Rescue Services.'}
                 </p>
               </div>
-            </div>
+            </article>
           </div>
         </div>
       </ContinuitySection3D>
@@ -587,11 +569,14 @@ export function HeritageUpperSections({
                     key={member.id}
                     className="flex flex-col items-center rounded-2xl border border-[#c9932d]/45 bg-white/95 p-3.5 text-center shadow-sm"
                   >
-                    <div className="h-24 w-24 overflow-hidden rounded-full border-2 border-[#c9932d] bg-[#fdf1d4] shadow-md">
+                    <div className="h-28 w-28 overflow-hidden rounded-full border-2 border-[#c9932d] bg-[#fdf1d4] shadow-md">
                       <img
                         src={member.photo}
                         alt={lang === 'ta' ? member.nameTa : member.nameEn}
                         loading="lazy"
+                        onError={(e) => {
+                          e.currentTarget.src = HERITAGE_ASSETS.portraitPlaceholder;
+                        }}
                         className="h-full w-full object-cover object-top"
                       />
                     </div>
@@ -657,11 +642,14 @@ export function HeritageUpperSections({
                     key={member.id}
                     className="flex flex-col items-center rounded-2xl border border-[#c9932d]/45 bg-white/95 p-3.5 text-center shadow-sm"
                   >
-                    <div className="h-24 w-24 overflow-hidden rounded-full border-2 border-[#c9932d] bg-[#fdf1d4] shadow-md">
+                    <div className="h-28 w-28 overflow-hidden rounded-full border-2 border-[#c9932d] bg-[#fdf1d4] shadow-md">
                       <img
                         src={member.photo}
                         alt={lang === 'ta' ? member.nameTa : member.nameEn}
                         loading="lazy"
+                        onError={(e) => {
+                          e.currentTarget.src = HERITAGE_ASSETS.portraitPlaceholder;
+                        }}
                         className="h-full w-full object-cover object-top"
                       />
                     </div>
@@ -1140,7 +1128,7 @@ export function HeritageUpperSections({
                         : WEDDING_CONFIG.auspiciousNoticeEn}
                     </p>
 
-                    {/* Engagement Details inside Parchment Window */}
+                    {/* Engagement Details inside Parchment Window (Dress line removed) */}
                     <div className="rounded-lg border border-[#c9932d]/70 bg-[#fff5db]/95 px-2 py-1.5 text-center shadow-sm">
                       <p className="font-tamil text-[8.5px] font-extrabold text-[#631226] sm:text-[10px]">
                         ❖ {lang === 'ta' ? WEDDING_CONFIG.engagementTitleTa : WEDDING_CONFIG.engagementTitleEn} ❖
@@ -1148,24 +1136,27 @@ export function HeritageUpperSections({
                       <p className="font-tamil text-[7.8px] font-bold text-[#8c5a12] sm:text-[9.5px]">
                         {lang === 'ta' ? WEDDING_CONFIG.nichayatharthamTa : WEDDING_CONFIG.nichayatharthamEn}
                       </p>
-                      <p className="font-tamil text-[7.3px] font-semibold text-[#3a0815] sm:text-[9px]">
-                        {lang === 'ta' ? WEDDING_CONFIG.engagementDressTa : WEDDING_CONFIG.engagementDressEn}
-                      </p>
                       <p className="mt-0.5 font-tamil text-[7px] leading-snug text-[#4e2318] sm:text-[8.5px]">
                         {lang === 'ta' ? WEDDING_CONFIG.engagementDescTa : WEDDING_CONFIG.engagementDescEn}
                       </p>
                     </div>
 
-                    <div className="mx-auto inline-block max-w-full rounded-lg border border-[#d4a237] bg-[#631226] px-2 py-1 text-[8px] leading-tight font-bold text-[#ffefa8] sm:text-[9.5px]">
-                      {lang === 'ta'
-                        ? 'முகூர்த்தம்: 22.11.2026 · காலை 6:15 – 7:15'
-                        : 'Muhurtham: 22 Nov 2026 · 6:15 – 7:15 AM'}
+                    {/* Highlighted Sacred Muhurtham (திருமாங்கல்ய தாரணம் — சுப முகூர்த்தம்) */}
+                    <div className="mx-auto w-full rounded-xl border-2 border-[#f7df94] bg-gradient-to-r from-[#7c1428] via-[#631226] to-[#7c1428] px-2 py-1.5 text-center shadow-lg">
+                      <p className="font-tamil text-[8.5px] leading-tight font-extrabold text-[#f7df94] sm:text-[10.5px]">
+                        ✨ {lang === 'ta' ? 'திருமாங்கல்ய தாரணம் — சுப முகூர்த்தம்' : 'Sacred Muhurtham — Thirumangalyam'} ✨
+                      </p>
+                      <p className="mt-0.5 font-tamil text-[8px] leading-tight font-bold text-white sm:text-[10px]">
+                        {lang === 'ta'
+                          ? 'ஞாயிறு, 22.11.2026 · காலை 6:15 – 7:15'
+                          : 'Sunday, 22 Nov 2026 · 6:15 – 7:15 AM'}
+                      </p>
+                      <p className="mt-0.5 text-[7.5px] leading-tight font-semibold text-[#ffefa8] sm:text-[9px]">
+                        {lang === 'ta'
+                          ? 'MATD திருமூர்த்தி மஹால், டி. வாடிப்பட்டி, மதுரை'
+                          : 'MATD Thirumoorthi Mahal, T. Vadipatti, Madurai'}
+                      </p>
                     </div>
-                    <p className="text-[8px] leading-tight font-bold text-[#3a0815] sm:text-[10px]">
-                      {lang === 'ta'
-                        ? 'MATD திருமூர்த்தி மஹால், டி. வாடிப்பட்டி, மதுரை'
-                        : 'MATD Thirumoorthi Mahal, T. Vadipatti, Madurai'}
-                    </p>
                   </div>
 
                   {/* Compact QR Code anchored strictly inside free bottom parchment space */}
@@ -1178,7 +1169,7 @@ export function HeritageUpperSections({
                       />
                     )}
                     <p className="text-[8px] font-bold text-[#631226] sm:text-[9.5px]">
-                      {lang === 'ta' ? '3D அழைப்பிதழ் தளம்' : 'Open 3D Website'}
+                      {lang === 'ta' ? 'திருமண அழைப்பிதழ் தளம்' : 'Wedding Website'}
                     </p>
                     <p className="w-full truncate font-mono-num text-[7px] font-semibold text-[#3a0815] sm:text-[8.5px]">
                       thirumoorthi-wedding-website.pages.dev
@@ -1434,7 +1425,9 @@ export function HeritageDirectoryAndAlbum({
   onOpenAdmin,
 }: HeritageDirectoryAndAlbumProps) {
   const [searchQuery, setSearchQuery] = useState('');
-  const [categoryFilter, setCategoryFilter] = useState<'all' | 'bride' | 'groom' | 'friends'>('all');
+  const [categoryFilter, setCategoryFilter] = useState<
+    'all' | 'bride' | 'groom' | 'brother_friends' | 'friends'
+  >('all');
   const [ageFilter, setAgeFilter] = useState<'all' | AgeGroupKey>('all');
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
 
@@ -1443,12 +1436,14 @@ export function HeritageDirectoryAndAlbum({
 
     const matchesQuery = (p: DirectoryPerson) => {
       if (!q) return true;
-      const haystack = `${p.nameEn} ${p.nameTa} ${p.groupEn} ${p.groupTa} ${p.locationEn} ${p.locationTa}`.toLowerCase();
+      const seniorKeyword = p.isSenior ? 'senior சீனியர்' : '';
+      const haystack =
+        `${p.nameEn} ${p.nameTa} ${p.groupEn} ${p.groupTa} ${p.locationEn} ${p.locationTa} ${seniorKeyword}`.toLowerCase();
       return haystack.includes(q);
     };
 
     const categories: Array<{
-      id: 'bride' | 'groom' | 'friends';
+      id: 'bride' | 'groom' | 'brother_friends' | 'friends';
       emoji: string;
       titleTa: string;
       titleEn: string;
@@ -1456,7 +1451,10 @@ export function HeritageDirectoryAndAlbum({
       subtitleEn: string;
       accentBorder: string;
       headerBg: string;
-      tiers: Array<{ meta: (typeof AGE_GROUP_ORDER)[number]; members: DirectoryPerson[] }>;
+      tiers: Array<{
+        meta: { key: string; order: number; labelTa: string; labelEn: string };
+        members: DirectoryPerson[];
+      }>;
       totalCount: number;
     }> = [];
 
@@ -1522,12 +1520,78 @@ export function HeritageDirectoryAndAlbum({
       }
     }
 
+    if (categoryFilter === 'all' || categoryFilter === 'friends' || categoryFilter === 'brother_friends') {
+      const showFriendsTier = ageFilter === 'all' || ageFilter === 'friends';
+      if (showFriendsTier) {
+        const brotherSubGroups: Array<{
+          key: NonNullable<DirectoryPerson['friendCategory']>;
+          order: number;
+          labelTa: string;
+          labelEn: string;
+        }> = [
+          {
+            key: 'thaai_school',
+            order: 1,
+            labelTa: 'தாய் பள்ளி நண்பர்கள்',
+            labelEn: 'Thaai School Friends',
+          },
+          {
+            key: 'kalasalingam_mentors',
+            order: 2,
+            labelTa: 'கலசலிங்கம் பல்கலைக்கழகம் · வழிகாட்டிகள்',
+            labelEn: 'Kalasalingam University · Mentors',
+          },
+          {
+            key: 'kalasalingam_seniors',
+            order: 3,
+            labelTa: 'கலசலிங்கம் பல்கலைக்கழகம் · சீனியர்கள்',
+            labelEn: 'Kalasalingam University · Seniors',
+          },
+          {
+            key: 'kalasalingam_friends',
+            order: 4,
+            labelTa: 'கலசலிங்கம் பல்கலைக்கழகம் · நண்பர்கள்',
+            labelEn: 'Kalasalingam University · Friends',
+          },
+        ];
+
+        const brotherTiers = brotherSubGroups
+          .map((sub) => ({
+            meta: sub,
+            members: directoryPersons.filter(
+              (p) => p.friendCategory === sub.key && matchesQuery(p)
+            ),
+          }))
+          .filter((t) => t.members.length > 0);
+
+        if (brotherTiers.length > 0) {
+          categories.push({
+            id: 'brother_friends',
+            emoji: '🎓',
+            titleTa: 'மணமகள் சகோதரர் (M. தீபக்) நண்பர்கள் & வழிகாட்டிகள்',
+            titleEn: "Bride's Brother's Friends & Mentors (M. Deepak)",
+            subtitleTa:
+              'தாய் பள்ளி நண்பர்கள் மற்றும் கலசலிங்கம் பல்கலைக்கழக வழிகாட்டிகள், சீனியர்கள் & நண்பர்கள்',
+            subtitleEn:
+              'Thaai School friends along with Kalasalingam University mentors, seniors & friends',
+            accentBorder: 'border-[#7a4b0c]/45',
+            headerBg: 'bg-gradient-to-r from-[#4b1022] via-[#631226] to-[#7a4b0c] text-[#fff8eb]',
+            tiers: brotherTiers,
+            totalCount: brotherTiers.reduce((acc, t) => acc + t.members.length, 0),
+          });
+        }
+      }
+    }
+
     if (categoryFilter === 'all' || categoryFilter === 'friends') {
       const friendsMeta = AGE_GROUP_ORDER.find((g) => g.key === 'friends');
       const showFriendsTier = ageFilter === 'all' || ageFilter === 'friends';
       if (friendsMeta && showFriendsTier) {
         const friendsMembers = directoryPersons.filter(
-          (p) => (p.ageGroup === 'friends' || p.side === 'both') && matchesQuery(p)
+          (p) =>
+            !p.friendCategory &&
+            (p.ageGroup === 'friends' || p.side === 'both') &&
+            matchesQuery(p)
         );
         if (friendsMembers.length > 0) {
           categories.push({
@@ -1622,6 +1686,11 @@ export function HeritageDirectoryAndAlbum({
                     { id: 'all', labelTa: 'அனைவரும்', labelEn: 'All' },
                     { id: 'bride', labelTa: 'மணமகள் குடும்பம்', labelEn: "Bride's Family" },
                     { id: 'groom', labelTa: 'மணமகன் குடும்பம்', labelEn: "Groom's Family" },
+                    {
+                      id: 'brother_friends',
+                      labelTa: 'மணமகள் சகோதரர் நண்பர்கள்',
+                      labelEn: "Bride's Brother's Friends",
+                    },
                     { id: 'friends', labelTa: 'நண்பர்கள்', labelEn: 'Friends' },
                   ] as const
                 ).map((f) => (
@@ -1630,7 +1699,7 @@ export function HeritageDirectoryAndAlbum({
                     type="button"
                     onClick={() => {
                       setCategoryFilter(f.id);
-                      if (f.id === 'friends') setAgeFilter('all');
+                      if (f.id === 'friends' || f.id === 'brother_friends') setAgeFilter('all');
                     }}
                     className={`rounded-xl border px-3 py-2.5 text-center text-[11px] font-bold leading-tight transition-colors cursor-pointer sm:px-4 sm:text-xs ${
                       categoryFilter === f.id
@@ -1716,7 +1785,7 @@ export function HeritageDirectoryAndAlbum({
                             {meta.order}
                           </span>
                           <h4 className="font-display text-sm font-bold text-[#3a0815] sm:text-lg">
-                            {lang === 'ta' ? `${meta.labelTa} (${meta.labelEn})` : `${meta.labelEn} · ${meta.labelTa}`}
+                            {lang === 'ta' ? meta.labelTa : meta.labelEn}
                           </h4>
                         </div>
                         <span className="shrink-0 text-[11px] font-bold text-[#8c6418]">
@@ -1737,32 +1806,46 @@ export function HeritageDirectoryAndAlbum({
                                 </p>
                                 <span
                                   className={`shrink-0 rounded px-1.5 py-0.5 text-[10px] font-bold ${
-                                    person.side === 'bride'
-                                      ? 'bg-[#631226]/10 text-[#631226]'
-                                      : person.side === 'groom'
-                                        ? 'bg-[#1e3a8a]/10 text-[#1e3a8a]'
-                                        : 'bg-[#c9932d]/15 text-[#7a5210]'
+                                    person.friendCategory === 'kalasalingam_mentors'
+                                      ? 'bg-[#631226]/12 text-[#631226]'
+                                      : person.isSenior
+                                        ? 'bg-[#c9932d]/25 text-[#631226]'
+                                        : person.side === 'bride'
+                                          ? 'bg-[#631226]/10 text-[#631226]'
+                                          : person.side === 'groom'
+                                            ? 'bg-[#1e3a8a]/10 text-[#1e3a8a]'
+                                            : 'bg-[#c9932d]/15 text-[#7a5210]'
                                   }`}
                                 >
-                                  {person.ageGroup === 'friends' || person.side === 'both'
+                                  {person.friendCategory === 'kalasalingam_mentors'
                                     ? lang === 'ta'
-                                      ? 'நண்பர்கள்'
-                                      : 'Friends'
-                                    : person.side === 'bride'
+                                      ? 'வழிகாட்டி'
+                                      : 'Mentor'
+                                    : person.isSenior
                                       ? lang === 'ta'
-                                        ? 'மணமகள்'
-                                        : 'Bride'
-                                      : lang === 'ta'
-                                        ? 'மணமகன்'
-                                        : 'Groom'}
+                                        ? 'சீனியர்'
+                                        : 'Senior'
+                                      : person.ageGroup === 'friends' || person.side === 'both'
+                                        ? lang === 'ta'
+                                          ? 'நண்பர்கள்'
+                                          : 'Friends'
+                                        : person.side === 'bride'
+                                          ? lang === 'ta'
+                                            ? 'மணமகள்'
+                                            : 'Bride'
+                                          : lang === 'ta'
+                                            ? 'மணமகன்'
+                                            : 'Groom'}
                                 </span>
                               </div>
-                              <h5 className="mt-1.5 text-sm font-bold leading-snug text-[#3a0815] sm:text-[15px]">
-                                {lang === 'ta' ? person.nameTa : person.nameEn}
+                              <h5 className="mt-1.5 flex flex-wrap items-center gap-1.5 text-sm font-bold leading-snug text-[#3a0815] sm:text-[15px]">
+                                <span>{lang === 'ta' ? person.nameTa : person.nameEn}</span>
+                                {person.isSenior && (
+                                  <span className="inline-block rounded-md border border-[#c9932d] bg-[#fff3d2] px-2 py-0.5 text-[10px] font-extrabold tracking-wide text-[#631226] uppercase">
+                                    {lang === 'ta' ? 'சீனியர்' : 'Senior'}
+                                  </span>
+                                )}
                               </h5>
-                              <p className="mt-1 text-xs leading-snug text-[#6e463a]">
-                                {lang === 'ta' ? person.nameEn : person.nameTa}
-                              </p>
                             </div>
                             {(person.locationTa || person.locationEn) && (
                               <p className="mt-3 flex items-start gap-1.5 border-t border-[#f3e5cb] pt-2 text-xs font-medium text-[#6e463a]">
@@ -1787,6 +1870,40 @@ export function HeritageDirectoryAndAlbum({
           )}
         </div>
       </section>
+
+      <ContinuitySection3D
+        id="communityWelcome"
+        className="relative py-14"
+        style={{
+          backgroundImage: `linear-gradient(rgba(253, 246, 230, 0.84), rgba(253, 246, 230, 0.92)), url('${HERITAGE_ASSETS.page5HorizontalFrame}')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        <div className="mx-auto max-w-4xl px-4 text-center sm:px-6">
+          <p className="text-xs font-bold tracking-[0.22em] text-[#631226] uppercase">
+            ❖ {lang === 'ta' ? WEDDING_CONFIG.familyFunctionTa : WEDDING_CONFIG.familyFunction} ❖
+          </p>
+          <h2 className="mt-2 font-display text-3xl font-bold text-[#3a0815] sm:text-4xl">
+            {lang === 'ta' ? 'அன்பான நல்வரவு' : 'Warm Welcome'}
+          </h2>
+          <div className="mt-6 rounded-3xl border border-[#c9932d]/55 bg-white/95 p-6 text-sm leading-relaxed text-[#3b1d16] shadow-lg sm:p-8">
+            {lang === 'ta' ? (
+              <p className="font-tamil text-[#631226]" lang="ta">
+                பொதிகுளம் யாதவர் இளைஞர் நற்பணி மன்றத்தினர், யாதவர் பொதிகுளம் கிராமப் பொதுமக்கள்,
+                கலசலிங்கம் மாணவர்கள், தாய் பள்ளி நண்பர்கள், செந்தாமரை கல்லூரி நண்பர்கள் மற்றும் அனைத்து
+                உறவினர்கள், நண்பர்கள், நல்விரும்பிகள் அனைவரையும் அன்புடன் வரவேற்கிறோம்.
+              </p>
+            ) : (
+              <p className="text-[#3b1d16]">
+                We warmly welcome the Pothikulam Yadavar Ilaignar Narpani Mandram, the people of Yadavar
+                Pothikulam village, Kalasalingam University students, Thaai School friends, Senthamarai
+                College friends, and all our relatives, friends and well-wishers.
+              </p>
+            )}
+          </div>
+        </div>
+      </ContinuitySection3D>
 
       <ContinuitySection3D
         id="album"
@@ -2108,37 +2225,6 @@ export function HeritageWishesAndFooter({
                 {wishAck && <p className="text-center text-xs font-bold text-[#631226]">{wishAck}</p>}
               </form>
             </div>
-          </div>
-        </div>
-      </ContinuitySection3D>
-
-      <ContinuitySection3D
-        id="communityWelcome"
-        className="relative py-14"
-        style={{
-          backgroundImage: `linear-gradient(rgba(253, 246, 230, 0.84), rgba(253, 246, 230, 0.92)), url('${HERITAGE_ASSETS.page5HorizontalFrame}')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      >
-        <div className="mx-auto max-w-4xl px-4 text-center sm:px-6">
-          <p className="text-xs font-bold tracking-[0.22em] text-[#631226] uppercase">
-            ❖ {lang === 'ta' ? WEDDING_CONFIG.familyFunctionTa : WEDDING_CONFIG.familyFunction} ❖
-          </p>
-          <h2 className="mt-2 font-display text-3xl font-bold text-[#3a0815] sm:text-4xl">
-            {lang === 'ta' ? 'அன்பான நல்வரவு' : 'Warm Welcome'}
-          </h2>
-          <div className="card-3d-tilt mt-6 space-y-4 rounded-3xl border border-[#c9932d]/55 bg-white/95 p-6 text-sm leading-relaxed text-[#3b1d16] shadow-lg sm:p-8">
-            <p className="font-tamil text-[#631226]" lang="ta">
-              பொதிகுளம் யாதவர் இளைஞர் நற்பணி மன்றத்தினர், யாதவர் பொதிகுளம் கிராமப் பொதுமக்கள்,
-              கலசலிங்கம் மாணவர்கள், தாய் பள்ளி நண்பர்கள், செந்தாமரை கல்லூரி நண்பர்கள் மற்றும் அனைத்து
-              உறவினர்கள், நண்பர்கள், நல்விரும்பிகள் அனைவரையும் அன்புடன் வரவேற்கிறோம்.
-            </p>
-            <p className="text-[#3b1d16]">
-              We warmly welcome the Pothikulam Yadavar Ilaignar Narpani Mandram, the people of Yadavar
-              Pothikulam village, Kalasalingam University students, Thaai School friends, Senthamarai
-              College friends, and all our relatives, friends and well-wishers.
-            </p>
           </div>
         </div>
       </ContinuitySection3D>

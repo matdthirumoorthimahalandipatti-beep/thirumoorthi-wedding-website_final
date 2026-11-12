@@ -51,19 +51,17 @@
   }
 }
 
-/* 3D Continuity Perspective Stage & Interactive Depth Cards */
+/* Clean Flat Card Depth (no 3D perspective lag) */
 .continuity-3d-stage {
-  perspective: 1400px;
+  position: relative;
 }
 
 .card-3d-tilt {
-  transform-style: preserve-3d;
-  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: box-shadow 0.25s ease;
 }
 
 .card-3d-tilt:hover {
-  transform: perspective(1000px) translateY(-6px) rotateX(2.5deg) rotateY(-2deg) scale(1.012);
-  box-shadow: 0 24px 48px rgba(45, 12, 20, 0.24);
+  box-shadow: 0 18px 36px rgba(45, 12, 20, 0.16);
 }
 
 /* Scroll Progress Top Bar */
@@ -100,10 +98,10 @@
   color: #7c1428;
 }
 
-/* Real Rose Petals 3D Drift */
+/* Gentle Rose Petals Drift */
 @keyframes petalDrift3D {
   0% {
-    transform: translate3d(0, -8vh, 0) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+    transform: translate(0, -8vh) rotate(0deg);
     opacity: 0;
   }
   12% {
@@ -113,7 +111,7 @@
     opacity: 0.82;
   }
   100% {
-    transform: translate3d(var(--drift-x, 60px), 108vh, 40px) rotateX(220deg) rotateY(180deg) rotateZ(310deg);
+    transform: translate(var(--drift-x, 60px), 108vh) rotate(260deg);
     opacity: 0;
   }
 }

@@ -6,6 +6,7 @@ import {
   Pause,
   Play,
   Plus,
+  Shuffle,
   SkipBack,
   SkipForward,
   ThumbsUp,
@@ -15,10 +16,11 @@ import {
   extractYoutubeId,
   HERITAGE_ASSETS,
   QUICK_YOUTUBE_PICKS,
+  WEDDING_AUDIO_COLLECTION,
   type JukeboxTrack,
   type Lang,
 } from '../data/weddingData';
-import { soundFx } from '../utils/soundFx';
+import { soundFx, type MusicPlayerState } from '../utils/soundFx';
 import ContinuitySection3D from './ContinuitySection3D';
 
 interface SangeetJukeboxProps {
@@ -38,7 +40,7 @@ export default function SangeetJukebox({
 }: SangeetJukeboxProps) {
   const [currentTrackId, setCurrentTrackId] = useState<string>(tracks[0]?.id || 'tr-1');
   const [autoPlayEmbed, setAutoPlayEmbed] = useState(false);
-  const [liveMusicOn, setLiveMusicOn] = useState(false);
+  const [playerState, setPlayerState] = useState<MusicPlayerState>(() => soundFx.getState());
   const [youtubeInput, setYoutubeInput] = useState('');
   const [songTitle, setSongTitle] = useState('');
   const [artistName, setArtistName] = useState('');
@@ -50,9 +52,7 @@ export default function SangeetJukebox({
   const [isLookingUp, setIsLookingUp] = useState(false);
 
   useEffect(() => {
-    return () => {
-      soundFx.stopWeddingMusicLoop();
-    };
+    return soundFx.subscribe(setPlayerState);
   }, []);
 
   const sortedTracks = [...tracks].sort((a, b) => b.votes - a.votes || b.addedAt - a.addedAt);
@@ -63,16 +63,23 @@ export default function SangeetJukebox({
   const activeTrack = sortedTracks[activeIndex] || sortedTracks[0];
 
   const handleToggleBuiltInMusic = () => {
-    if (liveMusicOn) {
-      soundFx.stopWeddingMusicLoop();
-      setLiveMusicOn(false);
+    if (playerState.isPlaying) {
+      soundFx.pauseMusic();
     } else {
-      soundFx.startWeddingMusicLoop('sangeet');
-      setLiveMusicOn(true);
+      soundFx.startRandomCollection(true);
     }
   };
 
+  const handlePlayRandomSong = () => {
+    soundFx.nextRandomTrack();
+  };
+
+  const handleSelectLocalTrack = (id: string) => {
+    soundFx.playTrackById(id);
+  };
+
   const handleSelectTrack = (id: string) => {
+    soundFx.pauseMusic();
     setCurrentTrackId(id);
     setAutoPlayEmbed(true);
     soundFx.playChime();
@@ -136,6 +143,7 @@ export default function SangeetJukebox({
     setSongTitle('');
     setArtistName('');
     setDedication('');
+    soundFx.pauseMusic();
     setAutoPlayEmbed(true);
     setStatusMsg(
       lang === 'ta'
@@ -153,6 +161,7 @@ export default function SangeetJukebox({
 
   const handleStep = (delta: number) => {
     if (sortedTracks.length === 0) return;
+    soundFx.pauseMusic();
     const nextIdx = (activeIndex + delta + sortedTracks.length) % sortedTracks.length;
     setCurrentTrackId(sortedTracks[nextIdx].id);
     setAutoPlayEmbed(true);
@@ -179,70 +188,118 @@ export default function SangeetJukebox({
         <div className="flex flex-col justify-between gap-4 border-b border-[#c9932d]/40 pb-6 md:flex-row md:items-end">
           <div>
             <p className="text-xs font-bold tracking-[0.22em] text-[#631226] uppercase">
-              ❖ {lang === 'ta' ? 'சங்கீத் டிஜே இசைப்பெட்டி' : 'Sangeet DJ Jukebox · YouTube Request Box'} ❖
+              ❖ {lang === 'ta' ? 'சங்கீத் டிஜே & சிறப்புப் பாடல் தொகுப்பு' : 'Sangeet DJ · 16-Track Shuffle & YouTube'} ❖
             </p>
             <h2 className="mt-2 font-display text-3xl font-bold text-[#3a0815] sm:text-5xl">
               {lang === 'ta'
-                ? 'உங்கள் விருப்பப் பாடலை YouTube-இல் இருந்து சேர்க்கவும்'
+                ? 'திருமண இசைத் தொகுப்பு & YouTube பாடல் பரிந்துரை'
                 : 'Sangeet DJ Jukebox & YouTube Suggestion Box'}
             </h2>
             <p className="mt-1 text-sm text-[#6e463a]">
               {lang === 'ta'
-                ? 'எந்த YouTube பாடல் இணைப்பையும் சேர்த்து, விருப்பப் பாடல்களுக்கு வாக்களித்து, இசையை உடனே கேட்டு மகிழுங்கள்.'
-                : 'Drop any YouTube song link for the Sangeet dance floor, play YouTube tracks or launch instant Madurai wedding beats.'}
+                ? 'ஒவ்வொரு முறையும் 16 சிறப்புத் தமிழ் திருமணப் பாடல்களிலிருந்து ரேண்டமாக இசையைக் கேளுங்கள் அல்லது YouTube பாடலைச் சேர்க்கவும்.'
+                : 'Stream our 16-song wedding music collection in random shuffle mode or add your favorite YouTube dance picks.'}
             </p>
           </div>
           <div className="font-mono-num text-sm font-bold text-[#631226]">
-            {sortedTracks.length} {lang === 'ta' ? 'பாடல்கள் வரிசையில்' : 'tracks queued'}
+            {WEDDING_AUDIO_COLLECTION.length} {lang === 'ta' ? 'திருமணப் பாடல்கள்' : 'wedding songs'} · {sortedTracks.length}{' '}
+            {lang === 'ta' ? 'YouTube பட்டியல்' : 'YouTube tracks'}
           </div>
         </div>
 
-        <div className="mt-8 grid gap-6 lg:grid-cols-12">
-          {/* Left Stage: Live Audio + YouTube DJ Deck + Playlist Queue */}
-          <div className="space-y-5 lg:col-span-7">
-            {/* Instant Audible Built-in Wedding Music Bar (Always audible with 1 tap) */}
-            <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border-2 border-[#c9932d] bg-gradient-to-r from-[#4a0c1d] via-[#3a0815] to-[#24050d] px-5 py-4 text-[#fff8eb] shadow-xl">
-              <div className="flex items-center gap-3">
-                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#f7df94] text-[#24050d]">
-                  <Volume2 className="h-5 w-5" />
-                </span>
-                <div>
-                  <p className="text-xs font-bold tracking-wider text-[#f7df94] uppercase">
-                    {lang === 'ta' ? 'நேரலை மங்கள இசை & சங்கீத் தாளம்' : 'Built-In Wedding Music Deck'}
-                  </p>
-                  <p className="text-xs text-[#f5deb3]">
-                    {liveMusicOn
-                      ? lang === 'ta'
-                        ? 'மங்கள நாதஸ்வரம் & தவில் இசை ஒலிக்கிறது...'
-                        : 'Playing live Tamil wedding Nadaswaram & Thavil beats...'
-                      : lang === 'ta'
-                        ? 'உடனடியாக இசை கேட்க கீழே உள்ள பொத்தானை அழுத்தவும்'
-                        : 'Tap Play for instant celebratory wedding music without restrictions'}
-                  </p>
-                </div>
+        {/* 16-Track Real Audio Wedding Shuffle Collection */}
+        <div className="mt-8 rounded-3xl border-2 border-[#c9932d] bg-gradient-to-br from-[#3b0714] via-[#2b050f] to-[#1a0308] p-5 text-[#fff8eb] shadow-2xl sm:p-6">
+          <div className="flex flex-col justify-between gap-4 border-b border-[#c9932d]/35 pb-4 md:flex-row md:items-center">
+            <div className="flex items-center gap-3.5">
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#f7df94] to-[#c9932d] text-[#24050d] shadow-lg">
+                <Volume2 className={`h-6 w-6 ${playerState.isPlaying ? 'animate-pulse' : ''}`} />
+              </span>
+              <div className="min-w-0">
+                <p className="text-[11px] font-bold tracking-[0.18em] text-[#f7df94] uppercase">
+                  {lang === 'ta'
+                    ? `திருமண சிறப்பு இசைத் தொகுப்பு · ${WEDDING_AUDIO_COLLECTION.length} பாடல்கள் (ரேண்டம்)`
+                    : `Wedding Music Collection · ${WEDDING_AUDIO_COLLECTION.length} Tracks (Random Shuffle)`}
+                </p>
+                <h3 className="mt-0.5 truncate font-display text-lg font-bold text-white sm:text-xl">
+                  {playerState.isPlaying
+                    ? `♫ ${lang === 'ta' ? playerState.currentTrack.titleTa : playerState.currentTrack.titleEn}`
+                    : lang === 'ta'
+                      ? `தேர்ந்தெடுக்கப்பட்டது: ${playerState.currentTrack.titleTa}`
+                      : `Ready: ${playerState.currentTrack.titleEn}`}
+                </h3>
+                <p className="text-xs text-[#f5deb3]/80">
+                  {lang === 'ta' ? playerState.currentTrack.tagTa : playerState.currentTrack.tagEn}
+                </p>
               </div>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2.5">
               <button
                 type="button"
                 onClick={handleToggleBuiltInMusic}
                 className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-bold shadow-lg transition cursor-pointer ${
-                  liveMusicOn
+                  playerState.isPlaying
                     ? 'border border-[#f7df94] bg-[#631226] text-[#f7df94]'
                     : 'bg-gradient-to-r from-[#f7df94] via-[#c9932d] to-[#b3822a] text-[#24050d] hover:brightness-105'
                 }`}
               >
-                {liveMusicOn ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+                {playerState.isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
                 <span>
-                  {liveMusicOn
+                  {playerState.isPlaying
                     ? lang === 'ta'
                       ? 'இசையை நிறுத்து'
-                      : 'Pause Wedding Music'
+                      : 'Pause Music'
                     : lang === 'ta'
-                      ? 'இசையை இயக்கு'
-                      : 'Play Wedding Music'}
+                      ? 'ரேண்டம் பாடலை இயக்கு'
+                      : 'Play Random Song'}
                 </span>
               </button>
-            </div>
 
+              <button
+                type="button"
+                onClick={handlePlayRandomSong}
+                className="inline-flex items-center gap-2 rounded-full border border-[#f7df94]/70 bg-[#480c1c] px-4 py-2.5 text-xs font-bold text-[#f7df94] shadow transition hover:bg-[#631226] cursor-pointer"
+              >
+                <Shuffle className="h-4 w-4" />
+                <span>{lang === 'ta' ? 'அடுத்த ரேண்டம் பாடல்' : 'Next Random Song'}</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Interactive 16-Song Selector Grid */}
+          <div className="mt-4 grid max-h-56 grid-cols-1 gap-2 overflow-y-auto pr-1 sm:grid-cols-2 lg:grid-cols-4">
+            {WEDDING_AUDIO_COLLECTION.map((song, idx) => {
+              const isCurrent = playerState.currentTrack.id === song.id;
+              return (
+                <button
+                  key={song.id}
+                  type="button"
+                  onClick={() => handleSelectLocalTrack(song.id)}
+                  className={`flex items-center gap-2.5 rounded-xl border px-3 py-2 text-left text-xs transition cursor-pointer ${
+                    isCurrent
+                      ? 'border-[#f7df94] bg-[#631226] text-white shadow'
+                      : 'border-[#c9932d]/30 bg-[#2d0914]/80 text-[#f3d9ad] hover:border-[#f7df94] hover:bg-[#440c1d]'
+                  }`}
+                >
+                  <span
+                    className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full font-mono-num text-[11px] font-bold ${
+                      isCurrent ? 'bg-[#f7df94] text-[#24050d]' : 'bg-[#1a0308] text-[#f7df94]'
+                    }`}
+                  >
+                    {isCurrent && playerState.isPlaying ? '♫' : idx + 1}
+                  </span>
+                  <span className="min-w-0 flex-1 truncate font-semibold">
+                    {lang === 'ta' ? song.titleTa : song.titleEn}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="mt-8 grid gap-6 lg:grid-cols-12">
+          {/* Left Stage: YouTube DJ Deck + Playlist Queue */}
+          <div className="space-y-5 lg:col-span-7">
             {activeTrack && (
               <div className="card-3d-tilt overflow-hidden rounded-3xl border border-[#c9932d] bg-[#24050d] text-[#fff8eb] shadow-2xl">
                 <div className="relative aspect-video w-full bg-black">
@@ -259,7 +316,7 @@ export default function SangeetJukebox({
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2 text-xs font-bold text-[#f7df94]">
                       <Disc3 className="h-4 w-4 animate-spin" style={{ animationDuration: '5s' }} />
-                      <span>{lang === 'ta' ? 'இப்போது இசைப்பது' : 'Now Spinning on Sangeet Deck'}</span>
+                      <span>{lang === 'ta' ? 'YouTube சங்கீத் திரை' : 'Now Spinning on YouTube Deck'}</span>
                     </div>
                     <h3 className="mt-1 truncate font-display text-xl font-bold text-[#fff8eb]">
                       {activeTrack.title}
@@ -283,7 +340,10 @@ export default function SangeetJukebox({
                     </button>
                     <button
                       type="button"
-                      onClick={() => setAutoPlayEmbed(true)}
+                      onClick={() => {
+                        soundFx.pauseMusic();
+                        setAutoPlayEmbed(true);
+                      }}
                       className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-[#f7df94] to-[#c9932d] px-3.5 py-2 text-xs font-bold text-[#24050d] shadow cursor-pointer"
                     >
                       <Play className="h-3.5 w-3.5" />
@@ -308,11 +368,6 @@ export default function SangeetJukebox({
                     </a>
                   </div>
                 </div>
-                <div className="border-t border-[#c9932d]/25 bg-[#19040a] px-4 py-2 text-[11px] text-[#f5deb3]/85">
-                  {lang === 'ta'
-                    ? 'குறிப்பு: சில திரைப்படப் பாடல்கள் YouTube உள்-பின்னணியில் கட்டுப்படுத்தப்பட்டிருந்தால் “YouTube-இல் கேள்” அல்லது மேலே உள்ள “இசையை இயக்கு” பொத்தானைப் பயன்படுத்தலாம்.'
-                    : 'Tip: If YouTube disables embedded audio for a film label track, click “Open on YouTube” or tap “Play Wedding Music” above for live audio.'}
-                </div>
               </div>
             )}
 
@@ -320,14 +375,14 @@ export default function SangeetJukebox({
               <div className="mb-3 flex items-center justify-between">
                 <h3 className="flex items-center gap-2 text-sm font-bold tracking-wider text-[#631226] uppercase">
                   <Music2 className="h-4 w-4 text-[#c9932d]" />
-                  <span>{lang === 'ta' ? 'சங்கீத் பாடல் வரிசை' : 'Live Sangeet Dance Queue'}</span>
+                  <span>{lang === 'ta' ? 'YouTube பாடல் வரிசை' : 'YouTube Dance Queue'}</span>
                 </h3>
                 <span className="text-xs font-medium text-[#6e463a]">
                   {lang === 'ta' ? 'அதிக வாக்குகள் மேலே' : 'Top-voted rises first'}
                 </span>
               </div>
 
-              <div className="max-h-80 space-y-2 overflow-y-auto pr-1">
+              <div className="max-h-72 space-y-2 overflow-y-auto pr-1">
                 {sortedTracks.map((track) => {
                   const isActive = activeTrack?.id === track.id;
                   return (
@@ -395,7 +450,6 @@ export default function SangeetJukebox({
                   : 'Paste any YouTube watch/share URL or tap a quick Tamil wedding hit below to prefill.'}
               </p>
 
-              {/* Quick Picks */}
               <div className="mt-4">
                 <span className="block text-[11px] font-bold tracking-wider text-[#631226] uppercase">
                   {lang === 'ta' ? 'விரைவுத் தேர்வு (YouTube)' : 'Quick YouTube Picks'}

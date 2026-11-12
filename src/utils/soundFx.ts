@@ -1,26 +1,235 @@
-// Synthesized festive Tamil wedding & game audio via Web Audio API (reliable playback inside iframes)
+import { WEDDING_AUDIO_COLLECTION, type WeddingAudioTrack } from '../data/weddingData';
 
+export interface MusicPlayerState {
+  muted: boolean;
+  isPlaying: boolean;
+  currentTrack: WeddingAudioTrack;
+  currentIndex: number;
+  totalTracks: number;
+}
+
+type StateListener = (state: MusicPlayerState) => void;
+
+const LAST_TRACK_STORAGE_KEY = 'tvm_last_random_track_id_v1';
+
+// Wedding Audio & Game Sound Engine
+// Uses HTML5 <audio> with pure non-ordered random track picking (and persists last-played ID so leaving/returning always plays a different song).
 class SoundEngine {
   private ctx: AudioContext | null = null;
   private muted = false;
-  private musicTimer: number | null = null;
-  private stepIdx = 0;
+  private audioEl: HTMLAudioElement | null = null;
+  private currentIndex = 0;
+  private isPlaying = false;
+  private listeners = new Set<StateListener>();
+
+  constructor() {
+    if (WEDDING_AUDIO_COLLECTION.length > 0) {
+      this.currentIndex = this.pickRandomIndexDifferentFromLast();
+    }
+  }
+
+  private getSavedLastTrackId(): string | null {
+    try {
+      return typeof window !== 'undefined' ? window.localStorage.getItem(LAST_TRACK_STORAGE_KEY) : null;
+    } catch {
+      return null;
+    }
+  }
+
+  private saveLastTrackId(id: string): void {
+    try {
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem(LAST_TRACK_STORAGE_KEY, id);
+      }
+    } catch {
+      // ignore storage quota errors
+    }
+  }
+
+  private pickRandomIndexDifferentFromLast(): number {
+    const count = WEDDING_AUDIO_COLLECTION.length;
+    if (count <= 1) return 0;
+
+    const currentId = WEDDING_AUDIO_COLLECTION[this.currentIndex]?.id;
+    const savedLastId = this.getSavedLastTrackId();
+    const candidates = WEDDING_AUDIO_COLLECTION.map((t, idx) => ({ id: t.id, idx })).filter(
+      (item) => item.id !== currentId && item.id !== savedLastId
+    );
+    const fallbackCandidates = WEDDING_AUDIO_COLLECTION.map((t, idx) => ({ id: t.id, idx })).filter(
+      (item) => item.id !== currentId
+    );
+    const pool =
+      candidates.length > 0
+        ? candidates
+        : fallbackCandidates.length > 0
+          ? fallbackCandidates
+          : WEDDING_AUDIO_COLLECTION.map((t, idx) => ({ id: t.id, idx }));
+
+    const picked = pool[Math.floor(Math.random() * pool.length)];
+    return picked ? picked.idx : 0;
+  }
+
+  private ensureAudioElement(): HTMLAudioElement | null {
+    if (typeof window === 'undefined' || typeof Audio === 'undefined') return null;
+    if (!this.audioEl) {
+      const el = new Audio();
+      el.preload = 'auto';
+      el.volume = 0.85;
+      el.addEventListener('play', () => {
+        this.isPlaying = true;
+        this.emit();
+      });
+      el.addEventListener('pause', () => {
+        this.isPlaying = false;
+        this.emit();
+      });
+      el.addEventListener('ended', () => {
+        this.isPlaying = false;
+        if (!this.muted) {
+          this.nextRandomTrack();
+        } else {
+          this.emit();
+        }
+      });
+      el.addEventListener('error', () => {
+        if (!this.muted && this.isPlaying) {
+          this.nextRandomTrack();
+        } else {
+          this.isPlaying = false;
+          this.emit();
+        }
+      });
+      this.audioEl = el;
+    }
+    return this.audioEl;
+  }
+
+  private emit(): void {
+    const snapshot = this.getState();
+    this.listeners.forEach((cb) => cb(snapshot));
+  }
+
+  public subscribe(listener: StateListener): () => void {
+    this.listeners.add(listener);
+    listener(this.getState());
+    return () => {
+      this.listeners.delete(listener);
+    };
+  }
+
+  public getState(): MusicPlayerState {
+    const safeIdx = Math.max(0, Math.min(this.currentIndex, WEDDING_AUDIO_COLLECTION.length - 1));
+    return {
+      muted: this.muted,
+      isPlaying: this.isPlaying,
+      currentTrack: WEDDING_AUDIO_COLLECTION[safeIdx],
+      currentIndex: safeIdx,
+      totalTracks: WEDDING_AUDIO_COLLECTION.length,
+    };
+  }
 
   public isMuted(): boolean {
     return this.muted;
   }
 
+  public isMusicPlaying(): boolean {
+    return this.isPlaying;
+  }
+
   public setMuted(mute: boolean): void {
     this.muted = mute;
     if (mute) {
-      this.stopWeddingMusicLoop();
+      this.pauseMusic();
+    } else {
+      this.startRandomCollection(true);
+    }
+    this.emit();
+  }
+
+  private playIndex(idx: number): void {
+    const track = WEDDING_AUDIO_COLLECTION[idx];
+    if (!track) return;
+    this.currentIndex = idx;
+    this.saveLastTrackId(track.id);
+    this.muted = false;
+    const el = this.ensureAudioElement();
+    if (!el) return;
+
+    const targetSrc = new URL(track.src, window.location.origin).href;
+    if (el.src !== targetSrc) {
+      el.src = track.src;
+      el.load();
+    }
+    el.currentTime = 0;
+    const playPromise = el.play();
+    if (playPromise && typeof playPromise.then === 'function') {
+      playPromise
+        .then(() => {
+          this.isPlaying = true;
+          this.emit();
+        })
+        .catch(() => {
+          this.isPlaying = false;
+          this.emit();
+        });
+    } else {
+      this.isPlaying = true;
+      this.emit();
     }
   }
 
-  public isMusicPlaying(): boolean {
-    return this.musicTimer !== null;
+  // Starts playback picking a completely random song (guaranteed different from the previous visit or track)
+  public startRandomCollection(forceNewRandom = true): void {
+    if (WEDDING_AUDIO_COLLECTION.length === 0) return;
+    if (this.muted) this.muted = false;
+    const el = this.ensureAudioElement();
+    if (forceNewRandom || !el || !el.src) {
+      const nextIdx = this.pickRandomIndexDifferentFromLast();
+      this.playIndex(nextIdx);
+      return;
+    }
+    void el
+      .play()
+      .then(() => {
+        this.isPlaying = true;
+        this.emit();
+      })
+      .catch(() => {
+        this.isPlaying = false;
+        this.emit();
+      });
   }
 
+  public nextRandomTrack(): void {
+    if (WEDDING_AUDIO_COLLECTION.length === 0) return;
+    const nextIdx = this.pickRandomIndexDifferentFromLast();
+    this.playIndex(nextIdx);
+  }
+
+  public playTrackById(id: string): void {
+    const idx = WEDDING_AUDIO_COLLECTION.findIndex((t) => t.id === id);
+    if (idx >= 0) {
+      this.playIndex(idx);
+    }
+  }
+
+  public pauseMusic(): void {
+    if (this.audioEl && !this.audioEl.paused) {
+      this.audioEl.pause();
+    }
+    this.isPlaying = false;
+    this.emit();
+  }
+
+  public stopWeddingMusicLoop(): void {
+    this.pauseMusic();
+  }
+
+  public startWeddingMusicLoop(): void {
+    this.startRandomCollection(true);
+  }
+
+  // --- Synthesized UI & Game Sound Effects ---
   private getContext(): AudioContext | null {
     if (this.muted || typeof window === 'undefined') return null;
     const AudioCtx =
@@ -109,55 +318,6 @@ class SoundEngine {
     scale.forEach((f, i) => {
       this.playTone(f, 0.25, 'sine', 0.1, i * 0.075);
     });
-  }
-
-  // Celebratory Tamil Kalyana Mohanam/Kalyani raga melody + soft Thavil pulse for Sangeet Jukebox
-  public startWeddingMusicLoop(mode: 'nadaswaram' | 'sangeet' = 'nadaswaram'): void {
-    if (this.muted) this.muted = false;
-    this.stopWeddingMusicLoop();
-
-    // Mohanam auspicious scale frequencies (S R2 G3 P D2 S')
-    const nadaswaramPhrase = [
-      293.66, 329.63, 369.99, 440.0, 493.88, 587.33, 493.88, 440.0,
-      369.99, 440.0, 493.88, 440.0, 369.99, 329.63, 293.66, 369.99,
-    ];
-    const sangeetPhrase = [
-      392.0, 440.0, 493.88, 587.33, 587.33, 493.88, 440.0, 392.0,
-      329.63, 392.0, 440.0, 493.88, 440.0, 392.0, 329.63, 293.66,
-    ];
-
-    const phrase = mode === 'sangeet' ? sangeetPhrase : nadaswaramPhrase;
-    const intervalMs = mode === 'sangeet' ? 320 : 420;
-    this.stepIdx = 0;
-
-    const tick = () => {
-      if (this.muted) {
-        this.stopWeddingMusicLoop();
-        return;
-      }
-      const note = phrase[this.stepIdx % phrase.length];
-      // Warm reed / flute blend
-      this.playTone(note, intervalMs / 1000 + 0.08, mode === 'sangeet' ? 'triangle' : 'sawtooth', 0.065, 0);
-      this.playTone(note * 2, intervalMs / 1000, 'sine', 0.025, 0);
-      if (this.stepIdx % 2 === 0) {
-        this.playThavilTap();
-      }
-      if (this.stepIdx % 8 === 0) {
-        // Subtle Tanpura Sa drone
-        this.playTone(146.83, 2.2, 'sine', 0.045, 0);
-      }
-      this.stepIdx++;
-    };
-
-    tick();
-    this.musicTimer = window.setInterval(tick, intervalMs);
-  }
-
-  public stopWeddingMusicLoop(): void {
-    if (this.musicTimer !== null) {
-      window.clearInterval(this.musicTimer);
-      this.musicTimer = null;
-    }
   }
 }
 

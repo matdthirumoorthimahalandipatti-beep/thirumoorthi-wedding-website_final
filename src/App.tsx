@@ -4,7 +4,10 @@ import {
   DoorOpen,
   Download,
   Globe,
+  Pause,
+  Play,
   ScrollText,
+  Shuffle,
   Sparkles,
   Tv,
   Volume2,
@@ -28,10 +31,8 @@ import {
   type OracleFortune,
   type TeamSide,
 } from './data/weddingData';
-import { soundFx } from './utils/soundFx';
-import Mandapam3DScene from './components/Mandapam3DScene';
+import { soundFx, type MusicPlayerState } from './utils/soundFx';
 import Petal3DFloat from './components/Petal3DFloat';
-import ContinuitySection3D from './components/ContinuitySection3D';
 import EntranceDoorsPortal from './components/EntranceDoorsPortal';
 import AdminPortalModal, { type CouplePhotosState } from './components/AdminPortalModal';
 import {
@@ -52,10 +53,10 @@ const STORAGE_KEYS = {
   jukebox: 'tvm_sangeet_jukebox_v1',
   blessings: 'tvm_blessings_wall_v1',
   portalDismissed: 'tvm_portal_dismissed_v1',
-  couplePhotos: 'tvm_admin_couple_photos_v1',
-  familyMembers: 'tvm_admin_family_members_v1',
+  couplePhotos: 'tvm_admin_couple_photos_v2',
+  familyMembers: 'tvm_admin_family_members_v3',
   albumPhotos: 'tvm_admin_album_photos_v1',
-  directoryPersons: 'tvm_admin_directory_v2',
+  directoryPersons: 'tvm_admin_directory_v3',
 };
 
 interface CountdownParts {
@@ -88,11 +89,16 @@ function getMuhurthamCountdown(): CountdownParts {
 
 export default function App() {
   const [lang, setLang] = useState<Lang>('ta');
-  const [muted, setMuted] = useState(false);
+  const [musicState, setMusicState] = useState<MusicPlayerState>(() => soundFx.getState());
+  const muted = musicState.muted;
 
   useEffect(() => {
     document.documentElement.lang = lang;
   }, [lang]);
+
+  useEffect(() => {
+    return soundFx.subscribe(setMusicState);
+  }, []);
 
   const [guestName, setGuestName] = useState<string>(() => {
     try {
@@ -167,7 +173,6 @@ export default function App() {
     return INITIAL_BLESSINGS;
   });
 
-  const [heroScrollProgress, setHeroScrollProgress] = useState(0);
   const [pageScrollPercent, setPageScrollPercent] = useState(0);
   const [countdown, setCountdown] = useState<CountdownParts>(() => getMuhurthamCountdown());
   const [heroImgSrc, setHeroImgSrc] = useState(HERITAGE_ASSETS.coupleSectionBg);
@@ -237,9 +242,6 @@ export default function App() {
 
   useEffect(() => {
     const onScroll = () => {
-      const heroRatio = Math.min(1, Math.max(0, window.scrollY / Math.max(400, window.innerHeight * 0.9)));
-      setHeroScrollProgress(heroRatio);
-
       const maxDoc = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
       setPageScrollPercent(Math.min(100, Math.max(0, (window.scrollY / maxDoc) * 100)));
     };
@@ -297,10 +299,16 @@ export default function App() {
     setDirectoryPersons(DIRECTORY_PERSONS);
   };
 
-  const handleToggleMute = () => {
-    const next = !muted;
-    setMuted(next);
-    soundFx.setMuted(next);
+  const handleToggleMusicDock = () => {
+    if (musicState.isPlaying) {
+      soundFx.setMuted(true);
+    } else {
+      soundFx.startRandomCollection(true);
+    }
+  };
+
+  const handleNextRandomSong = () => {
+    soundFx.nextRandomTrack();
   };
 
   const handleUpdateGuest = (name: string, nextTeam: TeamSide) => {
@@ -396,7 +404,7 @@ export default function App() {
       {/* Ambient Real 3D Rose Petals Layer */}
       <Petal3DFloat />
 
-      {/* Persistent Side Floating Dock — Language & Music accessible throughout the website */}
+      {/* Persistent Side Floating Dock — Language & Random Music accessible throughout the website */}
       <div
         aria-label={lang === 'ta' ? 'மொழி மற்றும் இசை கட்டுப்பாடுகள்' : 'Language and Music Controls'}
         className="fixed top-20 right-2.5 z-[60] flex flex-col items-end gap-2 sm:top-24 sm:right-4"
@@ -411,28 +419,69 @@ export default function App() {
           <span>{lang === 'en' ? 'தமிழ்' : 'English'}</span>
         </button>
 
-        <button
-          type="button"
-          onClick={handleToggleMute}
-          aria-label={muted ? 'Unmute wedding music & chimes' : 'Mute wedding music & chimes'}
-          title={muted ? 'Unmute music' : 'Mute music'}
-          className="inline-flex items-center gap-1.5 rounded-full border border-[#c9932d]/80 bg-[#2b0711]/95 px-3 py-1.5 text-[11px] font-bold text-[#fff8eb] shadow-xl transition hover:border-[#f7df94] hover:bg-[#3a0815] cursor-pointer sm:px-3.5 sm:py-2 sm:text-xs"
-        >
-          {muted ? (
-            <VolumeX className="h-3.5 w-3.5 shrink-0 text-[#f7df94]" />
-          ) : (
-            <Volume2 className="h-3.5 w-3.5 shrink-0 text-[#f7df94]" />
-          )}
-          <span>
-            {muted
-              ? lang === 'ta'
-                ? 'நிறுத்தம்'
-                : 'Muted'
-              : lang === 'ta'
-                ? 'இசை'
-                : 'Music'}
-          </span>
-        </button>
+        <div className="flex items-center gap-1.5">
+          <button
+            type="button"
+            onClick={handleToggleMusicDock}
+            aria-label={
+              musicState.isPlaying
+                ? lang === 'ta'
+                  ? 'இசையை நிறுத்து'
+                  : 'Pause wedding music'
+                : lang === 'ta'
+                  ? 'திருமண இசையை இயக்கு'
+                  : 'Play random wedding music'
+            }
+            title={
+              musicState.isPlaying
+                ? `${lang === 'ta' ? musicState.currentTrack.titleTa : musicState.currentTrack.titleEn}`
+                : lang === 'ta'
+                  ? 'ரேண்டம் திருமண பாடலை இயக்கு'
+                  : 'Play random wedding song'
+            }
+            className="inline-flex items-center gap-1.5 rounded-full border border-[#c9932d]/80 bg-[#2b0711]/95 px-3 py-1.5 text-[11px] font-bold text-[#fff8eb] shadow-xl transition hover:border-[#f7df94] hover:bg-[#3a0815] cursor-pointer sm:px-3.5 sm:py-2 sm:text-xs"
+          >
+            {muted ? (
+              <VolumeX className="h-3.5 w-3.5 shrink-0 text-[#f7df94]" />
+            ) : musicState.isPlaying ? (
+              <Pause className="h-3.5 w-3.5 shrink-0 text-[#f7df94]" />
+            ) : (
+              <Play className="h-3.5 w-3.5 shrink-0 text-[#f7df94]" />
+            )}
+            <span>
+              {muted
+                ? lang === 'ta'
+                  ? 'நிறுத்தம்'
+                  : 'Muted'
+                : musicState.isPlaying
+                  ? lang === 'ta'
+                    ? 'இசை · நிறுத்து'
+                    : 'Playing'
+                  : lang === 'ta'
+                    ? 'இசை இயக்கு'
+                    : 'Play Music'}
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={handleNextRandomSong}
+            aria-label={lang === 'ta' ? 'அடுத்த ரேண்டம் பாடல்' : 'Play next random wedding song'}
+            title={lang === 'ta' ? 'புதிய ரேண்டம் பாடல்' : 'Next random song'}
+            className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#c9932d]/80 bg-[#2b0711]/95 text-[#f7df94] shadow-xl transition hover:border-[#f7df94] hover:bg-[#3a0815] cursor-pointer sm:h-9 sm:w-9"
+          >
+            <Shuffle className="h-3.5 w-3.5" />
+          </button>
+        </div>
+
+        {musicState.isPlaying && (
+          <div className="hidden max-w-[190px] items-center gap-1.5 rounded-full border border-[#c9932d]/55 bg-[#24050d]/90 px-3 py-1 text-[10px] font-semibold text-[#f7df94] shadow-lg sm:inline-flex">
+            <Volume2 className="h-3 w-3 shrink-0 animate-pulse text-[#f7df94]" />
+            <span className="truncate">
+              {lang === 'ta' ? musicState.currentTrack.titleTa : musicState.currentTrack.titleEn}
+            </span>
+          </div>
+        )}
       </div>
 
       {/* 3D Temple Doors & Garland Video Intro Gate */}
@@ -519,16 +568,8 @@ export default function App() {
               setHeroImgSrc(HERITAGE_ASSETS.heroMandapamCouple);
             }
           }}
-          className="absolute inset-0 z-0 h-full w-full object-cover object-center transition-transform duration-700"
-          style={{
-            transform: `scale(${1 + heroScrollProgress * 0.06}) translateY(${heroScrollProgress * 18}px)`,
-          }}
+          className="absolute inset-0 z-0 h-full w-full object-cover object-center"
         />
-
-        {/* Transparent Three.js 3D Continuity Depth Layer (no blur overlay above it) */}
-        <div className="pointer-events-none absolute inset-0 z-10 opacity-75">
-          <Mandapam3DScene scrollProgress={heroScrollProgress} />
-        </div>
 
         {/* Contrast Gradient Scrim Keeping Center Couple & Temple Vivid */}
         <div
@@ -690,7 +731,7 @@ export default function App() {
               className="inline-flex items-center gap-2 rounded-full border border-[#f7df94]/70 bg-[#3a0815]/90 px-6 py-3 text-sm font-bold text-[#f7df94] shadow-lg transition hover:bg-[#520d1f] cursor-pointer"
             >
               <Sparkles className="h-4 w-4" />
-              <span>{lang === 'ta' ? 'திருமண விளையாட்டுகள்' : 'Play Wedding Games'}</span>
+              <span>{lang === 'ta' ? 'விளையாட்டு' : 'Play Wedding Games'}</span>
             </button>
 
             <a
@@ -705,8 +746,8 @@ export default function App() {
         {/* Bottom Scroll Prompt */}
         <div className="relative z-20 pb-5 text-center text-xs font-semibold tracking-[0.2em] text-[#f3d9ad]/80 uppercase">
           {lang === 'ta'
-            ? '↓ கீழே நகர்த்தி 3D மதுரை திருமண விழாவைத் தரிசிக்கவும் ↓'
-            : '↓ Scroll to glide through the 3D Madurai celebration ↓'}
+            ? '↓ கீழே நகர்த்தி மதுரை திருமண விழாவைத் தரிசிக்கவும் ↓'
+            : '↓ Scroll to explore the Madurai wedding celebration ↓'}
         </div>
       </section>
 
