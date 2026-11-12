@@ -1,0 +1,8 @@
+{
+  "name": "Thirumoorthi Veettu Thirukalyanam",
+  "description": "3D Cinematic Madurai Tamil Wedding Invitation, Nalangu Games, Sangeet DJ Jukebox, Sacred Wedding Oracle & 1080x1920 Story Card Generator for M. Thirisha & Siva Shankar.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

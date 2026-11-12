@@ -1,0 +1,4847 @@
+/* ==========================================================================
+   MADURAI HERITAGE WEDDING - REGAL DESIGN SYSTEM
+   Palette: Madurai Temple Crimson, Antique Gold, Brass, Sandalwood, Deep Maroon
+   ========================================================================== */
+:root {
+  --crimson: #631226;
+  --crimson-dark: #3a0815;
+  --crimson-deep: #24050d;
+  --crimson-light: #8a1d37;
+  --gold: #c9932d;
+  --gold-light: #f7df94;
+  --gold-glow: #f6d87c;
+  --gold-dark: #8c6418;
+  --brass: #b3822a;
+  --sandal: #fff8eb;
+  --sandal-card: rgba(255, 248, 235, 0.96);
+  --parchment: #fdf6e6;
+  --ink: #3b1d16;
+  --ink-muted: #6e463a;
+  --border-gold: rgba(201, 147, 45, 0.55);
+  --border-gold-solid: #c9932d;
+  --gold-gradient: linear-gradient(135deg, #f7df94 0%, #c9932d 50%, #8c6418 100%);
+  --gold-text: linear-gradient(135deg, #ffe8a3, #d4a237, #fef0c7);
+  --shadow-gold: 0 12px 36px rgba(110, 24, 45, 0.22);
+  --shadow-card: 0 16px 40px rgba(45, 12, 20, 0.16);
+  --font-regal: 'Cinzel', Georgia, serif;
+  --font-ornate: 'Cinzel Decorative', Georgia, serif;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-tamil: 'Noto Sans Tamil', 'Outfit', sans-serif;
+  --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 72px;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  background: #fbf3e4;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* Scroll progress bar */
+.scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  width: 0%;
+  background: linear-gradient(90deg, #d4a237, #ff5e62, #ffb347, #d4a237);
+  background-size: 200% 100%;
+  animation: shimmerProgress 3s linear infinite;
+  z-index: 99;
+  box-shadow: 0 0 10px rgba(247, 223, 148, 0.8);
+  pointer-events: none;
+}
+@keyframes shimmerProgress {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 200% 0%; }
+}
+
+/* Audio & Canvas floating overlays */
+#petalsCanvas, #droneCanvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 15;
+  width: 100vw;
+  height: 100vh;
+}
+#droneCanvas {
+  z-index: 16;
+  display: none;
+}
+
+/* ==========================================================================
+   TOPBAR NAVIGATION
+   ========================================================================== */
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background: rgba(43, 7, 17, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(247, 223, 148, 0.35);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  transition: transform 0.3s ease;
+}
+
+.brand-mark {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #ffe399;
+  font-family: var(--font-regal);
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+.brand-mark span.om {
+  font-size: 1.3rem;
+  color: var(--gold-glow);
+  filter: drop-shadow(0 0 6px rgba(246, 216, 124, 0.7));
+}
+
+.nav-container {
+  display: flex;
+  gap: 0.3rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 0.2rem 0;
+  max-width: 100%;
+}
+.nav-container::-webkit-scrollbar { display: none; }
+
+.nav-link {
+  white-space: nowrap;
+  text-decoration: none;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.45rem 0.75rem;
+  border-radius: 99px;
+  color: #ffd894;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+.nav-link:hover, .nav-link.active {
+  background: rgba(247, 223, 148, 0.2);
+  border-color: rgba(247, 223, 148, 0.45);
+  color: #fff;
+}
+
+/* ==========================================================================
+   FLOATING ACTIONS (AUDIO, LANGUAGE, DRONE) & ADMIN BUTTON
+   ========================================================================== */
+.floating-actions {
+  position: fixed;
+  bottom: 20px;
+  right: 16px;
+  z-index: 38;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.float-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--gold-glow);
+  background: linear-gradient(135deg, #631226, #3a0815);
+  color: #ffe8a3;
+  padding: 0.65rem 1rem;
+  border-radius: 99px;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4), 0 0 10px rgba(246,216,124,0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.float-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.5), 0 0 16px rgba(246,216,124,0.5);
+}
+.float-btn.active {
+  background: linear-gradient(135deg, #8c6418, #d4a237);
+  color: #2b0b14;
+}
+
+.admin-trigger-btn {
+  position: fixed;
+  bottom: 20px;
+  left: 16px;
+  z-index: 38;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(58, 8, 21, 0.92);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(247, 223, 148, 0.55);
+  color: #ffe399;
+  border-radius: 99px;
+  padding: 0.6rem 0.95rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  transition: transform 0.2s;
+}
+.admin-trigger-btn:hover {
+  transform: translateY(-2px);
+  background: var(--crimson);
+}
+
+/* ==========================================================================
+   SECTION CONTAINERS & HEADERS
+   ========================================================================== */
+section {
+  position: relative;
+  padding: 5.5rem 1.2rem;
+  scroll-margin-top: 65px;
+}
+.section-container {
+  width: min(1140px, 100%);
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+.section-header {
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto 2.5rem;
+}
+.section-kicker {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--crimson);
+  margin-bottom: 0.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+}
+.section-kicker::before, .section-kicker::after {
+  content: '❖';
+  font-size: 0.75rem;
+  color: var(--gold);
+}
+.section-title {
+  font-family: var(--font-regal);
+  font-size: clamp(2.1rem, 5.5vw, 3.8rem);
+  font-weight: 700;
+  color: var(--crimson-dark);
+  line-height: 1.15;
+  margin-bottom: 0.8rem;
+}
+.section-subtitle {
+  font-family: var(--font-serif);
+  font-size: clamp(1.15rem, 2.5vw, 1.4rem);
+  color: var(--ink-muted);
+  line-height: 1.5;
+  font-style: italic;
+}
+.ornament-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1rem auto 1.5rem;
+  color: var(--gold);
+  font-size: 1.2rem;
+}
+.ornament-divider::before, .ornament-divider::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+/* Regal Buttons */
+.btn-regal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.85rem 1.6rem;
+  border-radius: 99px;
+  background: linear-gradient(135deg, #a62040 0%, #631226 100%);
+  color: #fffaee;
+  border: 1px solid var(--gold-glow);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(99, 18, 38, 0.5), inset 0 1px 0 rgba(255,255,255,0.3);
+  transition: all 0.25s ease;
+}
+.btn-regal:hover {
+  background: linear-gradient(135deg, #bd2c4f 0%, #7d1731 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(99, 18, 38, 0.7);
+}
+.btn-regal.gold {
+  background: linear-gradient(135deg, #e6b247 0%, #ba8222 100%);
+  color: #310d15;
+  border-color: #fff0a8;
+}
+.btn-regal.gold:hover {
+  background: linear-gradient(135deg, #f7c763 0%, #cf932c 100%);
+}
+.btn-regal.outline {
+  background: rgba(255, 248, 235, 0.15);
+  backdrop-filter: blur(8px);
+  color: #fff6db;
+  border: 1px solid rgba(246, 216, 124, 0.7);
+}
+.btn-regal.outline:hover {
+  background: rgba(255, 248, 235, 0.3);
+}
+
+/* ==========================================================================
+   1. ROYAL ENTRANCE PORTAL & 3D TEMPLE DOORS (Section 4)
+   ========================================================================== */
+.entrance-portal {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at center 35%, #420a1a 0%, #20040c 70%, #120207 100%);
+  color: #fff8e8;
+  padding: 5rem 1rem 3rem;
+  overflow: hidden;
+  box-shadow: inset 0 0 100px rgba(0,0,0,0.8);
+}
+.portal-ambient-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(246, 216, 124, 0.18) 0%, transparent 65%);
+  pointer-events: none;
+  animation: ambientPulse 5s ease-in-out infinite alternate;
+}
+@keyframes ambientPulse {
+  0% { opacity: 0.4; transform: scale(0.96); }
+  100% { opacity: 0.85; transform: scale(1.04); }
+}
+
+.portal-inner-container {
+  width: min(720px, 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+/* Gopuram Top Arch */
+.portal-gopuram-arch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+.arch-diya {
+  font-size: 2.2rem;
+  filter: drop-shadow(0 0 12px rgba(255, 170, 50, 0.9));
+  animation: diyaFlicker 2.5s ease-in-out infinite alternate;
+}
+@keyframes diyaFlicker {
+  0% { transform: scale(0.95); opacity: 0.85; filter: drop-shadow(0 0 8px rgba(255, 150, 30, 0.7)); }
+  100% { transform: scale(1.05); opacity: 1; filter: drop-shadow(0 0 16px rgba(255, 200, 60, 1)); }
+}
+
+.arch-title-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.portal-om {
+  font-size: 2.2rem;
+  color: var(--gold-glow);
+  text-shadow: 0 0 15px rgba(246, 216, 124, 0.8);
+  line-height: 1;
+  margin-bottom: 0.2rem;
+}
+.portal-sacred-subtitle {
+  font-family: var(--font-tamil);
+  font-size: clamp(0.85rem, 2.2vw, 1.05rem);
+  font-weight: 600;
+  color: #ffebad;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.4rem;
+}
+.portal-wedding-heading {
+  font-family: var(--font-regal);
+  font-size: clamp(1.8rem, 5.5vw, 3.2rem);
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 4px 20px rgba(0,0,0,0.85), 0 0 12px rgba(247, 215, 121, 0.4);
+  line-height: 1.15;
+}
+.portal-date-tag {
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold-glow);
+  margin-top: 0.3rem;
+}
+.portal-guest-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.6rem;
+  padding: 0.35rem 1rem;
+  border-radius: 99px;
+  background: rgba(99, 18, 38, 0.8);
+  border: 1px solid var(--gold-glow);
+  font-size: 0.85rem;
+  color: #ffefa8;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+}
+
+/* 3D Doors Stage */
+.portal-doors-container {
+  position: relative;
+  width: min(540px, 92vw);
+  height: clamp(420px, 60vh, 560px);
+  perspective: 1400px;
+  border: 8px solid #a8741c;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 30px rgba(201, 147, 45, 0.35);
+  background: #1e050f;
+  overflow: hidden;
+}
+
+.portal-door {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  background: linear-gradient(135deg, #3d0d19 0%, #20050d 100%);
+  border: 4px solid #c9932d;
+  box-shadow: inset 0 0 0 8px rgba(246, 216, 124, 0.25), inset 0 0 40px rgba(0,0,0,0.85);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 2rem 1rem;
+  transform-style: preserve-3d;
+  transition: transform 1.5s cubic-bezier(0.77, 0, 0.175, 1);
+  z-index: 4;
+}
+.portal-door-left {
+  left: 0;
+  border-right: 2px solid #e0b04b;
+  transform-origin: left center;
+}
+.portal-door-right {
+  right: 0;
+  border-left: 2px solid #e0b04b;
+  transform-origin: right center;
+}
+
+.door-inner-border {
+  position: absolute;
+  inset: 12px;
+  border: 1px dashed rgba(246, 216, 124, 0.45);
+  pointer-events: none;
+}
+.door-brass-ornament-top {
+  font-size: 1.1rem;
+  color: var(--gold-glow);
+  opacity: 0.8;
+}
+.door-brass-lion-knocker {
+  font-size: 3.2rem;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.8));
+  animation: knockerSway 3s ease-in-out infinite;
+}
+@keyframes knockerSway {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(3deg); }
+}
+.door-brass-handle {
+  width: 14px;
+  height: 55px;
+  background: linear-gradient(to right, #ffd87d, #a8741c);
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+}
+
+/* Center Seal Button */
+.portal-center-seal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 6;
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #6e152c 30%, #300612 100%);
+  border: 4px solid #ffde8a;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 25px rgba(247, 215, 121, 0.6);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  text-align: center;
+  color: #ffefa8;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.5s ease;
+}
+.portal-center-seal:hover {
+  transform: translate(-50%, -50%) scale(1.08);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.9), 0 0 35px rgba(247, 215, 121, 0.85);
+}
+.seal-flame {
+  font-size: 2.2rem;
+  margin-bottom: 0.15rem;
+  filter: drop-shadow(0 0 8px #ffb347);
+}
+.seal-text-main {
+  font-family: var(--font-regal);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  line-height: 1.25;
+}
+.seal-subtext {
+  font-family: var(--font-tamil);
+  font-size: 0.7rem;
+  color: #ffd88a;
+  margin-top: 0.2rem;
+}
+
+/* Revealed Stage Behind Doors */
+.portal-revealed-stage {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem 1.5rem;
+  background-color: #24050d;
+  opacity: 0;
+  transform: scale(0.96);
+  transition: opacity 1.2s ease, transform 1.2s ease;
+  pointer-events: none;
+}
+.revealed-mandapam-backdrop {
+  position: absolute;
+  inset: 0;
+  background-image: url('assets/mandapam-invitation-frame.webp');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.35;
+  filter: blur(1px);
+}
+.revealed-content {
+  position: relative;
+  z-index: 3;
+  max-width: 440px;
+}
+.revealed-om {
+  font-size: 2.4rem;
+  color: var(--gold-glow);
+  line-height: 1;
+  margin-bottom: 0.3rem;
+}
+.revealed-kicker {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #ffd27d;
+  margin-bottom: 0.5rem;
+}
+.revealed-couple-title {
+  font-family: var(--font-regal);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.4rem;
+}
+.revealed-date-badge {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  border-radius: 99px;
+  background: rgba(99, 18, 38, 0.85);
+  border: 1px solid var(--gold-glow);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #ffefa8;
+  margin-bottom: 0.8rem;
+}
+.revealed-blessing-text {
+  font-family: var(--font-tamil);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #ffeaaf;
+  margin-bottom: 1.2rem;
+}
+.revealed-scroll-cue {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  color: var(--gold-glow);
+  animation: bounceCue 2s infinite;
+}
+@keyframes bounceCue {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+.cue-arrow { font-size: 1.6rem; }
+.cue-text { font-size: 0.82rem; font-weight: 600; }
+
+/* Doors Opened State */
+.portal-doors-container.doors-open .portal-door-left {
+  transform: rotateY(-112deg);
+}
+.portal-doors-container.doors-open .portal-door-right {
+  transform: rotateY(112deg);
+}
+.portal-doors-container.doors-open .portal-center-seal {
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0.6);
+}
+.portal-doors-container.doors-open .portal-revealed-stage {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.portal-footer-bar {
+  margin-top: 1.2rem;
+}
+.portal-skip-btn {
+  background: none;
+  border: 1px solid rgba(247, 223, 148, 0.4);
+  color: #ffe8a3;
+  padding: 0.45rem 1.2rem;
+  border-radius: 99px;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.portal-skip-btn:hover {
+  background: rgba(247, 223, 148, 0.2);
+  border-color: var(--gold-glow);
+}
+
+/* ==========================================================================
+   2. CINEMATIC PANORAMA SCROLL SCENE (Section 5)
+   ========================================================================== */
+.cinematic-panorama-section {
+  position: relative;
+  height: 160vh; /* Pinned scroll space */
+  padding: 0;
+  background: #140309;
+}
+.panorama-sticky-viewport {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.panorama-layer-wrap {
+  position: absolute;
+  inset: -5%;
+  width: 110%;
+  height: 110%;
+}
+.panorama-stage-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center bottom;
+  transform: scale(1.03);
+  transition: transform 0.15s ease-out;
+  will-change: transform;
+}
+.panorama-overlay-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(20, 4, 10, 0.35) 0%, rgba(20, 4, 10, 0.15) 50%, rgba(20, 4, 10, 0.85) 100%);
+  pointer-events: none;
+}
+.panorama-golden-particles {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center 60%, rgba(246, 216, 124, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.panorama-heritage-svg {
+  position: absolute;
+  bottom: 12%;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 120px;
+  pointer-events: none;
+  z-index: 3;
+}
+.panorama-story-card {
+  position: relative;
+  z-index: 4;
+  max-width: 640px;
+  margin: 0 1.5rem;
+  padding: clamp(1.4rem, 4vw, 2.4rem);
+  background: rgba(36, 6, 15, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--gold-glow);
+  border-radius: 20px;
+  text-align: center;
+  color: #fff8eb;
+  box-shadow: 0 16px 45px rgba(0,0,0,0.6);
+  animation: fadeInStory 1.2s ease-out;
+}
+@keyframes fadeInStory {
+  from { opacity: 0; transform: translateY(25px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.story-kicker {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold-glow);
+  margin-bottom: 0.4rem;
+}
+.story-headline {
+  font-family: var(--font-regal);
+  font-size: clamp(1.5rem, 3.8vw, 2.4rem);
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 0.8rem;
+  line-height: 1.2;
+}
+.story-paragraph {
+  font-family: var(--font-serif);
+  font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+  line-height: 1.6;
+  color: #faeed7;
+  margin-bottom: 1.2rem;
+}
+.scroll-hint-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--gold-glow);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.hint-arrow {
+  animation: bounceCue 1.8s infinite;
+}
+
+/* ==========================================================================
+   3. COUPLE HERO & COUNTDOWN (Section 4 & 14)
+   ========================================================================== */
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 6.5rem 1.2rem 4.5rem;
+  isolation: isolate;
+  overflow: hidden;
+  background: #1d0711;
+}
+.hero-bg-container {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  overflow: hidden;
+}
+.hero-bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center bottom;
+  transform: scale(1.04);
+  filter: brightness(0.92) contrast(1.05);
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: radial-gradient(circle at center 40%, rgba(20, 6, 12, 0.28) 0%, rgba(30, 8, 18, 0.84) 80%, rgba(18, 4, 10, 0.96) 100%);
+}
+.hero-temple-glow {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 45%;
+  background: linear-gradient(to top, #14050d 0%, rgba(20, 5, 13, 0) 100%);
+  z-index: -1;
+}
+.hero-content {
+  width: min(920px, 100%);
+  color: #fff9ea;
+  text-shadow: 0 3px 20px rgba(0, 0, 0, 0.85);
+  position: relative;
+  z-index: 2;
+  animation: heroFadeIn 1.1s ease-out;
+}
+@keyframes heroFadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Wedding Day Mode Banner (Section 14) */
+.wedding-day-mode-banner {
+  background: linear-gradient(135deg, rgba(99, 18, 38, 0.95), rgba(166, 32, 64, 0.95));
+  border: 2px solid var(--gold-glow);
+  border-radius: 18px;
+  padding: 1.2rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(246, 216, 124, 0.4);
+}
+.day-mode-badge {
+  display: inline-block;
+  padding: 0.3rem 0.9rem;
+  border-radius: 99px;
+  background: var(--gold-gradient);
+  color: #2b0b14;
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  margin-bottom: 0.5rem;
+}
+.day-mode-title {
+  font-family: var(--font-regal);
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
+  color: #ffffff;
+  margin-bottom: 0.3rem;
+}
+.day-mode-desc {
+  font-size: 0.92rem;
+  color: #ffefa8;
+}
+
+.sacred-invocation {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 1.4rem;
+  border-radius: 99px;
+  background: rgba(99, 18, 38, 0.7);
+  border: 1px solid rgba(246, 216, 124, 0.6);
+  font-family: var(--font-tamil);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #ffebad;
+  letter-spacing: 0.08em;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.4);
+  margin-bottom: 1.2rem;
+}
+.wedding-banner-tag {
+  font-family: var(--font-regal);
+  font-size: clamp(0.75rem, 2vw, 0.95rem);
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: #f7d779;
+  margin-bottom: 0.8rem;
+}
+.couple-hero-title {
+  font-family: var(--font-regal);
+  font-size: clamp(2.4rem, 8vw, 5.2rem);
+  font-weight: 700;
+  line-height: 1.08;
+  margin: 0.5rem 0 1rem;
+  color: #ffffff;
+  text-shadow: 0 4px 25px rgba(0,0,0,0.85), 0 0 15px rgba(247, 215, 121, 0.4);
+}
+.couple-hero-title span.weds {
+  display: block;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.2rem, 3.5vw, 2.2rem);
+  color: #ffd88a;
+  letter-spacing: 0.05em;
+  margin: 0.15em 0;
+  font-weight: 400;
+}
+.hero-date-box {
+  display: inline-block;
+  padding: 0.6rem 1.6rem;
+  border-top: 1px solid rgba(246, 216, 124, 0.6);
+  border-bottom: 1px solid rgba(246, 216, 124, 0.6);
+  font-family: var(--font-sans);
+  font-size: clamp(0.95rem, 2.2vw, 1.25rem);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: #ffefa8;
+  margin-bottom: 0.6rem;
+  text-transform: uppercase;
+}
+.hero-venue-sub {
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  color: #fce7b8;
+  margin-bottom: 1.8rem;
+}
+
+/* Countdown */
+.countdown-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(0.4rem, 2vw, 1.2rem);
+  margin: 1.5rem auto 2.2rem;
+  flex-wrap: wrap;
+}
+.countdown-box {
+  min-width: 72px;
+  padding: 0.8rem 1rem;
+  background: rgba(43, 8, 17, 0.75);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(246, 216, 124, 0.45);
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5), inset 0 0 12px rgba(246, 216, 124, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+.countdown-box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 2px;
+  background: var(--gold-gradient);
+}
+.countdown-box strong {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: clamp(1.8rem, 4.5vw, 2.8rem);
+  font-weight: 700;
+  color: #ffe694;
+  line-height: 1;
+  text-shadow: 0 0 10px rgba(246, 216, 124, 0.5);
+}
+.countdown-box span {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #ffd27d;
+  margin-top: 0.35rem;
+}
+
+/* Livestream & Hero Buttons */
+.hero-livestream-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 1.8rem;
+}
+.livestream-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: #ffb7b7;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.livestream-pulse {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #ff334b;
+  box-shadow: 0 0 0 0 rgba(255, 51, 75, 0.7);
+  animation: pulseRed 1.6s infinite;
+}
+@keyframes pulseRed {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 51, 75, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(255, 51, 75, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 51, 75, 0); }
+}
+.livestream-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.live-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 215, 120, 0.5);
+  color: #ffffff;
+  font-size: 0.76rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.live-tab-btn:hover {
+  background: var(--crimson-light);
+  border-color: var(--gold-glow);
+  transform: translateY(-2px);
+}
+.hero-cta-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+/* ==========================================================================
+   4. INVITATION PATRIKA (Page 6 Goddess Frame: 940 x 1672)
+   ========================================================================== */
+#invitation {
+  background-color: #f7ede0;
+}
+.invitation-outer-stage {
+  max-width: 680px;
+  margin: 0 auto;
+  position: relative;
+  border-radius: 24px;
+  box-shadow: var(--shadow-card);
+  aspect-ratio: 940 / 1672;
+  background-image: url('assets/page6-goddess-frame.webp');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  padding: 16% 9% 12%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.invitation-patrika-framed {
+  background: rgba(255, 253, 247, 0.94);
+  border: 2px solid var(--gold);
+  border-radius: 20px;
+  padding: clamp(1.2rem, 3.5vw, 2.2rem);
+  text-align: center;
+  width: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+}
+.patrika-om {
+  font-size: 2.4rem;
+  color: var(--crimson);
+  line-height: 1;
+  margin-bottom: 0.3rem;
+}
+.patrika-slokam {
+  font-family: var(--font-tamil);
+  font-size: clamp(0.9rem, 2vw, 1.15rem);
+  color: var(--crimson-dark);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+.personalized-guest-box {
+  background: linear-gradient(135deg, #fff7e3, #feeac7);
+  border: 1px solid var(--gold);
+  border-radius: 12px;
+  padding: 0.6rem 1rem;
+  margin-bottom: 1rem;
+}
+.personalized-salute {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--crimson);
+  display: block;
+}
+.personalized-name {
+  font-family: var(--font-regal);
+  font-size: 1.15rem;
+  color: var(--crimson-dark);
+  margin-top: 0.2rem;
+}
+.patrika-greeting {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  color: var(--ink-muted);
+  font-style: italic;
+  margin-bottom: 0.6rem;
+}
+.patrika-body-text {
+  font-size: 1.02rem;
+  color: var(--ink);
+  line-height: 1.65;
+  margin-bottom: 1.2rem;
+}
+.patrika-couple-names {
+  font-family: var(--font-regal);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 700;
+  color: var(--crimson-dark);
+  margin-bottom: 0.4rem;
+}
+.patrika-weds {
+  font-size: 0.6em;
+  color: var(--gold);
+  display: block;
+  font-style: italic;
+}
+.patrika-muhurtham-badge {
+  display: inline-block;
+  padding: 0.6rem 1.4rem;
+  border-radius: 99px;
+  background: linear-gradient(135deg, #a62040 0%, #631226 100%);
+  color: #ffefa8;
+  border: 1px solid var(--gold-glow);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.88rem;
+  margin: 0.8rem 0 1.4rem;
+}
+.patrika-actions-row {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   5. BRIDE AND GROOM (Page 1: 1671 x 941)
+   ========================================================================== */
+#couple {
+  background-image: 
+    linear-gradient(rgba(255, 246, 230, 0.84), rgba(255, 246, 230, 0.92)),
+    url('assets/madurai-sunset-panorama.webp');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-color: #f7ede0;
+}
+.couple-frame-fitted {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto 2.2rem;
+  aspect-ratio: 1671 / 941;
+  border: 8px solid #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 16px 45px rgba(63, 9, 23, 0.25);
+  outline: 2px solid var(--gold);
+}
+.couple-frame-fitted img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.couple-showcase {
+  background: var(--sandal-card);
+  border: 1px solid var(--border-gold);
+  border-radius: 24px;
+  padding: clamp(1.2rem, 3.5vw, 2.5rem);
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(4px);
+}
+.couple-showcase::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 5px;
+  background: var(--gold-gradient);
+}
+.couple-bio-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+.couple-person-card {
+  text-align: center;
+  padding: 1.5rem;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(201, 147, 45, 0.35);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.04);
+}
+.couple-person-tag {
+  display: inline-block;
+  padding: 0.3rem 1rem;
+  border-radius: 99px;
+  background: var(--crimson);
+  color: #ffebad;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.8rem;
+}
+.couple-person-name {
+  font-family: var(--font-regal);
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 700;
+  color: var(--crimson-dark);
+  margin-bottom: 0.4rem;
+}
+.couple-person-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--gold-dark);
+  margin-bottom: 0.8rem;
+}
+.couple-person-desc {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  color: var(--ink);
+  line-height: 1.6;
+}
+.couple-center-amp {
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-style: italic;
+  color: var(--gold);
+  line-height: 1;
+  text-align: center;
+  filter: drop-shadow(0 2px 4px rgba(140, 100, 24, 0.3));
+}
+
+/* ==========================================================================
+   6. SACRED KOLAM DRAWING (Section 6)
+   ========================================================================== */
+.kolam-transition-section {
+  background: linear-gradient(to bottom, #fbf3e4 0%, #fff8eb 100%);
+  padding: 4.5rem 1rem;
+}
+.kolam-title {
+  font-family: var(--font-regal);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  color: var(--crimson-dark);
+  margin-bottom: 0.4rem;
+}
+.kolam-sub {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  color: var(--ink-muted);
+  font-style: italic;
+  margin-bottom: 1.8rem;
+}
+.kolam-svg-wrap {
+  width: min(340px, 85vw);
+  margin: 0 auto 1.5rem;
+}
+.kolam-svg {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 4px 15px rgba(201, 147, 45, 0.25));
+}
+.kolam-draw-path {
+  stroke-dasharray: 800;
+  stroke-dashoffset: 800;
+  transition: stroke-dashoffset 0.8s ease-out;
+}
+.kolam-flame {
+  animation: flameGlow 2s ease-in-out infinite alternate;
+}
+@keyframes flameGlow {
+  0% { transform: scale(0.95); opacity: 0.85; filter: drop-shadow(0 0 4px #ff5e00); }
+  100% { transform: scale(1.08); opacity: 1; filter: drop-shadow(0 0 10px #ffea79); }
+}
+.kolam-caption-box {
+  max-width: 600px;
+  margin: 0 auto;
+}
+.kolam-caption-text {
+  font-family: var(--font-tamil);
+  font-size: 1.05rem;
+  color: var(--crimson-dark);
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   7. LOVE STORY & HERITAGE EASTER EGGS (Section 9 & 15A)
+   ========================================================================== */
+#story {
+  background: #f7eee2;
+}
+.story-milestones-track {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+  position: relative;
+}
+.milestone-card {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid var(--border-gold);
+  border-radius: 18px;
+  padding: 1.6rem 1.4rem;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.04);
+  position: relative;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.milestone-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card);
+  border-color: var(--gold);
+}
+.milestone-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 99px;
+  background: var(--crimson);
+  color: #ffefa8;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+}
+.milestone-icon {
+  font-size: 2.2rem;
+  margin-bottom: 0.4rem;
+}
+.milestone-heading {
+  font-family: var(--font-regal);
+  font-size: 1.25rem;
+  color: var(--crimson-dark);
+  margin-bottom: 0.3rem;
+}
+.milestone-date {
+  font-size: 0.82rem;
+  color: var(--gold-dark);
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.8rem;
+}
+.milestone-desc {
+  font-size: 0.94rem;
+  color: var(--ink);
+  line-height: 1.6;
+}
+
+/* Heritage Easter Eggs (Section 15A) */
+.heritage-easter-eggs-panel {
+  background: linear-gradient(135deg, #fff7e5, #fdedd0);
+  border: 1px dashed var(--gold);
+  border-radius: 20px;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.04);
+}
+.easter-eggs-intro {
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  color: var(--crimson-dark);
+}
+.easter-egg-icons-row {
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+.easter-egg-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  background: #ffffff;
+  border: 1px solid var(--border-gold);
+  border-radius: 14px;
+  padding: 0.8rem 1.1rem;
+  cursor: pointer;
+  transition: all 0.25s;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+}
+.easter-egg-btn span {
+  font-size: 2rem;
+  transition: transform 0.2s;
+}
+.easter-egg-btn small {
+  font-family: var(--font-tamil);
+  font-weight: 700;
+  color: var(--crimson-dark);
+}
+.easter-egg-btn:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold);
+  box-shadow: 0 8px 20px rgba(99, 18, 38, 0.2);
+}
+.easter-egg-btn:hover span {
+  transform: scale(1.15);
+}
+
+/* ==========================================================================
+   8. PHOTO ALBUM - 3-PAGE WIDE HORIZONTAL SCROLL (2048 x 682, Section 7)
+   ========================================================================== */
+#album {
+  background-color: #f5e9d6;
+  overflow: hidden;
+}
+.album-banner-indicator {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 248, 235, 0.92);
+  border: 1px solid var(--border-gold);
+  border-radius: 99px;
+}
+.album-counter-badge {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--crimson-dark);
+}
+.album-three-page-scroll-wrap {
+  width: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  border-radius: 24px;
+  box-shadow: var(--shadow-card);
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold) #f1dfb9;
+  -webkit-overflow-scrolling: touch;
+  border: 2px solid var(--gold);
+  background: #1e0710;
+}
+.album-three-page-track {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  width: max(2048px, 300vw);
+  aspect-ratio: 2048 / 682;
+  background-image: url('assets/page5-horizontal-frame.webp');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding: 5% 6%;
+  box-sizing: border-box;
+}
+.album-item-card {
+  flex: 0 0 clamp(280px, 24vw, 380px);
+  scroll-snap-align: center;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #ffffff;
+  border: 2px solid rgba(201, 147, 45, 0.6);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+.album-item-card:hover {
+  transform: translateY(-6px) scale(1.03);
+}
+.album-img-wrapper {
+  width: 100%;
+  height: 240px;
+  background: #f4e3c1;
+  position: relative;
+  overflow: hidden;
+}
+.album-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.album-item-card:hover .album-img-wrapper img {
+  transform: scale(1.08);
+}
+.album-caption-bar {
+  padding: 0.85rem 1rem;
+  text-align: center;
+  background: #fffdf7;
+}
+.album-caption-title {
+  font-family: var(--font-regal);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--crimson-dark);
+}
+
+/* ==========================================================================
+   9. BELOVED FAMILIES (682 x 2048, Section 8 & 10)
+   ========================================================================== */
+#families {
+  background-image: 
+    linear-gradient(rgba(255, 248, 235, 0.76), rgba(255, 248, 235, 0.86)),
+    url('assets/pages8-family-border.webp');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #f7eee1;
+}
+.family-exact-frame-stage {
+  max-width: 840px;
+  margin: 0 auto;
+  position: relative;
+  background-image: url('assets/page7-family-frame.webp');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  border-radius: 24px;
+  box-shadow: var(--shadow-card);
+  padding: clamp(14%, 18vw, 22%) clamp(8%, 10vw, 14%) clamp(12%, 15vw, 18%);
+}
+.family-branch-panel {
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(201, 147, 45, 0.45);
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  backdrop-filter: blur(4px);
+  margin-bottom: 2rem;
+}
+.family-branch-panel h3 {
+  font-family: var(--font-regal);
+  font-size: 1.45rem;
+  color: var(--crimson-dark);
+  margin-bottom: 0.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.family-members-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.85rem;
+  margin-top: 1.2rem;
+}
+.family-member-card {
+  text-align: center;
+  padding: 0.8rem 0.5rem;
+  border-radius: 14px;
+  background: #fbf5ea;
+  border: 1px solid rgba(201, 147, 45, 0.3);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.family-member-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(99, 18, 38, 0.15);
+}
+.family-member-img {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 0.5rem;
+  display: block;
+  border: 2px solid var(--gold);
+  background: #f3dfb9;
+}
+.family-member-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--crimson-dark);
+  line-height: 1.2;
+  margin-bottom: 0.2rem;
+}
+.family-member-role {
+  font-size: 0.72rem;
+  color: var(--ink-muted);
+  line-height: 1.3;
+}
+.family-member-kids-bar {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #944800;
+  background: #fff4d9;
+  border: 1px solid #e8be72;
+  border-radius: 6px;
+  padding: 0.15rem 0.45rem;
+  margin-top: 0.3rem;
+  line-height: 1.2;
+}
+
+/* ==========================================================================
+   10. RELATIVES, FRIENDS & KIDS (Page 4: 940 x 1672)
+   ========================================================================== */
+#people {
+  background-image: 
+    linear-gradient(rgba(255, 248, 235, 0.78), rgba(255, 248, 235, 0.88)),
+    url('assets/page4-people-frame.webp');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #f7eee2;
+}
+.people-controls-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.people-search-box {
+  width: min(500px, 100%);
+  margin: 0 auto;
+  position: relative;
+}
+.people-search-input {
+  width: 100%;
+  padding: 0.75rem 1.2rem 0.75rem 2.8rem;
+  border-radius: 99px;
+  border: 1px solid var(--gold);
+  background: #ffffff;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--ink);
+  outline: none;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+}
+.search-icon {
+  position: absolute;
+  left: 1.1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gold-dark);
+  font-size: 1.1rem;
+}
+.people-filter-pills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.filter-pill {
+  padding: 0.55rem 1.1rem;
+  border-radius: 99px;
+  border: 1px solid rgba(201, 147, 45, 0.45);
+  background: #ffffff;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.filter-pill:hover, .filter-pill.active {
+  background: var(--crimson);
+  color: #fff;
+  border-color: var(--crimson);
+}
+
+.segregated-groups-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+}
+.guest-segregated-block {
+  margin-bottom: 1rem;
+}
+.guest-group-header {
+  font-family: var(--font-regal);
+  font-size: 1.35rem;
+  color: var(--crimson-dark);
+  border-bottom: 2px solid rgba(201, 147, 45, 0.35);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.group-count-badge {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.65rem;
+  border-radius: 99px;
+  background: #f1ddb6;
+  color: var(--crimson-dark);
+}
+.guest-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 1.1rem;
+}
+.guest-interactive-card {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(201, 147, 45, 0.35);
+  border-radius: 16px;
+  padding: 0.85rem;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(4px);
+}
+.guest-interactive-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 26px rgba(99, 18, 38, 0.16);
+  border-color: var(--gold);
+}
+.guest-photo-frame {
+  width: 100%;
+  aspect-ratio: 1/1;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 0.65rem;
+  background: #f4e5c5;
+  position: relative;
+}
+.guest-photo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.guest-interactive-card:hover .guest-photo-frame img {
+  transform: scale(1.08);
+}
+.guest-name-text {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--crimson-dark);
+  margin-bottom: 0.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.guest-relation-text {
+  font-size: 0.76rem;
+  color: var(--gold-dark);
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+.guest-kids-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  margin: 0.4rem 0 0.35rem;
+  padding: 0.3rem 0.6rem;
+  background: linear-gradient(135deg, #fff7e3, #feeac7);
+  border: 1px solid #e8b965;
+  border-radius: 8px;
+  font-size: 0.74rem;
+  box-shadow: 0 2px 6px rgba(201, 147, 45, 0.12);
+}
+.kids-tag-icon { font-size: 0.95rem; }
+.kids-tag-label {
+  font-weight: 700;
+  color: var(--crimson-dark);
+}
+.kids-tag-names {
+  font-weight: 600;
+  color: #8c4200;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 130px;
+}
+.guest-location-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.72rem;
+  color: var(--ink-muted);
+  background: #fbf5eb;
+  padding: 0.2rem 0.55rem;
+  border-radius: 99px;
+}
+.touch-cue {
+  display: block;
+  font-size: 0.68rem;
+  color: var(--crimson);
+  font-weight: 600;
+  margin-top: 0.4rem;
+  opacity: 0.85;
+}
+
+/* ==========================================================================
+   11. WEDDING EVENTS TIMELINE (Section 11)
+   ========================================================================== */
+#events {
+  background: #f5ebd9;
+}
+.events-timeline-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 820px;
+  margin: 0 auto;
+  position: relative;
+}
+.events-timeline-container::before {
+  content: '';
+  position: absolute;
+  top: 15px;
+  bottom: 15px;
+  left: 20px;
+  width: 3px;
+  background: linear-gradient(to bottom, #d4a237, #631226, #d4a237);
+  border-radius: 2px;
+}
+.event-timeline-item {
+  position: relative;
+  padding-left: 55px;
+}
+.event-timeline-marker {
+  position: absolute;
+  left: 8px;
+  top: 18px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #f7df94, #c9932d);
+  border: 3px solid #631226;
+  box-shadow: 0 0 10px rgba(246, 216, 124, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+}
+.event-card {
+  background: var(--sandal-card);
+  border: 1px solid var(--border-gold);
+  border-radius: 18px;
+  padding: 1.4rem;
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.event-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 35px rgba(99, 18, 38, 0.18);
+  border-color: var(--gold);
+}
+.event-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0; width: 5px;
+  background: var(--gold-gradient);
+}
+.event-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+.event-time-tag {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--crimson);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: #fee7c8;
+  padding: 0.25rem 0.75rem;
+  border-radius: 99px;
+  border: 1px solid #e8bc6f;
+}
+.event-title {
+  font-family: var(--font-regal);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--crimson-dark);
+  margin-top: 0.2rem;
+}
+.event-desc {
+  font-size: 0.95rem;
+  color: var(--ink-muted);
+  line-height: 1.55;
+  margin: 0.6rem 0 1rem;
+}
+.event-footer-bar {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   12. VENUE & ROUTE PLANNER (Page 2 & Page 3 Aerial: 682 x 2048)
+   ========================================================================== */
+#venue {
+  background-image: 
+    linear-gradient(rgba(255, 243, 225, 0.80), rgba(255, 243, 225, 0.90)),
+    url('assets/page2-temple-day.webp');
+  background-size: cover;
+  background-position: center;
+  background-color: #f5e9d5;
+}
+.venue-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+.venue-main-card {
+  background: var(--sandal-card);
+  border: 1px solid var(--border-gold);
+  border-radius: 20px;
+  padding: clamp(1.4rem, 4vw, 2.4rem);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(4px);
+  position: sticky;
+  top: 85px;
+}
+.venue-header-box {
+  text-align: center;
+  border-bottom: 1px solid rgba(201, 147, 45, 0.3);
+  padding-bottom: 1.4rem;
+  margin-bottom: 1.4rem;
+}
+.venue-temple-icon {
+  font-size: 2.4rem;
+  color: var(--crimson);
+  margin-bottom: 0.5rem;
+}
+.venue-name-text {
+  font-family: var(--font-regal);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 700;
+  color: var(--crimson-dark);
+  margin-bottom: 0.5rem;
+}
+.venue-address-text {
+  font-size: 1.05rem;
+  color: var(--ink-muted);
+  line-height: 1.5;
+}
+.route-actions-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+}
+.route-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 1.2rem;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.92rem;
+  border: 1px solid var(--border-gold-solid);
+  background: #ffffff;
+  color: var(--crimson-dark);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+.route-btn:hover {
+  background: var(--crimson);
+  color: #fff;
+  border-color: var(--crimson);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(99, 18, 38, 0.25);
+}
+.route-btn.gps-primary {
+  background: linear-gradient(135deg, #a62040 0%, #631226 100%);
+  color: #fff;
+  border-color: var(--gold-glow);
+}
+.route-btn.gps-primary:hover {
+  background: linear-gradient(135deg, #c4294e 0%, #7e1731 100%);
+}
+.route-btn .route-icon { font-size: 1.3rem; }
+
+/* 3-Page Tall Temple Gopuram (682 x 2048) */
+.three-page-tall-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 550px;
+  margin: 0 auto;
+  border: 6px solid #ffffff;
+  border-radius: 24px;
+  box-shadow: var(--shadow-card);
+  outline: 2px solid var(--gold);
+  overflow: hidden;
+  background: #fff;
+}
+.three-page-tall-wrapper img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 682 / 2048;
+  object-fit: cover;
+}
+.three-page-banner-tag {
+  position: sticky;
+  top: 85px;
+  margin: 12px;
+  z-index: 5;
+  background: rgba(58, 8, 21, 0.94);
+  backdrop-filter: blur(8px);
+  color: #ffe8a3;
+  padding: 0.6rem 1.2rem;
+  border-radius: 99px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-align: center;
+  border: 1px solid var(--gold);
+  box-shadow: 0 4px 18px rgba(0,0,0,0.4);
+}
+
+/* ==========================================================================
+   13. PROPER RSVP EXPERIENCE (Section 12)
+   ========================================================================== */
+#rsvp {
+  background: #f7eee2;
+}
+.rsvp-card-wrapper {
+  max-width: 780px;
+  margin: 0 auto;
+  background: var(--sandal-card);
+  border: 1px solid var(--border-gold);
+  border-radius: 24px;
+  padding: clamp(1.4rem, 4vw, 2.5rem);
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+}
+.rsvp-card-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 5px;
+  background: var(--gold-gradient);
+}
+.rsvp-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+}
+.rsvp-checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.3rem;
+}
+.rsvp-check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.92rem;
+  cursor: pointer;
+}
+.rsvp-check input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--crimson);
+}
+.rsvp-success-seal {
+  margin-top: 1.8rem;
+  padding: 1.5rem;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #fff7e5, #feeac7);
+  border: 2px solid var(--gold);
+  text-align: center;
+  animation: fadeInStory 0.5s ease-out;
+  box-shadow: 0 6px 20px rgba(201, 147, 45, 0.25);
+}
+.seal-emblem {
+  font-size: 2.2rem;
+  margin-bottom: 0.4rem;
+}
+.rsvp-success-seal h4 {
+  font-family: var(--font-regal);
+  font-size: 1.35rem;
+  color: var(--crimson-dark);
+  margin-bottom: 0.4rem;
+}
+
+/* ==========================================================================
+   14. WISHES, TRADITIONS & DIGITAL BLESSING WALL (Section 15F)
+   ========================================================================== */
+#wishes {
+  background-image: 
+    linear-gradient(rgba(255, 248, 235, 0.74), rgba(255, 248, 235, 0.86)),
+    url('assets/pages8-family-border.webp');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #f7eee2;
+}
+.expectations-suggestions-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+.regal-info-box {
+  background: var(--sandal-card);
+  border: 1px solid var(--border-gold);
+  border-radius: 20px;
+  padding: clamp(1.4rem, 4vw, 2.2rem);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(4px);
+}
+.regal-info-box h3 {
+  font-family: var(--font-regal);
+  font-size: 1.45rem;
+  color: var(--crimson-dark);
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.etiquette-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.etiquette-item {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+.etiquette-icon {
+  font-size: 1.6rem;
+  color: var(--gold-dark);
+  line-height: 1;
+}
+.etiquette-text strong {
+  display: block;
+  font-size: 0.95rem;
+  color: var(--crimson-dark);
+}
+.etiquette-text p {
+  font-size: 0.88rem;
+  color: var(--ink-muted);
+  line-height: 1.45;
+}
+
+/* Digital Blessing Wall Stream */
+.blessings-wall-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  max-height: 250px;
+  overflow-y: auto;
+  margin-bottom: 1.2rem;
+  padding-right: 0.4rem;
+}
+.blessing-card-bubble {
+  background: #ffffff;
+  border: 1px solid var(--border-gold);
+  border-radius: 14px;
+  padding: 0.85rem 1rem;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.03);
+}
+.blessing-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.3rem;
+}
+.blessing-author {
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: var(--crimson-dark);
+}
+.blessing-relation-pill {
+  font-size: 0.72rem;
+  padding: 0.15rem 0.5rem;
+  background: #fff4d9;
+  border-radius: 99px;
+  color: #8c4200;
+}
+.blessing-quote {
+  font-family: var(--font-serif);
+  font-size: 0.98rem;
+  line-height: 1.45;
+  color: var(--ink);
+  font-style: italic;
+}
+
+/* Suggestion / Wishes Form */
+.suggest-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+.form-input-regal {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-gold-solid);
+  background: #ffffff;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--ink);
+  outline: none;
+}
+.form-input-regal:focus {
+  border-color: var(--crimson);
+  box-shadow: 0 0 0 3px rgba(99, 18, 38, 0.15);
+}
+
+/* ==========================================================================
+   15. THANKING & CONTACT (1584 x 672)
+   ========================================================================== */
+#thanks {
+  position: relative;
+  background-color: #2b0711;
+  background-image: 
+    linear-gradient(rgba(43, 7, 17, 0.82), rgba(43, 7, 17, 0.92)),
+    url('assets/final-thank-you-courtyard.webp');
+  background-size: cover;
+  background-position: center;
+  color: #fff4db;
+  text-align: center;
+  padding: 6.5rem 1.2rem;
+}
+.thanks-inner {
+  max-width: 800px;
+  margin: 0 auto;
+}
+.thanks-tamil-blessing {
+  font-family: var(--font-tamil);
+  font-size: clamp(1.3rem, 3.5vw, 2rem);
+  font-weight: 700;
+  color: #ffd87d;
+  margin-bottom: 0.8rem;
+}
+.thanks-title {
+  font-family: var(--font-regal);
+  font-size: clamp(2.4rem, 6vw, 4.2rem);
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+.thanks-message {
+  font-family: var(--font-serif);
+  font-size: clamp(1.15rem, 2.5vw, 1.45rem);
+  line-height: 1.7;
+  color: #faebd7;
+  margin-bottom: 2rem;
+  font-style: italic;
+}
+.contact-coordinators-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin: 2.2rem 0;
+  text-align: center;
+}
+.coordinator-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(246, 216, 124, 0.35);
+  border-radius: 16px;
+  padding: 1.2rem;
+}
+.coordinator-side {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #ffd87d;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.4rem;
+}
+.coordinator-name {
+  font-family: var(--font-regal);
+  font-size: 1.2rem;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+.coordinator-links {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+}
+.coord-btn {
+  padding: 0.4rem 0.8rem;
+  border-radius: 99px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  text-decoration: none;
+  background: var(--gold-gradient);
+  color: #2b0b14;
+}
+
+/* ==========================================================================
+   16. PERSONAL NOTES DIARY
+   ========================================================================== */
+#notes {
+  background-image: 
+    linear-gradient(rgba(255, 248, 235, 0.74), rgba(255, 248, 235, 0.86)),
+    url('assets/page7-family-frame.webp');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #f7eee2;
+}
+.notes-container-card {
+  max-width: 840px;
+  margin: 0 auto;
+  background: var(--sandal-card);
+  border: 1px solid var(--border-gold);
+  border-radius: 20px;
+  padding: clamp(1.4rem, 4vw, 2.5rem);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(4px);
+}
+.notes-quick-templates {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.template-btn {
+  padding: 0.35rem 0.75rem;
+  border-radius: 99px;
+  border: 1px solid var(--border-gold);
+  background: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--crimson-dark);
+  cursor: pointer;
+}
+.template-btn:hover {
+  background: var(--crimson);
+  color: #fff;
+}
+.notes-textarea {
+  width: 100%;
+  min-height: 180px;
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-gold-solid);
+  background: #ffffff;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--ink);
+  resize: vertical;
+  outline: none;
+  margin-bottom: 1rem;
+}
+.notes-textarea:focus {
+  border-color: var(--crimson);
+  box-shadow: 0 0 0 3px rgba(99, 18, 38, 0.15);
+}
+.notes-footer-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+/* ==========================================================================
+   SMART FLOATING DOCK (Section 16)
+   ========================================================================== */
+.smart-floating-dock {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  z-index: 37;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 10px;
+  background: rgba(36, 5, 13, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(246, 216, 124, 0.45);
+  border-radius: 99px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s;
+  opacity: 0;
+  pointer-events: none;
+}
+.smart-floating-dock.visible {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+.dock-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: #ffd894;
+  font-size: 0.72rem;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.dock-item span { font-size: 1.1rem; line-height: 1; }
+.dock-item small { font-size: 0.65rem; margin-top: 2px; }
+.dock-item:hover, .dock-item.active {
+  color: #ffffff;
+  background: rgba(247, 223, 148, 0.22);
+}
+
+/* ==========================================================================
+   MODALS (GUEST POPUP, LIGHTBOX, EASTER EGG, ADMIN)
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(24, 4, 10, 0.86);
+  backdrop-filter: blur(10px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+.modal-overlay.open { display: flex; }
+.modal-dialog {
+  background: #fff8eb;
+  border: 1px solid var(--gold);
+  border-radius: 20px;
+  width: min(780px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 24px 70px rgba(0,0,0,0.6);
+  padding: clamp(1.2rem, 3.5vw, 2rem);
+  position: relative;
+  animation: modalScale 0.25s ease-out;
+}
+@keyframes modalScale {
+  from { transform: scale(0.92); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.modal-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(201, 147, 45, 0.35);
+  padding-bottom: 0.8rem;
+  margin-bottom: 1.2rem;
+}
+.modal-title-text {
+  font-family: var(--font-regal);
+  font-size: 1.45rem;
+  color: var(--crimson-dark);
+}
+.modal-close-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--gold);
+  background: #ffffff;
+  color: var(--crimson-dark);
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.modal-close-icon:hover {
+  background: var(--crimson);
+  color: #fff;
+}
+
+/* Guest Detail Popup */
+.guest-detail-popup {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.9fr) 1.1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+.guest-popup-photo {
+  width: 100%;
+  max-height: 340px;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 2px solid var(--gold);
+  background: #f1dfb9;
+}
+.guest-popup-info h3 {
+  font-family: var(--font-regal);
+  font-size: 1.7rem;
+  color: var(--crimson-dark);
+  margin-bottom: 0.4rem;
+}
+.guest-popup-badge {
+  display: inline-block;
+  padding: 0.25rem 0.8rem;
+  border-radius: 99px;
+  background: var(--crimson);
+  color: #ffefa8;
+  font-size: 0.76rem;
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+}
+.guest-popup-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.92rem;
+  margin-bottom: 1rem;
+}
+.guest-popup-kids-box {
+  margin: 0.8rem 0;
+  padding: 0.7rem 1rem;
+  background: linear-gradient(135deg, #fff9e6, #ffedd1);
+  border: 1px dashed var(--gold);
+  border-radius: 12px;
+}
+.guest-popup-kids-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--crimson-dark);
+  margin-bottom: 0.2rem;
+}
+.guest-popup-kids-names {
+  font-size: 0.96rem;
+  font-weight: 600;
+  color: #8c4200;
+}
+
+/* Lightbox Modal */
+.lightbox-modal-content {
+  position: relative;
+  max-width: 900px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lightbox-image-stage {
+  text-align: center;
+  max-width: 820px;
+}
+.lightbox-full-img {
+  max-width: 100%;
+  max-height: 80vh;
+  border-radius: 14px;
+  border: 2px solid var(--gold-glow);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.85);
+  display: block;
+  margin: 0 auto;
+}
+.lightbox-caption-text {
+  color: #ffe8a3;
+  font-family: var(--font-regal);
+  font-size: 1.15rem;
+  margin-top: 0.8rem;
+}
+.lightbox-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(43, 7, 17, 0.8);
+  border: 1px solid var(--gold-glow);
+  color: #ffe8a3;
+  font-size: 2rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 105;
+  transition: all 0.2s;
+}
+.lightbox-nav-btn.prev-btn { left: -20px; }
+.lightbox-nav-btn.next-btn { right: -20px; }
+.lightbox-nav-btn:hover { background: var(--crimson); color: #fff; }
+.lightbox-close-btn {
+  position: absolute;
+  top: -45px;
+  right: 0;
+  z-index: 106;
+}
+
+/* Admin Grid */
+.admin-grid-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+}
+.admin-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.admin-form-group label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--crimson-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.admin-tool-box {
+  background: #fffdf8;
+  border: 1px solid var(--border-gold);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1.2rem;
+}
+.admin-tool-box h4 {
+  font-family: var(--font-regal);
+  color: var(--crimson-dark);
+  font-size: 1rem;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN & MOBILE OPTIMIZATIONS
+   ========================================================================== */
+@media (max-width: 900px) {
+  .couple-bio-grid { grid-template-columns: 1fr; }
+  .couple-center-amp { display: none; }
+  .venue-grid { grid-template-columns: 1fr; }
+  .expectations-suggestions-grid { grid-template-columns: 1fr; }
+  .contact-coordinators-grid { grid-template-columns: 1fr; }
+  .guest-detail-popup { grid-template-columns: 1fr; }
+  .admin-grid-layout { grid-template-columns: 1fr; }
+  .story-milestones-track { grid-template-columns: 1fr; }
+  .rsvp-grid { grid-template-columns: 1fr; }
+  .lightbox-nav-btn.prev-btn { left: 5px; }
+  .lightbox-nav-btn.next-btn { right: 5px; }
+}
+
+@media (max-width: 480px) {
+  .topbar { padding: 0.4rem 0.6rem; }
+  .brand-mark span.brand-text { display: none; }
+  .portal-doors-container { height: 420px; }
+  .portal-center-seal { width: 135px; height: 135px; }
+  .seal-flame { font-size: 1.8rem; }
+  .seal-text-main { font-size: 0.68rem; }
+  .door-brass-lion-knocker { font-size: 2.3rem; }
+  .guest-cards-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.6rem; }
+  .countdown-box { min-width: 58px; padding: 0.6rem 0.4rem; }
+  .countdown-box strong { font-size: 1.5rem; }
+  .smart-floating-dock { bottom: 8px; padding: 4px 6px; }
+  .dock-item { padding: 3px 5px; }
+  .dock-item span { font-size: 0.95rem; }
+  .dock-item small { font-size: 0.58rem; }
+  .floating-actions { bottom: 65px; right: 10px; }
+  .admin-trigger-btn { bottom: 65px; left: 10px; }
+}
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .portal-door-left, .portal-door-right {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+  .portal-doors-container.doors-open .portal-door {
+    opacity: 0 !important;
+  }
+  .kolam-draw-path {
+    stroke-dashoffset: 0 !important;
+  }
+}
+
+
+/* ==========================================================================
+   MADURAI HERITAGE UPGRADE — uploaded carved temple-door artwork
+   The supplied reference image is split into left/right door panels.
+   ========================================================================== */
+.portal-doors-container {
+  border: 0;
+  border-radius: 2px;
+  background: #321407 url('assets/temple-door-reference.png') center / cover no-repeat;
+  box-shadow: 0 24px 70px rgba(0,0,0,.72), 0 0 0 5px #9b6a1b, 0 0 0 8px #f1d17a;
+  overflow: hidden;
+  isolation: isolate;
+}
+.portal-door {
+  background-image: url('assets/temple-door-reference.png');
+  background-repeat: no-repeat;
+  background-size: 200% 100%;
+  border: 0;
+  border-radius: 0;
+  box-shadow: inset 0 0 25px rgba(20,8,0,.25);
+  backface-visibility: hidden;
+}
+.portal-door-left { background-position: left center; transform-origin: left center; }
+.portal-door-right { background-position: right center; transform-origin: right center; }
+.portal-door .door-wood-grain,
+.portal-door .door-inner-border,
+.portal-door .door-stud-matrix,
+.portal-door .door-brass-ornament-top,
+.portal-door .door-brass-lion-knocker,
+.portal-door .door-brass-handle { opacity: .16; }
+.portal-revealed-stage { background: linear-gradient(180deg, rgba(34,7,12,.16), rgba(34,7,12,.65)), url('assets/hero-mandapam-couple.webp') center / cover no-repeat; }
+
+/* Keep the experience mobile-first and avoid the navigation covering the hero. */
+@media (max-width: 700px) {
+  .topbar { padding: .45rem .6rem; flex-wrap: wrap; gap: .35rem; }
+  .brand-mark { font-size: .78rem; }
+  .nav-container { width: 100%; order: 2; }
+  .nav-link { font-size: .72rem; padding: .4rem .6rem; }
+  .portal-doors-container { width: min(540px, 91vw); height: min(64svh, 540px); min-height: 390px; }
+  .portal-gopuram-arch { gap: .55rem; }
+  .arch-diya { font-size: 1.45rem; }
+  .portal-date-tag { font-size: .72rem; letter-spacing: .08em; }
+  .floating-actions { right: 8px; bottom: 12px; gap: 6px; }
+  .float-btn { padding: .55rem .72rem; font-size: .72rem; }
+  .admin-trigger-btn { left: 8px; bottom: 12px; padding: .55rem .7rem; font-size: .72rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
+
+/* ==========================================================================
+   FAMILY REQUESTED EXPERIENCE OVERRIDES
+   ========================================================================== */
+html { scroll-behavior: smooth; }
+body.invitation-locked { overflow: hidden; height: 100vh; }
+body.invitation-locked > *:not(#entrancePortal):not(#petalsCanvas):not(#progressBar) { visibility: hidden; }
+body.invitation-locked #entrancePortal { position: fixed; inset: 0; z-index: 1000; width: 100%; height: 100dvh; min-height: 100dvh; overflow-y: auto; padding: max(1rem, env(safe-area-inset-top)) 1rem max(1rem, env(safe-area-inset-bottom)); }
+body.invitation-locked .portal-inner-container { width: min(740px, 100%); min-height: calc(100dvh - 2rem); justify-content: center; }
+body.invitation-locked .portal-gopuram-arch { margin-bottom: .8rem; }
+.portal-doors-container { width: min(520px, 92vw); height: min(62dvh, 640px); min-height: 360px; border-radius: 5px; border: 8px solid #b88a35; background: #2b1008 url('assets/temple-door-reference.png') center / cover no-repeat; box-shadow: 0 0 0 3px #5b3714, 0 22px 60px rgba(0,0,0,.65), 0 0 38px rgba(247,223,148,.35); }
+.portal-door { background-image: url('assets/temple-door-reference.png'); background-size: 200% 100%; background-repeat: no-repeat; border-radius: 0; }
+.portal-door-left { background-position: left center; }
+.portal-door-right { background-position: right center; }
+.portal-door .door-wood-grain, .portal-door .door-inner-border, .portal-door .door-stud-matrix, .portal-door .door-brass-ornament-top, .portal-door .door-brass-lion-knocker, .portal-door .door-brass-handle { opacity: .18; }
+.portal-revealed-stage { background: linear-gradient(rgba(42,12,12,.30),rgba(42,12,12,.55)), url('assets/bride-groom-temple.webp') center / cover no-repeat; }
+.entrance-portal.doors-completed { opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .65s ease, visibility .65s; }
+/* The couple section uses two independent portrait slots, never one shared photo. */
+.couple-frame-fitted { display:none !important; }
+.couple-portrait-pair { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(1rem,3vw,2rem); width:min(900px,100%); margin:0 auto 2rem; }
+.couple-portrait-card { margin:0; min-width:0; padding:.7rem; border:2px solid var(--gold); border-radius:20px; background:rgba(255,250,239,.94); box-shadow:var(--shadow-card); }
+.couple-portrait-card img { display:block; width:100%; aspect-ratio:3/4; object-fit:cover; object-position:center; border-radius:12px; background:linear-gradient(145deg,#f6e7c8,#8d6335); }
+.couple-portrait-card figcaption { padding:.75rem .25rem .3rem; text-align:center; color:var(--crimson-dark); font-family:var(--font-serif); font-size:clamp(1rem,2.5vw,1.35rem); font-weight:700; }
+/* Keep decorative inner artwork out of content panels; use it as a page background instead. */
+.family-exact-frame-stage, .family-frame-no-artwork { max-width:100%; padding:0; background:none !important; }
+.family-branch-panel { margin-bottom:1.25rem; }
+#families { background-image:linear-gradient(rgba(255,248,235,.78),rgba(255,248,235,.88)),url('assets/family-invitation-border.webp'); background-size:cover; background-position:center; }
+.invitation-outer-stage, .invitation-background-scene { max-width:100%; width:100%; aspect-ratio:auto; padding:clamp(1rem,4vw,3rem); background-image:linear-gradient(rgba(255,248,235,.68),rgba(255,248,235,.78)),url('assets/bride-groom-temple.webp') !important; background-size:cover !important; background-position:center !important; border-radius:24px; }
+.invitation-patrika-framed, .invitation-content-panel { width:min(760px,100%); max-height:none; overflow:visible; background:rgba(255,250,239,.90); border:1px solid rgba(201,147,45,.75); backdrop-filter:blur(7px); }
+/* Venue is information-first: remove the tall decorative gopuram column entirely. */
+.three-page-tall-wrapper, .three-page-banner-tag { display:none !important; }
+#venue .venue-grid { grid-template-columns:minmax(0,1fr); }
+.venue-main-card { width:min(900px,100%); margin-inline:auto; background:linear-gradient(rgba(255,250,239,.92),rgba(255,250,239,.95)),url('assets/meenakshi-temple-day.webp') center/cover; }
+/* Family directory: readable list rows with name, children, location and photo tap target. */
+.person-card, .people-card, .guest-card { cursor:pointer; }
+#people { background-image:linear-gradient(rgba(255,248,235,.88),rgba(255,248,235,.92)),url('assets/ornate-family-border.webp'); background-size:cover; background-position:center; }
+/* Album has a themed scene behind the gallery, rather than an extra image inside every album card. */
+#album.album-heritage-scene { background-image:linear-gradient(rgba(35,8,15,.50),rgba(35,8,15,.70)),url('assets/madurai-sunset-panorama.webp'); background-size:cover; background-position:center; background-attachment:scroll; color:#fff7e6; }
+#album .section-title, #album .section-kicker, #album .section-subtitle { color:#fff2d2; }
+#album .album-three-page-scroll-wrap { background:rgba(255,248,235,.10); border-color:rgba(247,223,148,.6); }
+/* Remove requested sections and their obsolete navigation. */
+#panorama, #story, #kolam, #rsvp, #notes { display:none !important; }
+#droneCanvas, #droneToggleBtn { display:none !important; }
+/* Suggestions remain, with heritage-themed background. */
+#wishes { background-image:linear-gradient(rgba(255,248,235,.80),rgba(255,248,235,.88)),url('assets/wedding-courtyard.webp'); background-size:cover; background-position:center; }
+/* Admin access is only shown in the final section, never as a persistent floating button. */
+.admin-trigger-btn { position:static !important; display:inline-flex; margin:1rem 0 0; box-shadow:var(--shadow-card); }
+.family-final-notes { padding:4rem 1.2rem; background:linear-gradient(rgba(37,7,15,.68),rgba(37,7,15,.78)),url('assets/wedding-courtyard.webp') center/cover; color:#fff4d9; }
+.final-notes-card { max-width:900px; padding:clamp(1.2rem,4vw,3rem); border:1px solid rgba(247,223,148,.65); border-radius:24px; background:rgba(42,9,17,.72); text-align:center; box-shadow:0 20px 55px rgba(0,0,0,.25); }
+.family-final-notes .section-title, .family-final-notes .section-kicker, .family-final-notes .section-subtitle { color:#fff0c6; }
+.legacy-note { margin:1rem auto; max-width:680px; }
+.admin-last-access { display:flex; align-items:center; justify-content:center; gap:1rem; flex-wrap:wrap; margin-top:2rem; padding-top:1.25rem; border-top:1px solid rgba(247,223,148,.35); }
+.admin-last-access span { color:#ffe8a3; }
+/* Keep the top navigation concise on mobile. */
+@media (max-width:640px) {
+  .portal-doors-container { height:min(56dvh,520px); min-height:330px; width:min(94vw,440px); }
+  .portal-wedding-heading { font-size:clamp(1.4rem,6vw,2.2rem); }
+  .couple-portrait-pair { gap:.65rem; }
+  .couple-portrait-card { padding:.4rem; border-radius:14px; }
+  .couple-portrait-card img { border-radius:9px; }
+  .couple-portrait-card figcaption { font-size:.95rem; }
+  .nav-container { max-width:65vw; }
+  .floating-actions { bottom:12px; right:10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior:auto !important; animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
+}
+/* Directory rows: names first, photos remain tappable in the trailing thumbnail. */
+.guest-cards-grid { display:flex !important; flex-direction:column; gap:.65rem; }
+.guest-interactive-card { display:grid !important; grid-template-columns:52px minmax(0,1fr) 76px; align-items:center; gap:.85rem; padding:.75rem 1rem !important; border-radius:14px !important; text-align:left !important; }
+.guest-photo-frame { grid-column:3; grid-row:1 / span 3; width:76px !important; height:76px !important; margin:0 !important; }
+.guest-photo-frame img { width:100%; height:100%; object-fit:cover; border-radius:10px; }
+.guest-name-text { grid-column:2; font-weight:800; }
+.guest-role-text, .guest-location-text, .guest-kids-text { grid-column:2; }
+.guest-interactive-card::before { content:'⌕'; grid-column:1; grid-row:1 / span 3; width:42px; height:42px; display:grid; place-items:center; border-radius:50%; color:var(--gold-dark); background:rgba(201,147,45,.14); font-size:1.5rem; }
+@media(max-width:420px) { .guest-interactive-card { grid-template-columns:34px minmax(0,1fr) 60px; gap:.55rem; padding:.65rem !important; } .guest-photo-frame { width:60px !important; height:60px !important; } }
+
+/* Personalised guest details before the temple invitation opens. */
+.guest-personalise-form{width:min(680px,100%);margin:.4rem auto 1rem;padding:1rem;border:1px solid rgba(247,223,148,.62);border-radius:16px;background:rgba(38,8,16,.78);box-shadow:0 8px 24px rgba(0,0,0,.25);color:#fff3d3;backdrop-filter:blur(10px)}
+.guest-form-heading{text-align:center;font-family:var(--font-serif);font-size:1.2rem;font-weight:700;margin-bottom:.7rem;color:#ffe6a0}
+.guest-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem}
+.guest-form-grid label{display:grid;gap:.25rem;font-size:.8rem;font-weight:600}
+.guest-form-grid input{width:100%;min-width:0;padding:.65rem .75rem;border:1px solid rgba(247,223,148,.55);border-radius:9px;background:rgba(255,250,239,.96);color:#3b1d16;font:inherit}
+.guest-form-hint{text-align:center;font-size:.76rem;opacity:.88;margin-top:.65rem}
+.personalized-household-line{margin:.4rem auto;color:var(--ink-muted);font-size:.95rem;overflow-wrap:anywhere}
+.people-load-more-wrap{text-align:center;padding:1.5rem 1rem;color:var(--ink-muted)}
+.people-load-more-wrap p{margin-bottom:.7rem;font-size:.9rem}
+.people-empty-state{text-align:center;padding:2rem;color:var(--ink-muted)}
+@media(max-width:480px){.guest-personalise-form{padding:.75rem}.guest-form-grid{grid-template-columns:1fr 1fr;gap:.5rem}.guest-form-grid label{font-size:.72rem}.guest-form-grid input{padding:.6rem .5rem;font-size:.85rem}}
+@media print{.guest-personalise-form,.topbar,.floating-actions,.admin-trigger-btn,.scroll-progress-bar{display:none!important}}
+/* Full-viewport invitation doors: the reference temple door artwork fills the first screen. */
+body.invitation-locked #entrancePortal .portal-inner-container{position:relative;width:100%;height:100%;min-height:100%;padding:0;display:block;}
+body.invitation-locked #entrancePortal .portal-gopuram-arch{position:absolute;z-index:4;top:max(.65rem,env(safe-area-inset-top));left:50%;transform:translateX(-50%);width:min(760px,96vw);margin:0;gap:.6rem;text-shadow:0 2px 12px #160307;}
+body.invitation-locked #entrancePortal .portal-title-box{max-width:100%;}
+body.invitation-locked #entrancePortal .portal-wedding-heading{font-size:clamp(1.25rem,4vw,2.5rem);}
+body.invitation-locked #entrancePortal .portal-doors-container{position:absolute;inset:0;z-index:1;width:100%;height:100%;min-height:100%;max-height:none;border:0;border-radius:0;box-shadow:none;background-size:cover;background-position:center;}
+body.invitation-locked #entrancePortal .portal-door{background-size:200% 100%;}
+body.invitation-locked #entrancePortal .portal-center-seal{z-index:5;}
+body.invitation-locked #entrancePortal .portal-revealed-stage{position:absolute;inset:0;width:100%;height:100%;}
+body.invitation-locked #entrancePortal .guest-personalise-form{position:absolute;z-index:6;left:50%;bottom:max(2.5rem,env(safe-area-inset-bottom));transform:translateX(-50%);width:min(640px,94vw);margin:0;padding:.7rem .9rem;background:rgba(35,7,15,.86);}
+body.invitation-locked #entrancePortal .guest-form-heading{font-size:1rem;margin-bottom:.4rem;}
+body.invitation-locked #entrancePortal .guest-form-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:.45rem;}
+body.invitation-locked #entrancePortal .guest-form-grid label{font-size:.7rem;}
+body.invitation-locked #entrancePortal .guest-form-grid input{font-size:.78rem;padding:.5rem;}
+body.invitation-locked #entrancePortal .guest-form-hint{font-size:.68rem;margin-top:.35rem;}
+body.invitation-locked #entrancePortal .portal-footer-bar{position:absolute;z-index:7;bottom:.25rem;left:50%;transform:translateX(-50%);margin:0;}
+body.invitation-locked #entrancePortal .portal-skip-btn{font-size:.68rem;padding:.25rem .6rem;background:rgba(35,7,15,.65);}
+@media(max-width:650px){
+  body.invitation-locked #entrancePortal .portal-gopuram-arch{top:max(.5rem,env(safe-area-inset-top));}
+  body.invitation-locked #entrancePortal .arch-diya{display:none;}
+  body.invitation-locked #entrancePortal .portal-date-tag{margin-top:.15rem;}
+  body.invitation-locked #entrancePortal .guest-personalise-form{bottom:max(2.3rem,env(safe-area-inset-bottom));padding:.55rem .65rem;}
+  body.invitation-locked #entrancePortal .guest-form-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:.4rem;}
+  body.invitation-locked #entrancePortal .guest-form-grid label{font-size:.68rem;}
+  body.invitation-locked #entrancePortal .portal-center-seal{max-width:145px;}
+}
+
+
+/* =====================================================================
+   V4 VISUAL FIX: cohesive Madurai temple artwork, no colliding invitation layers
+   ===================================================================== */
+:root { --site-art-bg: url('assets/madurai-heritage-background.webp'); --invitation-art-bg: url('assets/invitation-temple-background.webp'); }
+html { background: #2b100b; }
+body {
+  background: #2b100b var(--site-art-bg) center center / cover fixed no-repeat !important;
+  position: relative;
+  isolation: isolate;
+}
+body::before {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(180deg, rgba(42,8,16,.35), rgba(50,16,9,.48) 45%, rgba(34,7,14,.62));
+}
+/* Main sections use the supplied/generative Madurai scene instead of a plain fill. */
+section {
+  background-color: rgba(255,248,235,.08) !important;
+  background-image: linear-gradient(rgba(255,248,235,.76),rgba(255,248,235,.83)), var(--site-art-bg) !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-attachment: fixed !important;
+}
+.hero-section {
+  background: linear-gradient(180deg,rgba(35,5,13,.34),rgba(35,5,13,.68)), var(--site-art-bg) center / cover no-repeat !important;
+}
+.hero-bg-container { background: transparent !important; }
+.hero-bg-img { opacity: .32 !important; object-fit: cover; }
+/* Invitation becomes ONE art-backed patrika. Remove nested artwork/card collisions. */
+#invitation { background-image: linear-gradient(rgba(255,248,235,.35),rgba(255,248,235,.45)), var(--site-art-bg) !important; }
+#invitation .section-header { text-shadow: 0 1px 0 rgba(255,255,255,.7); }
+.invitation-outer-stage,
+.invitation-background-scene {
+  width: min(860px, 100%) !important;
+  max-width: 860px !important;
+  min-height: clamp(700px, 105vw, 1120px) !important;
+  aspect-ratio: 2 / 3 !important;
+  margin: 0 auto !important;
+  padding: clamp(2.2rem, 8vw, 5.5rem) clamp(1.2rem, 8vw, 5.5rem) !important;
+  border: 0 !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: var(--invitation-art-bg) center / 100% 100% no-repeat !important;
+  box-shadow: 0 24px 65px rgba(20,5,8,.34), 0 0 0 5px rgba(190,139,45,.8) !important;
+}
+.invitation-patrika-framed,
+.invitation-content-panel {
+  width: 100% !important;
+  max-height: none !important;
+  overflow: visible !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  padding: clamp(.5rem,2vw,1.2rem) !important;
+}
+.invitation-patrika-framed::before,
+.invitation-patrika-framed::after,
+.invitation-content-panel::before,
+.invitation-content-panel::after { content: none !important; display:none !important; }
+.patrika-om { margin-top: 0; }
+.patrika-slokam { margin-bottom: .7rem; }
+.patrika-body-text { line-height: 1.5; }
+.patrika-couple-names { margin-top: .6rem; }
+.patrika-actions-row { gap: .55rem; }
+/* Avoid stacked / duplicate backgrounds in the invitation-opening stage. */
+.portal-revealed-stage {
+  background: linear-gradient(rgba(42,12,12,.14),rgba(42,12,12,.28)), var(--invitation-art-bg) center / cover no-repeat !important;
+}
+.portal-revealed-stage .revealed-mandapam-backdrop { display:none !important; }
+/* The initial invitation remains a true full-screen gate until doors are opened. */
+body.invitation-locked { overflow: hidden !important; height: 100vh; }
+body.invitation-locked > *:not(#entrancePortal):not(#petalsCanvas):not(#progressBar) { visibility: hidden !important; }
+body.invitation-locked #entrancePortal {
+  position: fixed !important; inset: 0 !important; z-index: 1000 !important;
+  width: 100vw !important; height: 100vh !important; height: 100dvh !important;
+  min-height: 100vh !important; min-height: 100dvh !important;
+  overflow: hidden !important; padding: 0 !important; margin: 0 !important;
+  background: #25070d !important;
+}
+body.invitation-locked #entrancePortal .portal-inner-container { width:100%; height:100%; min-height:100%; }
+body.invitation-locked #entrancePortal .portal-doors-container {
+  position:absolute; inset:0; z-index:1; width:100%; height:100%; min-height:100%; max-height:none;
+  border: clamp(6px,1.2vw,14px) solid #b88a35; border-radius: 0; box-shadow: inset 0 0 40px rgba(0,0,0,.4);
+  background: #2b1008 url('assets/temple-door-reference.png') center / cover no-repeat !important;
+}
+body.invitation-locked #entrancePortal .portal-door { background-size:200% 100% !important; }
+body.invitation-locked #entrancePortal .portal-gopuram-arch { top: 2vh; }
+body.invitation-locked #entrancePortal .guest-personalise-form {
+  position:absolute; z-index:6; left:50%; bottom: max(4.2rem, env(safe-area-inset-bottom));
+  transform:translateX(-50%); width:min(760px,92vw); margin:0;
+  padding: .7rem .9rem; background:rgba(42,8,16,.78); border-color:rgba(247,223,148,.78);
+}
+body.invitation-locked #entrancePortal .portal-footer-bar { bottom:.45rem; }
+/* Hide decorative petals behind controls and keep them from visually obscuring the invitation text. */
+#petalsCanvas { opacity: .62; }
+@media (max-width: 650px) {
+  section { background-attachment: scroll !important; }
+  .invitation-outer-stage, .invitation-background-scene {
+    min-height: 760px !important; aspect-ratio: auto !important;
+    padding: 3rem 1.2rem !important; background-size: cover !important; background-position: center !important;
+  }
+  .patrika-actions-row { flex-direction: column; align-items: stretch; }
+  .patrika-actions-row > * { width:100%; }
+  body.invitation-locked #entrancePortal .portal-gopuram-arch { top: 1rem; }
+  body.invitation-locked #entrancePortal .portal-wedding-heading { font-size: clamp(1.25rem,6vw,2rem); }
+  body.invitation-locked #entrancePortal .guest-personalise-form { bottom: 4rem; width:94vw; padding:.55rem; }
+  body.invitation-locked #entrancePortal .guest-form-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior:auto !important; animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
+}
+
+
+/* =====================================================================
+   V6 — distinct Madurai scenes, name-first door gate, compact guests,
+   and parent-first family hierarchy.
+   ===================================================================== */
+:root {
+  --scene-couple: url('assets/page2-temple-day.webp');
+  --scene-venue: url('assets/temple-aerial-sunset.webp');
+  --scene-family: url('assets/pages8-family-border.webp');
+  --scene-invitation: url('assets/page6-goddess-frame.webp');
+  --scene-events: url('assets/temple-aerial-sunset-two.webp');
+  --scene-guests: url('assets/page3-temple-aerial.webp');
+  --scene-album: url('assets/madurai-sunset-panorama.webp');
+  --scene-wishes: url('assets/meenakshi-temple-day.webp');
+  --scene-thanks: url('assets/final-thank-you-courtyard.webp');
+}
+/* The full site is richly illustrated; individual sections have their own scene. */
+#couple, #venue, #families, #invitation, #events, #people, #album, #wishes, #family-final-notes {
+  position: relative;
+  isolation: isolate;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-attachment: fixed !important;
+}
+#couple { background-image: linear-gradient(rgba(255,247,229,.35),rgba(255,247,229,.54)),var(--scene-couple) !important; }
+#venue { background-image: linear-gradient(rgba(255,245,222,.32),rgba(255,245,222,.53)),var(--scene-venue) !important; }
+#families { background-image: linear-gradient(rgba(255,247,229,.24),rgba(255,247,229,.42)),var(--scene-family) !important; }
+#invitation { background-image: linear-gradient(rgba(52,13,18,.12),rgba(52,13,18,.22)),var(--scene-events) !important; }
+#events { background-image: linear-gradient(rgba(255,247,229,.28),rgba(255,247,229,.48)),var(--scene-events) !important; }
+#people { background-image: linear-gradient(rgba(255,247,229,.30),rgba(255,247,229,.48)),var(--scene-guests) !important; }
+#album { background-image: linear-gradient(rgba(41,8,17,.20),rgba(41,8,17,.30)),var(--scene-album) !important; }
+#wishes { background-image: linear-gradient(rgba(255,247,229,.28),rgba(255,247,229,.45)),var(--scene-wishes) !important; }
+#family-final-notes { background-image: linear-gradient(rgba(255,247,229,.28),rgba(255,247,229,.42)),var(--scene-thanks) !important; }
+.hero-section { background: linear-gradient(rgba(37,6,15,.24),rgba(37,6,15,.48)),url('assets/page2-temple-day.webp') center 45%/cover no-repeat !important; }
+.hero-bg-container { background: transparent !important; }
+.hero-bg-img { opacity: .22 !important; mix-blend-mode: screen; object-fit: cover; }
+/* Make cards readable without flattening the backgrounds into plain colours. */
+.section-container { position: relative; z-index: 1; }
+.section-header { background: rgba(255,249,237,.76); border: 1px solid rgba(190,139,45,.36); border-radius: 18px; padding: 1rem 1.2rem; width: fit-content; max-width: 100%; margin: 0 auto 1.5rem; backdrop-filter: blur(5px); }
+.venue-main-card, .family-branch-panel, .guest-segregated-block, .wishes-card, .final-notes-card { background: rgba(255,250,239,.93) !important; backdrop-filter: blur(7px); }
+/* Goddess frame is used only for the auspicious invitation, never as a repeated site backdrop. */
+.invitation-outer-stage, .invitation-background-scene {
+  background: var(--scene-invitation) center/100% 100% no-repeat !important;
+  width: min(860px,100%) !important; max-width: 860px !important;
+  min-height: clamp(720px,100vw,1120px) !important; aspect-ratio: 940/1672 !important;
+  padding: clamp(3rem,9vw,6rem) clamp(1.2rem,9vw,5rem) !important;
+  margin: 0 auto !important; border: 0 !important; border-radius: 0 !important;
+  box-shadow: 0 24px 60px rgba(23,6,10,.3) !important; overflow: visible !important;
+}
+.invitation-patrika-framed, .invitation-content-panel { background: transparent !important; border:0 !important; box-shadow:none !important; backdrop-filter:none !important; border-radius:0 !important; padding:clamp(.25rem,1.5vw,1rem) !important; width:100% !important; }
+.invitation-patrika-framed::before, .invitation-patrika-framed::after, .invitation-content-panel::before, .invitation-content-panel::after { display:none !important; content:none !important; }
+/* Name-first full-screen entrance. The central door button is unavailable until a name is entered. */
+body.invitation-locked #entrancePortal { background: #2c090e !important; }
+body.invitation-locked #entrancePortal .portal-doors-container { background-image: url('assets/temple-door-reference.png') !important; background-position:center !important; background-size:cover !important; }
+body.invitation-locked #entrancePortal .portal-gopuram-arch { top: max(.7rem,env(safe-area-inset-top)) !important; }
+body.invitation-locked #entrancePortal .guest-personalise-form {
+  bottom: max(1rem,env(safe-area-inset-bottom)) !important; width:min(620px,92vw) !important;
+  padding:.8rem 1rem !important; border:1px solid rgba(255,220,130,.8) !important; border-radius:16px !important;
+  background:rgba(45,8,16,.91) !important; box-shadow:0 10px 32px rgba(0,0,0,.4) !important;
+}
+.guest-form-heading { text-align:center; margin:0 0 .45rem !important; color:#ffe5a0; font-family:var(--font-regal); font-weight:700; }
+.guest-primary-label { display:block; color:#fff3d0; font-size:.85rem; font-weight:700; margin-bottom:.25rem; }
+.guest-primary-input { display:block; width:100%; border:1px solid #d6b36b; border-radius:10px; padding:.75rem .85rem; background:#fffaf0; color:#42101b; font-size:1rem; outline-offset:3px; }
+.guest-primary-input:focus { outline:2px solid #ffe39a; }
+.guest-form-hint { color:#f8e6bc; text-align:center; font-size:.75rem; margin:.4rem 0 !important; }
+.guest-family-toggle, .guest-add-child-btn { border:1px solid rgba(255,224,151,.65); color:#ffe5a0; background:rgba(255,255,255,.06); border-radius:999px; padding:.35rem .75rem; font:inherit; font-size:.78rem; cursor:pointer; }
+.guest-family-toggle { display:block; margin:.35rem auto 0; }
+.guest-family-extra { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:.55rem; margin-top:.7rem; text-align:left; }
+.guest-family-extra label, .guest-kids-entry { display:flex; flex-direction:column; gap:.25rem; color:#fff0cc; font-size:.75rem; }
+.guest-family-extra input { width:100%; min-width:0; padding:.55rem .6rem; border:1px solid #dfc78f; border-radius:8px; background:#fffaf0; color:#42101b; }
+.guest-kids-entry { grid-column:1/-1; }
+.invitee-children-list { display:grid; gap:.35rem; }
+.invitee-child-row { display:flex; gap:.35rem; }
+.invitee-child-row input { flex:1; }
+.remove-child-name { width:34px; border:1px solid #d8b96c; border-radius:8px; background:#fff1dc; color:#6b1329; font-size:1.15rem; cursor:pointer; }
+.portal-center-seal { opacity:0; visibility:hidden; pointer-events:none; transition:opacity .35s ease, transform .35s ease, visibility .35s; }
+.portal-doors-container.name-entered .portal-center-seal { opacity:1; visibility:visible; pointer-events:auto; }
+.portal-center-seal:disabled { cursor:not-allowed; }
+.portal-footer-bar { display:none !important; }
+.portal-revealed-stage { background:linear-gradient(rgba(40,8,16,.10),rgba(40,8,16,.22)),url('assets/page2-temple-day.webp') center/cover no-repeat !important; }
+/* Parent-first family hierarchy: parents are shown first; children and elders follow vertically. */
+.family-exact-frame-stage, .family-frame-no-artwork { background:none !important; padding:0 !important; max-width:900px !important; box-shadow:none !important; }
+.family-branch-panel { border:1px solid rgba(180,129,39,.55) !important; border-radius:18px !important; padding:clamp(.8rem,2.5vw,1.5rem) !important; }
+.family-hierarchy-block { margin-top:1rem; }
+.family-hierarchy-block h4 { margin:0 0 .55rem; color:#7b1d2c; font-family:var(--font-regal); font-size:1rem; border-bottom:1px solid rgba(184,138,53,.38); padding-bottom:.35rem; }
+.family-hierarchy-list { display:grid; grid-template-columns:minmax(0,1fr); gap:.55rem; }
+.family-member-card { display:grid !important; grid-template-columns:76px minmax(0,1fr); grid-template-rows:auto auto; align-items:center; column-gap:.8rem; text-align:left !important; padding:.65rem !important; background:rgba(255,248,232,.9) !important; }
+.family-member-img { grid-column:1; grid-row:1/4; width:70px !important; height:84px !important; border-radius:10px !important; object-fit:cover; margin:0 !important; }
+.family-member-name { grid-column:2; font-size:.96rem !important; }
+.family-member-role { grid-column:2; }
+.family-member-kids-stack { grid-column:2; display:flex; flex-direction:column; align-items:flex-start; gap:.12rem; margin-top:.3rem; color:#6b4320; font-size:.78rem; overflow-wrap:anywhere; }
+.family-member-kids-stack strong { color:#7b1d2c; font-size:.72rem; }
+.family-member-kids-stack span { display:block; }
+.family-parent-card { border-color:#bf8c32 !important; background:rgba(255,241,207,.96) !important; }
+.family-empty-note { color:var(--ink-muted); padding:.8rem; }
+/* Relatives list is compact; touching any name/card opens the photo modal. */
+.guest-cards-grid { display:grid !important; grid-template-columns:minmax(0,1fr) !important; gap:.35rem !important; }
+.guest-interactive-card { display:grid !important; grid-template-columns:42px minmax(0,1fr) !important; grid-template-rows:auto auto auto !important; align-items:center; column-gap:.55rem; padding:.42rem .6rem !important; min-height:0 !important; border-radius:10px !important; cursor:pointer; }
+.guest-photo-frame { grid-column:1; grid-row:1/4; width:38px !important; height:38px !important; margin:0 !important; }
+.guest-photo-frame img { width:38px !important; height:38px !important; border-radius:50% !important; object-fit:cover; }
+.guest-name-text { grid-column:2; margin:0 !important; font-size:.88rem !important; line-height:1.2 !important; }
+.guest-relation-text { grid-column:2; margin:0 !important; font-size:.7rem !important; line-height:1.15 !important; }
+.guest-kids-badge { grid-column:2; justify-self:start; margin:.12rem 0 0 !important; padding:.08rem .3rem !important; font-size:.66rem !important; }
+.guest-location-badge { grid-column:2; font-size:.66rem !important; margin:.1rem 0 0 !important; }
+.touch-cue { display:none !important; }
+.guest-interactive-card:hover { transform:translateY(-1px); box-shadow:0 4px 12px rgba(70,20,20,.12); }
+/* Different backgrounds remain visible while the content panels retain contrast. */
+@media(max-width:650px) {
+  #couple,#venue,#families,#invitation,#events,#people,#album,#wishes,#family-final-notes { background-attachment:scroll !important; }
+  .section-header { width:100%; padding:.8rem; }
+  .invitation-outer-stage,.invitation-background-scene { min-height:760px !important; aspect-ratio:auto !important; background-size:100% 100% !important; padding:3.2rem 1.1rem !important; }
+  body.invitation-locked #entrancePortal .portal-gopuram-arch { width:94vw !important; top:.55rem !important; }
+  body.invitation-locked #entrancePortal .portal-wedding-heading { font-size:clamp(1.2rem,5.8vw,1.8rem) !important; }
+  body.invitation-locked #entrancePortal .portal-date-tag { font-size:.65rem !important; letter-spacing:.08em !important; }
+  body.invitation-locked #entrancePortal .guest-personalise-form { bottom:max(.6rem,env(safe-area-inset-bottom)) !important; padding:.55rem .65rem !important; }
+  .guest-form-heading { font-size:.9rem; }
+  .guest-primary-input { padding:.6rem .7rem; }
+  .guest-family-extra { grid-template-columns:1fr; }
+  .guest-kids-entry { grid-column:auto; }
+  .family-member-card { grid-template-columns:62px minmax(0,1fr) !important; }
+  .family-member-img { width:58px !important; height:70px !important; }
+}
+@media(prefers-reduced-motion:reduce) { .portal-door,.portal-center-seal,.portal-revealed-stage { transition:none !important; } }
+
+
+/* V7 refinements: no overlapping gate controls, gold heritage finish, compact directory. */
+body.invitation-locked #entrancePortal .portal-gopuram-arch { display:none !important; }
+body.invitation-locked #entrancePortal .guest-personalise-form {
+  top:50% !important; bottom:auto !important; left:50% !important; transform:translate(-50%,-50%) !important;
+  width:min(760px,92vw) !important; max-height:86dvh !important; overflow:auto !important;
+  padding:clamp(1rem,2.5vw,1.6rem) !important; background:linear-gradient(145deg,rgba(48,12,12,.96),rgba(32,7,13,.96)) !important;
+  border:2px solid #c99a3a !important; border-radius:22px !important; box-shadow:0 18px 55px rgba(0,0,0,.65),inset 0 0 0 4px rgba(247,223,148,.08) !important;
+}
+body.invitation-locked #entrancePortal .guest-personalise-form.guest-form-finished { display:none !important; }
+.guest-complete-btn { display:block; width:min(100%,420px); margin:.8rem auto .1rem; padding:.8rem 1.2rem; border:1px solid #ffdf91; border-radius:999px; color:#2b0b10; background:linear-gradient(135deg,#fff0b8,#d6a13b 55%,#f9d878); box-shadow:0 5px 18px rgba(0,0,0,.28),inset 0 1px 0 #fff7d9; font:700 .92rem var(--font-sans); cursor:pointer; transition:transform .2s,box-shadow .2s; }
+.guest-complete-btn:hover { transform:translateY(-2px); box-shadow:0 8px 22px rgba(0,0,0,.36); }
+.portal-center-seal { z-index:8 !important; width:clamp(150px,24vw,205px) !important; height:clamp(150px,24vw,205px) !important; border:5px double #ffe39a !important; background:radial-gradient(circle at 35% 25%,#7e1b31,#3a0715 72%) !important; box-shadow:0 0 0 7px rgba(192,143,47,.35),0 16px 42px rgba(0,0,0,.7),0 0 38px rgba(247,211,119,.48) !important; }
+.portal-center-seal::after { content:'✦'; display:block; margin-top:.25rem; color:#f4cc70; font-size:.8rem; }
+/* The relatives directory resembles a compact printed family register, with photos on the right. */
+#people { background-image:linear-gradient(rgba(80,42,13,.2),rgba(42,12,12,.3)),url('assets/temple-aerial-sunset-two.webp') center/cover fixed !important; }
+#people .guest-segregated-block { background:rgba(255,247,225,.94) !important; border:1px solid #bd8a31 !important; border-radius:12px !important; padding:clamp(.5rem,1.3vw,.9rem) !important; box-shadow:0 10px 28px rgba(35,12,7,.16) !important; }
+.guest-cards-grid { display:flex !important; flex-direction:column !important; gap:.28rem !important; }
+.guest-interactive-card { display:grid !important; grid-template-columns:minmax(0,1fr) 54px !important; grid-template-rows:auto auto auto auto !important; column-gap:.65rem !important; align-items:center !important; min-height:0 !important; padding:.42rem .58rem !important; border:0 !important; border-bottom:1px solid rgba(161,111,38,.24) !important; border-radius:5px !important; background:linear-gradient(90deg,rgba(255,253,246,.97),rgba(255,246,225,.92)) !important; box-shadow:none !important; text-align:left !important; }
+.guest-photo-frame { grid-column:2 !important; grid-row:1/5 !important; width:50px !important; height:50px !important; margin:0 !important; border:1px solid #c99a42 !important; border-radius:6px !important; background:#f4e5c5 !important; }
+.guest-photo-frame img { width:100% !important; height:100% !important; border-radius:5px !important; object-fit:cover !important; }
+.guest-name-text,.guest-relation-text,.guest-kids-badge,.guest-location-badge { grid-column:1 !important; min-width:0 !important; text-align:left !important; overflow-wrap:anywhere !important; }
+.guest-name-text { font-family:var(--font-serif) !important; font-size:.91rem !important; font-weight:700 !important; color:#4a171c !important; line-height:1.15 !important; }
+.guest-relation-text { font-size:.7rem !important; color:#82591b !important; line-height:1.15 !important; }
+.guest-kids-badge { justify-self:start !important; max-width:100% !important; padding:.06rem .25rem !important; font-size:.64rem !important; line-height:1.2 !important; background:#f8e8c7 !important; border:1px solid rgba(184,133,43,.32) !important; }
+.guest-location-badge { font-size:.65rem !important; color:#735344 !important; line-height:1.1 !important; margin-top:.08rem !important; background:rgba(185,130,38,.07) !important; border-radius:4px !important; padding:.08rem .2rem !important; }
+.guest-interactive-card::before { display:none !important; content:none !important; }
+/* Remove the Om motif everywhere; use floral and lamp details instead. */
+.om,.portal-om,.revealed-om,.patrika-om { display:none !important; }
+@media(max-width:650px) {
+ body.invitation-locked #entrancePortal .guest-personalise-form { top:50% !important; bottom:auto !important; width:92vw !important; max-height:84dvh !important; padding:.85rem !important; }
+ .guest-complete-btn { padding:.72rem .8rem; font-size:.85rem; }
+ .guest-interactive-card { grid-template-columns:minmax(0,1fr) 46px !important; gap:.4rem !important; padding:.38rem .45rem !important; }
+ .guest-photo-frame { width:42px !important; height:42px !important; }
+}
+
+/* V8: separate the personalisation step from the key, prevent the key overlay after opening. */
+body.invitation-entered #entrancePortal { display:none !important; }
+body.invitation-locked #entrancePortal .portal-center-seal {
+  width:clamp(150px,22vw,205px) !important;
+  height:auto !important;
+  min-height:0 !important;
+  aspect-ratio:auto !important;
+  padding:.25rem .65rem .7rem !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  overflow:visible !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:.18rem !important;
+  color:#ffe8a0 !important;
+  opacity:0 !important;
+  visibility:hidden !important;
+  pointer-events:none !important;
+  transform:translate(-50%,-50%) scale(.92) !important;
+}
+body.invitation-locked #entrancePortal .portal-doors-container.name-entered .portal-center-seal {
+  opacity:1 !important;
+  visibility:visible !important;
+  pointer-events:auto !important;
+  transform:translate(-50%,-50%) scale(1) !important;
+}
+body.invitation-locked #entrancePortal .portal-doors-container.doors-open .portal-center-seal,
+body.invitation-locked #entrancePortal .portal-doors-container.doors-completed .portal-center-seal {
+  opacity:0 !important;
+  visibility:hidden !important;
+  pointer-events:none !important;
+}
+.royal-key-icon { display:block; width:clamp(94px,14vw,132px); height:auto; filter:drop-shadow(0 4px 9px rgba(0,0,0,.65)) drop-shadow(0 0 12px rgba(246,203,94,.38)); transition:transform .25s ease,filter .25s ease; }
+.portal-center-seal:hover .royal-key-icon { transform:translateY(-3px) rotate(-4deg); filter:drop-shadow(0 7px 12px rgba(0,0,0,.7)) drop-shadow(0 0 18px rgba(255,220,122,.72)); }
+.portal-center-seal .seal-text-main { display:inline-block; max-width:220px; padding:.45rem .9rem; border:1px solid rgba(255,224,145,.85); border-radius:999px; background:linear-gradient(135deg,rgba(93,15,34,.97),rgba(43,6,16,.98)); color:#ffedb2; font-size:.78rem; letter-spacing:.045em; line-height:1.2; box-shadow:0 5px 16px rgba(0,0,0,.4); }
+.portal-center-seal .seal-subtext { color:#fff1c9; font-size:.72rem; text-shadow:0 2px 5px #24060c; }
+.portal-center-seal:disabled { opacity:0 !important; visibility:hidden !important; pointer-events:none !important; }
+/* A real rose-petal fall: deep rose, ruby and soft pink petals instead of orange seed shapes. */
+#petalsCanvas { pointer-events:none !important; z-index:50 !important; opacity:.72 !important; }
+/* Family members appear in a clear vertical hierarchy: parents, children, then elders. */
+.family-members-grid { display:flex !important; flex-direction:column !important; align-items:stretch !important; gap:1rem !important; }
+.family-hierarchy-block { display:flex !important; flex-direction:column !important; width:100% !important; margin:0 0 .9rem !important; }
+.family-hierarchy-block h4 { margin:0 0 .45rem !important; padding:.45rem .7rem !important; border-bottom:1px solid rgba(176,126,37,.45) !important; color:#6c1b2b !important; text-align:left !important; }
+.family-hierarchy-list { display:flex !important; flex-direction:column !important; gap:.42rem !important; width:100% !important; }
+.family-member-card { width:100% !important; grid-template-columns:68px minmax(0,1fr) !important; grid-template-rows:auto auto auto !important; min-height:0 !important; margin:0 !important; }
+.family-member-img { grid-column:1 !important; grid-row:1/4 !important; width:60px !important; height:68px !important; object-fit:cover !important; }
+.family-member-name,.family-member-role,.family-member-kids-stack { grid-column:2 !important; min-width:0 !important; }
+@media(max-width:650px) {
+  body.invitation-locked #entrancePortal .portal-center-seal { width:148px !important; }
+  .royal-key-icon { width:88px; }
+  .portal-center-seal .seal-text-main { font-size:.69rem; padding:.38rem .65rem; }
+  .family-member-card { grid-template-columns:54px minmax(0,1fr) !important; column-gap:.55rem !important; padding:.55rem !important; }
+  .family-member-img { width:48px !important; height:56px !important; }
+}
+@media(prefers-reduced-motion:reduce) { .royal-key-icon { transition:none !important; } }
+
+
+/* V9 — cinematic golden temple wedding art, engraved royal key, realistic rose petals */
+:root {
+  --crimson: #651126;
+  --crimson-dark: #3b0917;
+  --crimson-deep: #21050d;
+  --crimson-light: #8d2440;
+  --gold: #d2a044;
+  --gold-light: #ffe6a1;
+  --gold-glow: #ffe19a;
+  --gold-dark: #8f5d18;
+  --brass: #b9832e;
+  --sandal: #fff8eb;
+  --sandal-card: rgba(255, 248, 235, 0.96);
+  --parchment: #fff5df;
+  --ink: #421b17;
+  --ink-muted: #765044;
+  --border-gold: rgba(208, 160, 68, 0.72);
+  --border-gold-solid: #c9932d;
+  --gold-gradient: linear-gradient(135deg, #fff0b9 0%, #d2a044 48%, #8c5b19 100%);
+}
+.hero-section { background:#24100f !important; }
+.hero-bg-img {
+  object-position:center 52% !important;
+  filter:brightness(.76) saturate(1.08) contrast(1.06) !important;
+  transform:scale(1.015) !important;
+}
+.hero-overlay {
+  background:linear-gradient(180deg,rgba(28,8,14,.24) 0%,rgba(30,8,14,.12) 36%,rgba(34,8,16,.48) 100%) !important;
+}
+.hero-temple-glow {
+  background:linear-gradient(to top,rgba(28,7,14,.68) 0%,rgba(28,7,14,.12) 72%,transparent 100%) !important;
+}
+.hero-content { text-shadow:0 2px 7px rgba(20,4,8,.78),0 8px 24px rgba(20,4,8,.45) !important; }
+.hero-content h1, .hero-couple-title, .hero-content .section-title {
+  color:#fff7e6 !important;
+  text-shadow:0 3px 18px rgba(24,4,10,.9),0 0 22px rgba(247,205,113,.28) !important;
+}
+.hero-date-box, .countdown-item, .hero-action-btn {
+  border-color:rgba(255,222,145,.86) !important;
+  box-shadow:0 8px 28px rgba(25,5,10,.24),inset 0 1px rgba(255,255,255,.22) !important;
+}
+#home .hero-date-box, #home .countdown-item { backdrop-filter:blur(8px); }
+#home .hero-date-box { background:rgba(59,12,25,.78) !important; color:#fff3d0 !important; }
+#home .countdown-item { background:rgba(255,246,225,.92) !important; color:#521526 !important; }
+
+/* The supplied seated-couple artwork is reserved for Sacred Wedding Invitation; Home has its own golden temple hero scene. */
+#invitation .invitation-outer-stage,
+#invitation .invitation-background-scene {
+  position:relative;
+  isolation:isolate;
+  background-image:linear-gradient(135deg,rgba(44,8,18,.30),rgba(40,9,18,.16)),url('assets/golden-temple-wedding-dusk.webp') !important;
+  background-size:cover !important;
+  background-position:center 48% !important;
+  background-repeat:no-repeat !important;
+  border:2px solid rgba(218,171,79,.88) !important;
+  border-radius:24px !important;
+  box-shadow:0 20px 55px rgba(44,8,18,.25),inset 0 0 0 1px rgba(255,241,190,.48) !important;
+  padding:clamp(1rem,3vw,2.4rem) !important;
+}
+#invitation .invitation-patrika-framed,
+#invitation .invitation-content-panel {
+  background:linear-gradient(145deg,rgba(255,249,233,.95),rgba(255,241,211,.92)) !important;
+  color:#42151c !important;
+  border:2px solid #c9973d !important;
+  border-radius:18px !important;
+  box-shadow:0 12px 34px rgba(35,7,14,.30),inset 0 0 0 5px rgba(255,255,255,.34) !important;
+  backdrop-filter:blur(5px) !important;
+}
+#invitation .section-title, #invitation .section-kicker, #invitation .section-subtitle {
+  color:#fff4d9 !important;
+  text-shadow:0 2px 8px rgba(30,5,12,.88) !important;
+}
+#invitation .patrika-slokam, #invitation .patrika-couple-names,
+#invitation .patrika-body, #invitation .patrika-event-details,
+#invitation .invitation-content-panel p,
+#invitation .invitation-content-panel h3,
+#invitation .invitation-content-panel h4 {
+  color:#4a1720 !important;
+}
+#invitation .ornament-divider { color:#c28b2f !important; }
+
+/* Replace the circular seal with the supplied ornate golden key artwork. */
+.portal-center-seal {
+  width:clamp(205px,31vw,285px) !important;
+  height:auto !important;
+  min-height:0 !important;
+  aspect-ratio:auto !important;
+  padding:0 !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  display:flex !important;
+  flex-direction:column !important;
+  justify-content:center !important;
+  gap:0 !important;
+  overflow:visible !important;
+  transform:translate(-50%,-50%) !important;
+  filter:drop-shadow(0 8px 13px rgba(0,0,0,.56));
+}
+.portal-center-seal:hover {
+  transform:translate(-50%,-50%) scale(1.045) !important;
+  box-shadow:none !important;
+}
+.portal-center-seal .royal-key-image {
+  display:block;
+  width:100%;
+  height:auto;
+  max-height:clamp(115px,22vh,190px);
+  object-fit:contain;
+  filter:drop-shadow(0 0 7px rgba(255,203,91,.42));
+  transition:filter .25s ease, transform .25s ease;
+}
+.portal-center-seal:hover .royal-key-image {
+  filter:drop-shadow(0 0 15px rgba(255,210,103,.86));
+  transform:rotate(-2deg) scale(1.03);
+}
+.portal-center-seal .seal-text-main {
+  display:inline-block;
+  align-self:center;
+  margin-top:-.15rem;
+  padding:.38rem .85rem;
+  border:1px solid #f4d58b;
+  border-radius:999px;
+  color:#fff0bd !important;
+  background:linear-gradient(135deg,#7d1932,#3b0a17) !important;
+  font-size:clamp(.68rem,1.3vw,.82rem) !important;
+  line-height:1.25;
+  letter-spacing:.07em;
+  box-shadow:0 4px 14px rgba(0,0,0,.38),inset 0 1px rgba(255,255,255,.12);
+  white-space:nowrap;
+}
+.portal-center-seal .seal-subtext {
+  margin-top:.22rem;
+  color:#ffdf9a !important;
+  text-shadow:0 2px 4px rgba(0,0,0,.8);
+  font-size:.72rem !important;
+}
+.portal-center-seal:disabled { opacity:0 !important; visibility:hidden !important; pointer-events:none !important; }
+.portal-doors-container.name-entered .portal-center-seal:not(:disabled) { opacity:1; visibility:visible; pointer-events:auto; }
+
+/* More natural rose-petal fall: fewer, larger, gently fluttering petals. */
+#petalsCanvas { z-index:15; opacity:.92; }
+@media (prefers-reduced-motion: reduce) {
+  #petalsCanvas { display:none !important; }
+}
+@media (max-width:650px) {
+  .portal-center-seal {
+    width:clamp(165px,48vw,220px) !important;
+  }
+  .portal-center-seal .royal-key-image { max-height:19vh; }
+  .portal-center-seal .seal-text-main { font-size:.66rem !important; }
+  .portal-center-seal .seal-subtext { font-size:.62rem !important; }
+  #invitation .invitation-outer-stage,
+  #invitation .invitation-background-scene { background-position:center center !important; padding:.7rem !important; }
+  #invitation .invitation-patrika-framed,
+  #invitation .invitation-content-panel { padding:1rem !important; }
+}
+
+
+/* Final specificity guard: the supplied key artwork must never revert to a round seal. */
+body.invitation-locked #entrancePortal .portal-center-seal {
+  width:clamp(205px,31vw,285px) !important;
+  height:auto !important;
+  min-height:0 !important;
+  aspect-ratio:auto !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  padding:0 !important;
+  overflow:visible !important;
+  display:flex !important;
+  flex-direction:column !important;
+  justify-content:center !important;
+  transform:translate(-50%,-50%) !important;
+  filter:drop-shadow(0 8px 13px rgba(0,0,0,.56)) !important;
+}
+body.invitation-locked #entrancePortal .portal-center-seal::after { content:none !important; display:none !important; }
+body.invitation-locked #entrancePortal .portal-center-seal:hover {
+  transform:translate(-50%,-50%) scale(1.045) !important;
+  box-shadow:none !important;
+}
+@media(max-width:650px) {
+  body.invitation-locked #entrancePortal .portal-center-seal {
+    width:clamp(165px,48vw,220px) !important;
+    height:auto !important;
+  }
+}
+
+
+/* V10 — clearer cinematic section artwork and high-contrast regal typography */
+:root {
+  --ink: #40121d;
+  --ink-muted: #694138;
+  --gold: #d6a64b;
+  --gold-light: #ffedb4;
+  --parchment: #fff5df;
+  --sandal-card: rgba(255, 248, 233, .97);
+}
+/* Keep the artwork visible while ensuring headings and content remain legible. */
+#home.hero-section {
+  background:
+    linear-gradient(180deg, rgba(28, 7, 14, .18) 0%, rgba(38, 8, 16, .12) 42%, rgba(35, 7, 14, .56) 100%),
+    url('assets/golden-temple-wedding-dusk.webp') center 48% / cover no-repeat !important;
+}
+#home .hero-bg-img { opacity: .12 !important; }
+#home .hero-content h1,
+#home .hero-content .section-title,
+#home .hero-content p,
+#home .hero-content .hero-date-box {
+  color: #fff4d6 !important;
+  text-shadow: 0 2px 10px rgba(24, 4, 10, .92), 0 0 22px rgba(224, 171, 67, .28) !important;
+}
+#couple {
+  background:
+    linear-gradient(180deg, rgba(34, 8, 15, .38), rgba(35, 8, 15, .48)),
+    url('assets/couple-section-wedding.webp') center 53% / cover no-repeat !important;
+  background-attachment: scroll !important;
+}
+#venue {
+  background:
+    linear-gradient(180deg, rgba(38, 10, 16, .22), rgba(38, 10, 16, .34)),
+    url('assets/page2-temple-day.webp') center 46% / cover no-repeat !important;
+  background-attachment: scroll !important;
+}
+#families {
+  background:
+    linear-gradient(180deg, rgba(40, 8, 17, .24), rgba(40, 8, 17, .35)),
+    url('assets/temple-aerial-sunset-two.webp') center 48% / cover no-repeat !important;
+  background-attachment: scroll !important;
+}
+#invitation {
+  background:
+    linear-gradient(180deg, rgba(36, 7, 15, .26), rgba(36, 7, 15, .38)),
+    url('assets/couple-section-wedding.webp') center 48% / cover no-repeat !important;
+  background-attachment: scroll !important;
+}
+#events {
+  background:
+    linear-gradient(180deg, rgba(38, 8, 16, .22), rgba(38, 8, 16, .34)),
+    url('assets/wedding-courtyard.webp') center 48% / cover no-repeat !important;
+  background-attachment: scroll !important;
+}
+#people {
+  background:
+    linear-gradient(180deg, rgba(35, 7, 14, .28), rgba(35, 7, 14, .38)),
+    url('assets/madurai-sunset-panorama.webp') center 48% / cover no-repeat !important;
+  background-attachment: scroll !important;
+}
+#album {
+  background:
+    linear-gradient(180deg, rgba(32, 7, 14, .25), rgba(32, 7, 14, .38)),
+    url('assets/temple-aerial-sunset.webp') center 48% / cover no-repeat !important;
+  background-attachment: scroll !important;
+}
+#wishes {
+  background:
+    linear-gradient(180deg, rgba(38, 8, 16, .24), rgba(38, 8, 16, .36)),
+    url('assets/meenakshi-temple-day.webp') center 48% / cover no-repeat !important;
+  background-attachment: scroll !important;
+}
+#family-final-notes {
+  background:
+    linear-gradient(180deg, rgba(35, 7, 14, .18), rgba(35, 7, 14, .34)),
+    url('assets/final-thank-you-courtyard.webp') center 50% / cover no-repeat !important;
+  background-attachment: scroll !important;
+}
+/* Consistent high-contrast section headings across every scenic page. */
+#couple .section-header,
+#venue .section-header,
+#families .section-header,
+#invitation .section-header,
+#events .section-header,
+#people .section-header,
+#album .section-header,
+#wishes .section-header,
+#family-final-notes .section-header {
+  padding: clamp(.8rem, 2vw, 1.25rem);
+  margin-bottom: clamp(1.2rem, 3vw, 2.2rem);
+  border: 1px solid rgba(255, 220, 143, .68);
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(48, 8, 19, .84), rgba(91, 18, 36, .76));
+  box-shadow: 0 10px 28px rgba(20, 3, 9, .22), inset 0 1px rgba(255,255,255,.1);
+  backdrop-filter: blur(5px);
+}
+#couple .section-title,
+#venue .section-title,
+#families .section-title,
+#invitation .section-title,
+#events .section-title,
+#people .section-title,
+#album .section-title,
+#wishes .section-title,
+#family-final-notes .section-title {
+  color: #ffe8a1 !important;
+  text-shadow: 0 2px 8px rgba(0,0,0,.62) !important;
+}
+#couple .section-kicker,
+#venue .section-kicker,
+#families .section-kicker,
+#invitation .section-kicker,
+#events .section-kicker,
+#people .section-kicker,
+#album .section-kicker,
+#wishes .section-kicker,
+#family-final-notes .section-kicker {
+  color: #fff0c8 !important;
+}
+#couple .section-subtitle,
+#venue .section-subtitle,
+#families .section-subtitle,
+#invitation .section-subtitle,
+#events .section-subtitle,
+#people .section-subtitle,
+#album .section-subtitle,
+#wishes .section-subtitle,
+#family-final-notes .section-subtitle {
+  color: #fff8e8 !important;
+  text-shadow: 0 1px 5px rgba(0,0,0,.7) !important;
+}
+/* Cream-and-gold panels preserve legibility without hiding the scenic backgrounds. */
+#couple .couple-portrait-card,
+#couple .couple-person-card,
+#venue .venue-main-card,
+#families .family-branch-panel,
+#events .event-card,
+#people .guest-segregated-block,
+#wishes .expectation-card,
+#family-final-notes .family-note-card,
+#family-final-notes .admin-login-card {
+  color: #42151d !important;
+  background-color: rgba(255, 247, 227, .96) !important;
+  border-color: rgba(210, 160, 68, .92) !important;
+  box-shadow: 0 12px 32px rgba(25, 5, 10, .24), inset 0 1px rgba(255,255,255,.85) !important;
+}
+#couple .couple-portrait-card {
+  overflow: hidden;
+  border: 2px solid #d6a64b !important;
+  border-radius: 18px !important;
+}
+#couple .couple-portrait-card img {
+  object-fit: cover;
+  background: #f5e6c9;
+}
+#couple .couple-portrait-card figcaption,
+#couple .couple-person-name {
+  color: #67162a !important;
+}
+#couple .couple-person-desc,
+#couple .couple-person-title {
+  color: #58352d !important;
+}
+#venue .venue-main-card,
+#families .family-branch-panel,
+#people .guest-segregated-block,
+#events .events-list,
+#wishes .expectations-suggestions-grid {
+  border: 1px solid rgba(210, 160, 68, .9);
+  border-radius: 18px;
+}
+#venue .route-btn,
+#events .event-card button,
+#wishes .expectation-card {
+  color: #541325 !important;
+}
+@media (max-width: 700px) {
+  #couple, #venue, #families, #invitation, #events, #people, #album, #wishes, #family-final-notes {
+    background-attachment: scroll !important;
+    background-position: center center !important;
+  }
+  #couple .section-header,
+  #venue .section-header,
+  #families .section-header,
+  #invitation .section-header,
+  #events .section-header,
+  #people .section-header,
+  #album .section-header,
+  #wishes .section-header,
+  #family-final-notes .section-header {
+    border-radius: 13px;
+  }
+}
+
+/* V12 — stronger text contrast, supplied devotional frame, and clearer venue controls. */
+:root {
+  --ink: #351019;
+  --ink-muted: #5c332b;
+  --gold: #bd8425;
+  --gold-light: #ffe6a0;
+  --parchment: #fff8e8;
+  --sandal-card: rgba(255, 249, 235, .985);
+}
+
+/* Use the newly supplied goddess frame for the album backdrop and the auspicious invitation. */
+#album {
+  background-image: linear-gradient(rgba(255,248,231,.12), rgba(255,248,231,.20)),
+    url('assets/ornate-goddess-invitation-frame.webp') !important;
+  background-size: cover !important;
+  background-position: center top !important;
+  background-attachment: scroll !important;
+}
+#album .album-three-page-scroll-wrap {
+  background: rgba(255, 248, 232, .88) !important;
+  border: 2px solid #c28b32 !important;
+  border-radius: 18px !important;
+  padding: .65rem !important;
+  box-shadow: 0 14px 35px rgba(43, 8, 17, .25) !important;
+}
+#album .album-item-card {
+  background: #fff9ec !important;
+  border: 1px solid #c9973d !important;
+  box-shadow: 0 8px 22px rgba(45, 10, 18, .22) !important;
+}
+#album .album-caption-bar {
+  background: #fff7e4 !important;
+  color: #40121d !important;
+}
+#album .album-caption-title { color: #541526 !important; text-shadow: none !important; }
+#album .album-caption-bar small { color: #65412d !important; }
+
+/* The invitation artwork itself supplies the ivory centre; avoid stacking another opaque card on it. */
+#invitation {
+  background-image: linear-gradient(rgba(50, 12, 20, .10), rgba(50, 12, 20, .16)),
+    url('assets/ornate-goddess-invitation-frame.webp') !important;
+  background-size: cover !important;
+  background-position: center top !important;
+  background-attachment: scroll !important;
+}
+#invitation .invitation-outer-stage,
+#invitation .invitation-background-scene {
+  background-image: url('assets/ornate-goddess-invitation-frame.webp') !important;
+  background-size: 100% 100% !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: clamp(3.3rem, 8vw, 6.5rem) clamp(1.6rem, 11vw, 7rem) !important;
+  min-height: clamp(760px, 125vw, 1320px) !important;
+}
+#invitation .invitation-patrika-framed,
+#invitation .invitation-content-panel {
+  background: rgba(255, 249, 231, .12) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  color: #3c101b !important;
+}
+#invitation .patrika-slokam,
+#invitation .patrika-couple-names,
+#invitation .patrika-body,
+#invitation .patrika-event-details,
+#invitation .invitation-content-panel p,
+#invitation .invitation-content-panel h3,
+#invitation .invitation-content-panel h4,
+#invitation .invitation-content-panel li,
+#invitation .invitation-content-panel strong {
+  color: #3b101a !important;
+  text-shadow: 0 1px 0 rgba(255,255,255,.7) !important;
+}
+#invitation .patrika-couple-names { color: #71182b !important; }
+#invitation .ornament-divider { color: #98631a !important; }
+
+/* High-contrast venue directions: burgundy buttons get white/gold lettering; light buttons get dark text. */
+#venue .route-btn,
+#venue .venue-main-card .btn-regal,
+#venue .venue-main-card a.btn-regal {
+  color: #4a1220 !important;
+  background: #fff9eb !important;
+  border: 1px solid #c58d2b !important;
+  text-shadow: none !important;
+}
+#venue .route-btn:first-of-type,
+#venue .venue-main-card .route-btn.primary,
+#venue .venue-main-card .btn-regal:not(.outline) {
+  color: #fff8e7 !important;
+  background: linear-gradient(135deg, #7e1730, #4a1020) !important;
+  border-color: #e2b75b !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,.35) !important;
+}
+#venue .venue-main-card,
+#venue .venue-main-card p,
+#venue .venue-main-card li,
+#venue .venue-main-card strong,
+#venue .venue-main-card address,
+#venue .venue-main-card h3,
+#venue .venue-main-card h4 {
+  color: #43202a !important;
+}
+#venue .venue-name-text { color: #65172a !important; }
+
+/* Fix the final family-note panel: no pale-gold text on ivory. */
+#family-final-notes .final-notes-card {
+  background: rgba(255, 247, 226, .97) !important;
+  border: 2px solid #c58d2b !important;
+  color: #40121d !important;
+  box-shadow: 0 18px 44px rgba(31, 5, 12, .32) !important;
+  backdrop-filter: blur(4px) !important;
+}
+#family-final-notes .section-title,
+#family-final-notes .section-kicker,
+#family-final-notes .section-subtitle,
+#family-final-notes .legacy-note,
+#family-final-notes .admin-last-access,
+#family-final-notes .admin-last-access span {
+  color: #451421 !important;
+  text-shadow: none !important;
+}
+#family-final-notes .section-title { color: #75182e !important; }
+#family-final-notes .admin-trigger-btn {
+  color: #fff7e5 !important;
+  background: linear-gradient(135deg, #78172d, #4b1020) !important;
+  border: 1px solid #d6a64b !important;
+}
+
+/* Make headings and body copy consistently readable on all scenic backgrounds. */
+#couple .section-subtitle,
+#venue .section-subtitle,
+#families .section-subtitle,
+#invitation .section-subtitle,
+#events .section-subtitle,
+#people .section-subtitle,
+#album .section-subtitle,
+#wishes .section-subtitle {
+  display: inline-block;
+  color: #fff9e9 !important;
+  background: rgba(52, 12, 23, .84) !important;
+  border: 1px solid rgba(223, 180, 91, .65) !important;
+  border-radius: 10px !important;
+  padding: .45rem .75rem !important;
+  text-shadow: 0 1px 3px rgba(0,0,0,.6) !important;
+}
+#couple .section-header,
+#venue .section-header,
+#families .section-header,
+#invitation .section-header,
+#events .section-header,
+#people .section-header,
+#album .section-header,
+#wishes .section-header {
+  background: rgba(55, 11, 23, .92) !important;
+  border-color: #d5a64b !important;
+}
+#couple .section-title,
+#venue .section-title,
+#families .section-title,
+#invitation .section-title,
+#events .section-title,
+#people .section-title,
+#album .section-title,
+#wishes .section-title {
+  color: #ffe8a6 !important;
+}
+
+@media (max-width: 700px) {
+  #invitation .invitation-outer-stage,
+  #invitation .invitation-background-scene {
+    min-height: 800px !important;
+    padding: 3.2rem 1.2rem !important;
+    background-size: 100% 100% !important;
+  }
+  #album .album-three-page-scroll-wrap { padding: .35rem !important; }
+}
+#venue .route-btn.gps-primary {
+  color: #fff8e7 !important;
+  background: linear-gradient(135deg, #8a1732, #4b1020) !important;
+  border: 1px solid #e0b451 !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,.4) !important;
+}
+#venue .route-btn:not(.gps-primary) {
+  color: #481321 !important;
+  background: #fffaf0 !important;
+  border: 1px solid #c58d2b !important;
+}
+
+/* V13 correction: preserve the original section scenes; only the invitation's inner artwork changes. */
+#invitation {
+  background-image: linear-gradient(rgba(52,13,18,.12), rgba(52,13,18,.22)), var(--scene-events) !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  background-attachment: scroll !important;
+}
+#invitation .invitation-outer-stage,
+#invitation .invitation-background-scene {
+  width: min(860px, 100%) !important;
+  max-width: 860px !important;
+  aspect-ratio: 2 / 3 !important;
+  min-height: 0 !important;
+  height: auto !important;
+  margin: 0 auto !important;
+  padding: 10.5% 15.5% 11% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background-image: url('assets/ornate-goddess-invitation-frame.webp') !important;
+  background-size: 100% 100% !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+#invitation .invitation-patrika-framed,
+#invitation .invitation-content-panel {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  padding: .2rem !important;
+  margin: 0 auto !important;
+  background: rgba(255,249,231,.10) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  overflow-wrap: anywhere !important;
+  text-align: center !important;
+}
+#invitation .patrika-slokam,
+#invitation .patrika-greeting,
+#invitation .patrika-body-text,
+#invitation .personalized-guest-box,
+#invitation .patrika-couple-names,
+#invitation .patrika-muhurtham-badge,
+#invitation .patrika-actions-row {
+  max-width: 100% !important;
+  overflow-wrap: anywhere !important;
+  word-break: normal !important;
+  margin-inline: auto !important;
+}
+#invitation .patrika-slokam { font-size: clamp(.76rem, 1.6vw, 1rem) !important; line-height: 1.45 !important; }
+#invitation .patrika-greeting { font-size: clamp(.82rem, 1.7vw, 1.1rem) !important; line-height: 1.45 !important; }
+#invitation .patrika-body-text { font-size: clamp(.76rem, 1.5vw, .98rem) !important; line-height: 1.55 !important; }
+#invitation .patrika-couple-names { display:flex !important; flex-direction:column !important; align-items:center !important; gap:.08rem !important; font-size:clamp(1.25rem,3.2vw,2rem) !important; line-height:1.12 !important; }
+#invitation .patrika-muhurtham-badge { font-size:clamp(.72rem,1.5vw,.95rem) !important; line-height:1.4 !important; }
+#invitation .patrika-actions-row { display:flex !important; flex-wrap:wrap !important; justify-content:center !important; gap:.35rem !important; }
+#invitation .patrika-actions-row .btn-regal { max-width:100% !important; padding:.45rem .65rem !important; font-size:clamp(.65rem,1.35vw,.82rem) !important; white-space:normal !important; }
+
+/* Keep the album's original Madurai panorama background; no devotional frame inside its scroll track. */
+#album {
+  background-image: linear-gradient(rgba(41,8,17,.18), rgba(41,8,17,.30)), var(--scene-album) !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-attachment: scroll !important;
+}
+#album .album-three-page-scroll-wrap {
+  background: rgba(255,248,235,.08) !important;
+  background-image: none !important;
+  border: 1px solid rgba(247,223,148,.5) !important;
+  border-radius: 14px !important;
+  padding: .45rem !important;
+  box-shadow: 0 10px 28px rgba(43,8,17,.18) !important;
+  backdrop-filter: blur(2px) !important;
+}
+#album .album-three-page-track { background: transparent !important; background-image: none !important; }
+#album .album-item-card { background: rgba(255,249,236,.78) !important; }
+#album .album-caption-bar { background: rgba(255,247,228,.82) !important; }
+
+/* Compact relatives register: couple names on one row, children immediately underneath, no portrait column. */
+#people .guest-cards-grid { display:flex !important; flex-direction:column !important; gap:.3rem !important; }
+#people .guest-interactive-card {
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:stretch !important;
+  gap:.18rem !important;
+  min-height:0 !important;
+  width:100% !important;
+  padding:.48rem .75rem !important;
+  border:1px solid rgba(174,124,44,.28) !important;
+  border-bottom:1px solid rgba(174,124,44,.35) !important;
+  border-radius:8px !important;
+  background:rgba(255,249,235,.58) !important;
+  box-shadow:none !important;
+  text-align:left !important;
+  cursor:default !important;
+  transform:none !important;
+}
+#people .guest-photo-frame { display:none !important; }
+#people .guest-interactive-card::before { display:none !important; content:none !important; }
+#people .guest-couple-row { display:grid !important; grid-template-columns:minmax(0,1fr) auto !important; align-items:baseline !important; gap:.6rem !important; width:100% !important; }
+#people .guest-name-text { grid-column:auto !important; min-width:0 !important; font-weight:700 !important; font-size:clamp(.82rem,1.35vw,.98rem) !important; color:#42101c !important; line-height:1.25 !important; overflow-wrap:anywhere !important; }
+#people .guest-location-badge { grid-column:auto !important; margin:0 !important; padding:0 !important; border:0 !important; border-radius:0 !important; background:transparent !important; color:#6c4a28 !important; font-size:.72rem !important; text-align:right !important; white-space:normal !important; }
+#people .guest-children-line { padding-left:.2rem !important; font-size:.78rem !important; line-height:1.35 !important; color:#633a28 !important; overflow-wrap:anywhere !important; }
+#people .guest-children-label { font-weight:700 !important; color:#8a1732 !important; }
+#people .guest-relation-text { margin:0 !important; padding-left:.2rem !important; color:#795a43 !important; font-size:.68rem !important; line-height:1.25 !important; }
+#people .guest-segregated-block { background:rgba(255,249,235,.30) !important; padding:.4rem !important; border-radius:10px !important; backdrop-filter:blur(2px) !important; }
+#people .guest-group-header { color:#fff0c7 !important; text-shadow:0 1px 3px rgba(36,5,13,.75) !important; font-size:clamp(.85rem,1.6vw,1.1rem) !important; margin-bottom:.35rem !important; }
+#people .people-controls-bar { margin-bottom:.8rem !important; }
+#people .section-subtitle { background:rgba(52,12,23,.48) !important; }
+
+/* Lower the opacity of decorative panels so the scene remains visible while retaining readable text. */
+.section-header { background:rgba(255,249,237,.58) !important; backdrop-filter:blur(3px) !important; }
+#couple .section-header, #venue .section-header, #families .section-header,
+#invitation .section-header, #events .section-header, #people .section-header,
+#album .section-header, #wishes .section-header {
+  background:rgba(55,11,23,.60) !important;
+  border-color:rgba(213,166,75,.72) !important;
+  backdrop-filter:blur(3px) !important;
+}
+.section-subtitle { background:rgba(52,12,23,.48) !important; }
+.venue-main-card, .family-branch-panel, .guest-segregated-block, .wishes-card, .final-notes-card {
+  background-color:rgba(255,250,239,.78) !important;
+  backdrop-filter:blur(3px) !important;
+}
+#petalsCanvas { z-index:0 !important; opacity:.70 !important; pointer-events:none !important; }
+
+/* Compact controls for optional music and speed-adjustable auto-scroll. */
+.floating-actions { gap:7px !important; }
+.floating-actions .float-btn { padding:.55rem .78rem !important; font-size:.76rem !important; backdrop-filter:blur(5px); }
+@media (max-width:700px) {
+  .floating-actions { right:8px !important; bottom:84px !important; gap:5px !important; }
+  .floating-actions .float-btn { padding:.42rem .62rem !important; font-size:.68rem !important; }
+  #invitation .invitation-outer-stage,
+  #invitation .invitation-background-scene { width:100% !important; padding:11% 14% 12% !important; min-height:0 !important; aspect-ratio:2/3 !important; }
+  #invitation .patrika-actions-row .btn-regal { flex:1 1 42% !important; }
+  #people .guest-couple-row { grid-template-columns:minmax(0,1fr) auto !important; gap:.35rem !important; }
+  #people .guest-name-text { font-size:.78rem !important; }
+  #people .guest-location-badge { max-width:100px !important; font-size:.65rem !important; }
+}
+@media (prefers-reduced-motion:reduce) {
+  #petalsCanvas { display:none !important; }
+  html { scroll-behavior:auto !important; }
+}
+
+@media (max-width:700px) {
+  #invitation .invitation-outer-stage,
+  #invitation .invitation-background-scene { aspect-ratio:auto !important; min-height:760px !important; padding:10% 13% 11% !important; background-size:100% 100% !important; }
+}
+
+/* ==========================================================================
+   V14 MOBILE-FIRST FIT & USABILITY PATCH
+   Preserve the approved temple backgrounds and existing section content.
+   ========================================================================== */
+:root { --mobile-gutter: clamp(12px, 3.6vw, 22px); }
+html { width:100%; max-width:100%; overflow-x:clip; scroll-padding-top:76px; }
+body { width:100%; max-width:100%; overflow-x:clip; }
+img, video, canvas, svg { max-width:100%; }
+button, input, select, textarea, a { touch-action:manipulation; }
+button, .btn-regal, .float-btn, .nav-link, .dock-item { min-height:44px; }
+
+@media (max-width:700px) {
+  html { scroll-padding-top:64px; }
+  body { font-size:15px; line-height:1.5; }
+  .topbar { padding: .45rem var(--mobile-gutter) !important; min-height:58px; gap:8px; }
+  .topbar .brand, .topbar .logo, .brand-name { min-width:0; max-width:55vw; }
+  .topbar .brand *, .topbar .logo *, .brand-name { overflow-wrap:anywhere; }
+  .topbar nav { max-width:100%; }
+  main, .main-content, .page-content { width:100%; max-width:100%; }
+  section, .page-section { scroll-margin-top:68px; }
+  .section-header { width:calc(100% - 16px) !important; max-width:calc(100% - 16px) !important; margin-inline:auto !important; padding:.55rem .7rem !important; font-size:clamp(.88rem,4vw,1.08rem) !important; line-height:1.25 !important; overflow-wrap:anywhere; }
+  .section-subtitle { max-width:calc(100% - 24px); margin-inline:auto; padding:.45rem .65rem; font-size:.82rem; line-height:1.45; }
+  .section-inner, .section-content, .container, .content-wrap { width:100%; max-width:100%; padding-left:var(--mobile-gutter) !important; padding-right:var(--mobile-gutter) !important; }
+  p, li, .card-description { overflow-wrap:anywhere; }
+  .btn-regal, button, .float-btn { max-width:100%; white-space:normal; line-height:1.25; }
+
+  /* Main hero: no oversized text or horizontal clipping on narrow phones. */
+  #home, .hero-section, #hero { min-height: min(92svh, 860px); min-height: min(92vh, 860px); background-position:center center !important; }
+  .hero-title, #home h1, .hero-section h1 { font-size:clamp(2rem, 10vw, 3.7rem) !important; line-height:1.05 !important; letter-spacing:-.025em; overflow-wrap:normal; }
+  .hero-subtitle, #home .subtitle { font-size:clamp(.9rem,4vw,1.1rem) !important; line-height:1.45 !important; }
+
+  /* Full-screen personal invitation remains contained and readable on mobile. */
+  #invitation .invitation-outer-stage,
+  #invitation .invitation-background-scene {
+    width:100% !important; max-width:100% !important;
+    min-height: min(84svh, 780px) !important; min-height:min(84vh,780px) !important;
+    aspect-ratio:auto !important;
+    padding:clamp(34px, 9vw, 60px) clamp(24px, 7vw, 42px) !important;
+    background-size:100% 100% !important; background-position:center !important;
+  }
+  #invitation .invitation-patrika-framed, #invitation .invitation-content-panel { width:100% !important; max-width:100% !important; min-width:0 !important; }
+  #invitation .patrika-couple-names { font-size:clamp(1.45rem,6vw,2.2rem) !important; line-height:1.13 !important; }
+  #invitation .patrika-slokam, #invitation .patrika-greeting, #invitation .patrika-body-text { font-size:clamp(.82rem,3.5vw,.98rem) !important; line-height:1.5 !important; }
+  #invitation .patrika-actions-row { gap:.5rem !important; }
+  #invitation .patrika-actions-row .btn-regal { flex:1 1 100% !important; min-height:44px; }
+
+  /* Stack cards naturally on phones; never force desktop columns. */
+  #couple .couple-grid, #couple .couple-cards, #venue .venue-grid,
+  #families .families-grid, #families .family-columns,
+  #events .events-grid, #wishes .wishes-grid { grid-template-columns:minmax(0,1fr) !important; }
+  #couple .couple-card, #venue .venue-main-card, #families .family-branch-panel,
+  #events .event-card, #wishes .wishes-card { min-width:0 !important; }
+  #couple img { max-width:100%; height:auto; }
+
+  /* Compact, tappable relatives rows. Keep names and children text only. */
+  #people .people-controls-bar { display:flex !important; flex-direction:column !important; gap:.55rem !important; }
+  #people input, #people select, #people .search-input { width:100% !important; min-width:0 !important; min-height:44px !important; font-size:16px !important; }
+  #people .guest-cards-grid { gap:.35rem !important; }
+  #people .guest-interactive-card { padding:.6rem .7rem !important; border-radius:10px !important; }
+  #people .guest-couple-row { display:flex !important; flex-wrap:wrap !important; align-items:baseline !important; gap:.15rem .5rem !important; }
+  #people .guest-name-text { flex:1 1 100% !important; font-size:.9rem !important; line-height:1.3 !important; }
+  #people .guest-location-badge { max-width:100% !important; text-align:left !important; font-size:.72rem !important; }
+  #people .guest-children-line { padding-left:0 !important; font-size:.8rem !important; }
+  #people .guest-relation-text { padding-left:0 !important; font-size:.72rem !important; }
+  #people .guest-filter, #people .filter-chip, #people .tab-button { min-height:40px !important; }
+
+  /* Album: no nested horizontal scrollbar; swipeable photos remain within viewport. */
+  #album .album-three-page-scroll-wrap { max-width:100% !important; overflow-x:auto !important; overscroll-behavior-x:contain; }
+  #album .album-three-page-track { max-width:100%; }
+  #album .album-item-card { min-width:min(78vw, 320px) !important; }
+  #album img { object-fit:cover; }
+
+  /* Venue and events: legible directions, wrapping times, and easy-to-tap links. */
+  .venue-main-card, .family-branch-panel, .guest-segregated-block, .wishes-card, .final-notes-card { padding: .85rem !important; }
+  #venue a, #venue button, #events a, #events button { width:100%; min-height:44px; }
+  #venue .venue-address, #venue p, #events p { overflow-wrap:anywhere; }
+
+  /* Bottom dock respects iPhone/Android safe areas and never spans the whole screen. */
+  .floating-actions { right:8px !important; bottom:calc(10px + env(safe-area-inset-bottom)) !important; left:8px !important; width:max-content; max-width:calc(100vw - 16px); margin-inline:auto; gap:3px !important; padding:5px !important; }
+  .floating-actions .float-btn { min-width:42px; min-height:42px; padding:.38rem .48rem !important; font-size:.66rem !important; }
+  #petalsCanvas { width:100vw !important; height:100svh !important; }
+  .scroll-progress-bar { height:3px; }
+}
+
+@media (max-width:380px) {
+  .topbar { min-height:54px; }
+  .section-header { font-size:.84rem !important; }
+  #invitation .invitation-outer-stage, #invitation .invitation-background-scene { padding:30px 18px !important; }
+  .floating-actions .float-btn { min-width:38px; padding:.35rem .38rem !important; font-size:.61rem !important; }
+  #people .guest-interactive-card { padding:.55rem .6rem !important; }
+}
+@media (prefers-reduced-motion:reduce) {
+  *, *::before, *::after { scroll-behavior:auto !important; animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
+}
+
+
+/* v15 refinements: clearer family tree, calendar actions, motion levels and mobile-first controls */
+.countdown-actions{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:.65rem;margin:.8rem auto .35rem}
+.countdown-actions .btn-regal{min-height:42px;display:inline-flex;align-items:center;justify-content:center;padding:.65rem 1rem;font-size:.9rem}
+.next-ceremony-line{text-align:center;color:var(--crimson-dark);font-weight:700;margin:.4rem auto 1rem;font-size:.95rem}
+#families .family-exact-frame-stage{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:1rem!important;max-width:1100px!important;padding:0!important;background:none!important;align-items:start}
+#families .family-branch-panel{min-width:0!important;margin:0!important;padding:clamp(.75rem,2vw,1.2rem)!important;background:rgba(255,250,239,.84)!important;border:1px solid rgba(184,138,53,.65)!important;backdrop-filter:blur(3px)!important}
+#families .family-branch-panel h3{font-size:clamp(1rem,2vw,1.35rem)!important;line-height:1.3;overflow-wrap:anywhere}
+#families .family-members-grid{display:block!important;margin-top:.65rem!important}
+.family-tree{position:relative;display:flex;flex-direction:column;gap:.65rem}
+.family-tree-level{position:relative;padding:.45rem .45rem .55rem;border:1px solid rgba(184,138,53,.32);border-radius:12px;background:rgba(255,255,255,.42)}
+.family-tree-level:not(:last-child):after{content:'↓';display:block;text-align:center;color:#b8862b;font-weight:800;margin-top:.4rem;margin-bottom:-.55rem;position:relative;z-index:2}
+.family-tree-level h4{font-size:.83rem;text-align:center;color:#7b1d2c;margin:0 0 .5rem;padding:.25rem;border-bottom:1px solid rgba(184,138,53,.35)}
+.family-tree-nodes{display:flex;flex-direction:column;gap:.45rem}
+.family-tree-node{min-width:0;padding:.55rem .6rem;border-radius:10px;border:1px solid rgba(184,138,53,.4);background:rgba(255,249,235,.83);text-align:center;overflow-wrap:anywhere}
+.tree-level-label{display:none}
+.tree-couple{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.28rem .42rem;font-weight:800;color:#541426;font-size:.92rem;line-height:1.35}
+.tree-amp{color:#b8862b;font-size:.8rem}
+.tree-role{margin-top:.22rem;color:#6e5547;font-size:.76rem;line-height:1.4}
+.tree-children{margin-top:.45rem;padding-top:.4rem;border-top:1px dashed rgba(184,138,53,.45)}
+.tree-children-label{font-size:.72rem;font-weight:800;color:#7b1d2c;margin-bottom:.25rem}
+.tree-child-names{display:flex;flex-wrap:wrap;justify-content:center;gap:.3rem}
+.tree-child-names span{font-size:.75rem;line-height:1.3;padding:.25rem .45rem;border-radius:999px;background:rgba(201,147,45,.12);border:1px solid rgba(201,147,45,.25);color:#4b2a25}
+.motion-control,.volume-control{display:flex;align-items:center;gap:.35rem;border:1px solid rgba(234,197,116,.4);background:rgba(50,12,21,.88);color:#ffe9b0;border-radius:999px;padding:.25rem .5rem;font-size:.7rem}
+.motion-control select{max-width:90px;border:0;border-radius:8px;background:#fff3d8;color:#4c1823;padding:.25rem;font:inherit}
+.volume-control input{width:65px;accent-color:#d7a848}
+.motion-off #petalsCanvas,.motion-off .portal-ambient-glow,.motion-off .revealed-scroll-cue{display:none!important}
+.motion-off *, .motion-off *:before, .motion-off *:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+.motion-festive #petalsCanvas{opacity:1}
+.motion-festive .portal-ambient-glow{animation-duration:3s!important}
+@media(max-width:680px){
+  #families .family-exact-frame-stage{grid-template-columns:minmax(0,1fr)!important;gap:.8rem!important}
+  #families .family-branch-panel{border-radius:14px!important}
+  .countdown-actions{gap:.45rem;padding:0 .25rem}
+  .countdown-actions .btn-regal{flex:1 1 145px;font-size:.78rem;padding:.6rem .55rem}
+  .next-ceremony-line{font-size:.82rem;padding:0 .5rem}
+  .floating-actions{gap:.3rem;flex-wrap:wrap;justify-content:center;max-width:100vw}
+  .motion-control,.volume-control{font-size:.65rem;padding:.2rem .4rem}
+  .volume-control input{width:48px}
+}
+@media(max-width:390px){.tree-couple{font-size:.85rem}.tree-role{font-size:.72rem}.family-tree-node{padding:.5rem .4rem}.family-tree-level{padding:.4rem}.motion-control select{max-width:72px}}
+
+.bell-control{display:flex;align-items:center;gap:.3rem;border:1px solid rgba(234,197,116,.4);background:rgba(50,12,21,.88);color:#ffe9b0;border-radius:999px;padding:.25rem .5rem;font-size:.7rem}
+.bell-control input{accent-color:#d7a848;width:14px;height:14px}
+.revealed-couple-title{animation:coupleReveal .95s ease both;animation-delay:.25s}
+.revealed-date-badge{animation:coupleReveal .85s ease both;animation-delay:.6s}
+.revealed-blessing-text{animation:coupleReveal .85s ease both;animation-delay:.85s}
+@keyframes coupleReveal{from{opacity:0;transform:translateY(12px);filter:blur(4px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
+.motion-off .revealed-couple-title,.motion-off .revealed-date-badge,.motion-off .revealed-blessing-text{animation:none!important}
+@media(max-width:680px){.bell-control{font-size:.65rem;padding:.2rem .4rem}}
+
+
+/* ======================================================================
+   V16 — MOBILE CONTROLS AND INVITATION SAFE-CENTRE FIT
+   Keep the approved images; only change control placement and content sizing.
+   ====================================================================== */
+@media (max-width: 700px) {
+  /* Language + music are moved into the compact bottom dock by script.js. */
+  .floating-actions { display: none !important; }
+  .smart-floating-dock {
+    left: 6px !important;
+    right: 6px !important;
+    bottom: calc(6px + env(safe-area-inset-bottom, 0px)) !important;
+    width: auto !important;
+    max-width: none !important;
+    max-height: 58px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    flex-wrap: nowrap !important;
+    justify-content: flex-start !important;
+    gap: 2px !important;
+    padding: 3px 4px !important;
+    border-radius: 16px !important;
+    scrollbar-width: none !important;
+    -webkit-overflow-scrolling: touch;
+    transform: translateY(110px) !important;
+  }
+  .smart-floating-dock::-webkit-scrollbar { display: none !important; }
+  .smart-floating-dock.visible { transform: translateY(0) !important; }
+  /* Keep five main destinations visible; all other page sections remain in the top nav. */
+  #smartFloatingDock .dock-item[href="#couple"],
+  #smartFloatingDock .dock-item[href="#album"] { display: none !important; }
+  #smartFloatingDock .dock-item {
+    flex: 0 0 auto !important;
+    min-width: 38px !important;
+    min-height: 43px !important;
+    height: 46px !important;
+    padding: 3px 4px !important;
+    gap: 1px !important;
+    border-radius: 10px !important;
+    white-space: nowrap !important;
+  }
+  #smartFloatingDock .dock-item span { font-size: .9rem !important; line-height: 1 !important; }
+  #smartFloatingDock .dock-item small { font-size: .49rem !important; line-height: 1.05 !important; margin-top: 2px !important; }
+  #smartFloatingDock .mobile-dock-control {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    min-width: 42px !important;
+    max-width: 49px !important;
+    width: auto !important;
+    flex: 0 0 auto !important;
+    border: 1px solid rgba(255, 224, 145, .55) !important;
+    background: rgba(107, 24, 43, .65) !important;
+    box-shadow: none !important;
+    color: #ffe7a0 !important;
+    font: inherit !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    line-height: 1 !important;
+  }
+  #smartFloatingDock .mobile-dock-control #langFlag,
+  #smartFloatingDock .mobile-dock-control #musicIcon { font-size: .9rem !important; }
+  #smartFloatingDock .mobile-dock-control #langText,
+  #smartFloatingDock .mobile-dock-control #musicText {
+    display: block !important;
+    max-width: 43px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    font-size: .47rem !important;
+    line-height: 1.05 !important;
+    margin-top: 2px !important;
+  }
+
+  /* Invitation: keep all wording inside the clear ivory centre of the supplied goddess frame. */
+  #invitation .invitation-outer-stage,
+  #invitation .invitation-background-scene {
+    width: 100% !important;
+    max-width: 540px !important;
+    min-height: 0 !important;
+    height: auto !important;
+    aspect-ratio: 2 / 3 !important;
+    box-sizing: border-box !important;
+    padding: 8.5% 13% 9% !important;
+    overflow: hidden !important;
+    background-size: 100% 100% !important;
+    background-position: center center !important;
+  }
+  #invitation .invitation-patrika-framed,
+  #invitation .invitation-content-panel {
+    display: flex !important;
+    flex: 0 0 76% !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: center !important;
+    width: 76% !important;
+    max-width: 76% !important;
+    min-width: 0 !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    gap: 0 !important;
+    overflow: visible !important;
+    background: rgba(255, 250, 235, .03) !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    text-align: center !important;
+    overflow-wrap: anywhere !important;
+  }
+  #invitation .patrika-slokam {
+    font-size: clamp(.60rem, 2.65vw, .75rem) !important;
+    line-height: 1.32 !important;
+    margin: 0 auto .28rem !important;
+  }
+  #invitation .personalized-guest-box {
+    padding: .26rem .32rem !important;
+    margin: .18rem auto .3rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 7px !important;
+    background: rgba(255, 248, 228, .78) !important;
+    border-color: rgba(185, 126, 31, .7) !important;
+  }
+  #invitation .personalized-salute { font-size: .62rem !important; line-height: 1.25 !important; }
+  #invitation .personalized-name { font-size: clamp(.78rem, 3.1vw, .94rem) !important; line-height: 1.2 !important; margin-top: .12rem !important; }
+  #invitation .personalized-household-line { font-size: .6rem !important; line-height: 1.25 !important; margin: .15rem auto 0 !important; }
+  #invitation .patrika-greeting {
+    font-size: clamp(.64rem, 2.8vw, .78rem) !important;
+    line-height: 1.32 !important;
+    margin: .18rem auto .24rem !important;
+  }
+  #invitation .patrika-body-text {
+    font-size: clamp(.59rem, 2.55vw, .72rem) !important;
+    line-height: 1.34 !important;
+    margin: .18rem auto .35rem !important;
+  }
+  #invitation .patrika-couple-names {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: .03rem !important;
+    font-size: clamp(.98rem, 4.3vw, 1.28rem) !important;
+    line-height: 1.06 !important;
+    margin: .2rem auto .25rem !important;
+  }
+  #invitation .patrika-weds { font-size: .56em !important; line-height: 1.2 !important; }
+  #invitation .patrika-muhurtham-badge {
+    display: block !important;
+    width: 100% !important;
+    padding: .22rem .28rem !important;
+    margin: .2rem auto .32rem !important;
+    border-radius: 7px !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+    font-size: clamp(.55rem, 2.35vw, .67rem) !important;
+    line-height: 1.25 !important;
+  }
+  #invitation .patrika-actions-row {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: .18rem !important;
+    width: 100% !important;
+    margin: .1rem auto 0 !important;
+  }
+  #invitation .patrika-actions-row .btn-regal {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 28px !important;
+    padding: .22rem .28rem !important;
+    margin: 0 !important;
+    font-size: clamp(.52rem, 2.15vw, .63rem) !important;
+    line-height: 1.18 !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+  }
+  #invitation .section-header { margin-bottom: .9rem !important; }
+  /* Leave enough room for the fixed, compact navigation at the end of the page. */
+  #family-final-notes { padding-bottom: calc(82px + env(safe-area-inset-bottom, 0px)) !important; }
+}
+@media (max-width: 380px) {
+  #smartFloatingDock .dock-item { min-width: 34px !important; padding-inline: 2px !important; }
+  #smartFloatingDock .mobile-dock-control { min-width: 38px !important; max-width: 42px !important; }
+  #invitation .invitation-patrika-framed,
+  #invitation .invitation-content-panel { flex-basis: 74% !important; width: 74% !important; max-width: 74% !important; }
+  #invitation .patrika-body-text { font-size: .58rem !important; }
+}
+
+/* Keep invitation wording within the frame's open central panel on every screen. */
+@media (min-width: 701px) {
+  #invitation .invitation-patrika-framed,
+  #invitation .invitation-content-panel {
+    flex: 0 0 82% !important;
+    width: 82% !important;
+    max-width: 82% !important;
+    margin-inline: auto !important;
+  }
+}
+
+/* V17: compact bilingual music picker and kinship-grouped relatives */
+.music-picker-menu[hidden], .music-player-wrap[hidden] { display: none !important; }
+.music-picker-menu {
+  position: fixed;
+  right: 16px;
+  bottom: 92px;
+  z-index: 90;
+  width: min(340px, calc(100vw - 24px));
+  padding: 12px;
+  border: 1px solid rgba(218, 178, 91, .9);
+  border-radius: 16px;
+  background: rgba(55, 10, 24, .97);
+  color: #ffe8ad;
+  box-shadow: 0 14px 36px rgba(20, 3, 8, .4);
+  backdrop-filter: blur(12px);
+}
+.music-picker-heading { font-weight: 800; color: #ffe5a0; text-align: center; margin: 0 0 8px; }
+.music-track-option {
+  display: block; width: 100%; min-height: 42px; margin: 6px 0; padding: 9px 12px;
+  border: 1px solid rgba(231, 195, 116, .7); border-radius: 10px;
+  background: rgba(255, 236, 193, .1); color: #fff0c7; text-align: start; font: inherit; cursor: pointer;
+}
+.music-track-option.active, .music-track-option:focus-visible { background: #d9ab45; color: #3b0b18; }
+.music-player-wrap { margin-top: 9px; overflow: hidden; border-radius: 10px; background: #16070a; }
+.music-player-wrap iframe { display: block; width: 100%; aspect-ratio: 16 / 9; height: auto; border: 0; }
+.music-picker-note { margin: 7px 2px 0; color: #f3dca7; font-size: .78rem; line-height: 1.45; }
+.kinship-subgroup { margin: .55rem 0; border: 1px solid rgba(190, 143, 54, .4); border-radius: 11px; overflow: clip; background: rgba(255, 249, 235, .68); }
+.kinship-subgroup > summary { display: flex; align-items: center; justify-content: space-between; gap: .6rem; min-height: 42px; padding: .65rem .8rem; cursor: pointer; list-style: none; color: #64172a; font-weight: 800; background: linear-gradient(90deg, rgba(226, 190, 117, .22), rgba(255,255,255,.35)); }
+.kinship-subgroup > summary::-webkit-details-marker { display: none; }
+.kinship-subgroup > summary::after { content: '＋'; color: #a87820; font-size: 1rem; }
+.kinship-subgroup[open] > summary::after { content: '−'; }
+.kinship-count { flex: 0 0 auto; min-width: 24px; padding: .1rem .4rem; border-radius: 999px; background: rgba(123, 29, 44, .1); color: #741c2d; text-align: center; font-size: .75rem; }
+.kinship-subgroup > .guest-cards-grid { padding: .5rem; gap: .5rem; }
+@media (max-width: 700px) {
+  .music-picker-menu { left: 8px; right: 8px; bottom: calc(76px + env(safe-area-inset-bottom, 0px)); width: auto; max-height: min(65vh, 520px); overflow-y: auto; }
+  .music-track-option { min-height: 44px; font-size: .88rem; }
+  .kinship-subgroup > summary { min-height: 44px; font-size: .88rem; }
+}
+
+
+/* V18 fixes: remove the unused RSVP action, provide clear scroll controls, and
+   keep the real rose sprites visible on mobile as well as desktop. */
+.built-in-wedding-audio {
+  position: fixed !important; width: 1px !important; height: 1px !important;
+  right: 0 !important; bottom: 0 !important; opacity: .01 !important;
+  border: 0 !important; pointer-events: none !important; z-index: -1 !important;
+}
+.hero-cta-buttons .auto-scroll-action,
+.hero-cta-buttons .auto-scroll-speed-action {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  cursor: pointer; font: inherit; min-height: 44px; text-align: center;
+}
+.hero-cta-buttons .auto-scroll-action.active {
+  background: linear-gradient(135deg, #e8bd55, #b77a19) !important;
+  color: #421020 !important; border-color: #ffe6a0 !important;
+}
+@media (max-width: 700px) {
+  .hero-cta-buttons { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: .5rem !important; }
+  .hero-cta-buttons .auto-scroll-action,
+  .hero-cta-buttons .auto-scroll-speed-action {
+    width: 100% !important; min-width: 0 !important; padding: .62rem .48rem !important;
+    font-size: clamp(.7rem, 2.8vw, .82rem) !important; line-height: 1.2 !important;
+    white-space: normal !important; overflow-wrap: anywhere !important;
+  }
+}
+/* Earlier mobile rules hid the rose canvas; explicitly restore it. */
+#petalsCanvas {
+  display: block !important; position: fixed !important; inset: 0 !important;
+  width: 100vw !important; height: 100vh !important; height: 100dvh !important;
+  opacity: .76 !important; z-index: 15 !important; pointer-events: none !important;
+  visibility: visible !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  #petalsCanvas { opacity: .25 !important; }
+}
+
+/* Family details panel: readable, compact and responsive. */
+.family-admin-details{margin:.75rem 0 1rem;padding:.8rem 1rem;border:1px solid rgba(180,126,37,.32);border-radius:14px;background:rgba(255,250,237,.72);color:#4d2630;line-height:1.55;overflow-wrap:anywhere}
+.family-admin-details p{margin:.25rem 0}
+@media(max-width:600px){.family-admin-details{padding:.65rem .7rem;font-size:.86rem}.family-admin-details p{margin:.4rem 0}}
+
+
+/* V20 — Thirumoorthi Groups family-function identity and bottom-dock controls */
+.family-function-title {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  max-width: 100%;
+  margin: .7rem auto .85rem !important;
+  padding: .7rem 1rem !important;
+  border: 2px solid #e8c56a !important;
+  border-radius: 14px !important;
+  background: rgba(255, 231, 173, .96) !important;
+  color: #3b0815 !important;
+  font-size: clamp(1.05rem, 3vw, 1.8rem) !important;
+  line-height: 1.2 !important;
+  font-weight: 900 !important;
+  letter-spacing: .035em !important;
+  text-shadow: none !important;
+  box-shadow: 0 8px 28px rgba(28, 4, 10, .35), inset 0 0 0 1px rgba(87, 48, 11, .16) !important;
+  white-space: normal !important;
+  text-align: center;
+}
+.dock-control-item {
+  appearance: none; -webkit-appearance: none;
+  flex: 0 0 auto; border: 1px solid rgba(246,216,124,.42);
+  background: rgba(109, 25, 45, .8); cursor: pointer; font-family: inherit;
+}
+.dock-control-item.active { background: linear-gradient(135deg,#f0c96b,#b68026) !important; color: #3a0815 !important; }
+.dock-control-item small { white-space: nowrap; }
+.kinship-subgroup { margin: .65rem 0; border: 1px solid rgba(190,143,54,.42); border-radius: 12px; overflow: hidden; background: rgba(255,249,235,.77); }
+.kinship-subgroup-heading { display:flex; align-items:center; justify-content:space-between; gap:.55rem; min-height:38px; padding:.55rem .75rem; color:#501020; font-weight:850; background: linear-gradient(90deg, rgba(226,190,117,.38), rgba(255,255,255,.36)); border-bottom:1px solid rgba(190,143,54,.25); }
+.kinship-subgroup-heading > span:first-child { overflow-wrap:anywhere; }
+.kinship-subgroup > .guest-cards-grid { padding:.45rem; gap:.45rem; }
+@media (max-width:700px) {
+ .family-function-title { font-size: clamp(.95rem, 4vw, 1.28rem) !important; padding:.58rem .65rem !important; margin:.6rem auto !important; }
+ .hero-cta-buttons .auto-scroll-action, .hero-cta-buttons .auto-scroll-speed-action { display:none !important; }
+ .smart-floating-dock { gap:2px !important; }
+ #smartFloatingDock .dock-control-item.mobile-dock-control { min-width:43px !important; max-width:54px !important; padding:3px 4px !important; }
+ #smartFloatingDock #autoScrollText, #smartFloatingDock #scrollSpeedText { max-width:51px; font-size:.46rem !important; line-height:1.05 !important; }
+ #smartFloatingDock .mobile-dock-control #langText { font-size:.49rem !important; }
+ .kinship-subgroup-heading { font-size:.82rem; min-height:38px; padding:.5rem .6rem; }
+ .guest-cards-grid { grid-template-columns:1fr !important; }
+ .guest-name-text { overflow-wrap:anywhere; }
+ .guest-location-badge { white-space:normal !important; }
+}
+
+
+/* V21: full-screen garland-exchange transition between the royal doors and home. */
+#garlandIntro[hidden] { display: none !important; }
+.garland-intro {
+  position: fixed; inset: 0; z-index: 1200; width: 100%; height: 100vh; height: 100dvh;
+  padding: max(.75rem, env(safe-area-inset-top)) max(.75rem, env(safe-area-inset-right)) max(.75rem, env(safe-area-inset-bottom)) max(.75rem, env(safe-area-inset-left));
+  display: grid; place-items: center; overflow: hidden; background: #17080b; color: #fff1cf;
+}
+.garland-intro-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #17080b; }
+.garland-intro-shade { position:absolute; inset:0; pointer-events:none; background:linear-gradient(180deg,rgba(25,4,9,.38),transparent 28%,transparent 66%,rgba(25,4,9,.55)); }
+.garland-intro-overlay { position:absolute; inset:auto 0 max(.85rem,env(safe-area-inset-bottom)); display:flex; flex-direction:column; align-items:center; gap:.35rem; padding:0 1rem; text-align:center; pointer-events:none; text-shadow:0 2px 12px #160307; }
+.garland-intro-kicker { margin:0; color:#ffe0a0; letter-spacing:.14em; font-size:clamp(.62rem,2.4vw,.86rem); font-weight:800; }
+.garland-intro-overlay h1 { margin:0; font-family:var(--font-regal); font-size:clamp(1.05rem,4.5vw,2rem); line-height:1.2; color:#fff1c9; }
+.garland-intro-subtitle { margin:0; font-size:clamp(.72rem,2.7vw,.96rem); color:#fff7e8; }
+.garland-intro-actions { display:flex; flex-wrap:wrap; justify-content:center; gap:.6rem; margin-top:.5rem; pointer-events:auto; }
+.garland-intro-btn { min-height:42px; padding:.6rem 1rem; border:1px solid rgba(255,225,155,.9); border-radius:999px; color:#fff0ca; background:rgba(62,12,25,.9); font:600 .85rem var(--font-sans); box-shadow:0 6px 20px rgba(0,0,0,.35); cursor:pointer; }
+.garland-intro-btn.primary { color:#3e1018; background:linear-gradient(135deg,#f8dfa0,#c89131); }
+.garland-intro-hint { margin:.1rem 0 0; font-size:.72rem; color:rgba(255,246,223,.86); }
+.garland-intro.needs-tap .garland-intro-overlay { inset:0; justify-content:center; background:rgba(25,5,10,.38); }
+@media (max-width:600px) {
+  .garland-intro { padding: max(.5rem,env(safe-area-inset-top)) .5rem max(.5rem,env(safe-area-inset-bottom)); }
+  .garland-intro-overlay { gap:.25rem; bottom:max(.65rem,env(safe-area-inset-bottom)); padding:0 .5rem; }
+  .garland-intro-kicker { letter-spacing:.08em; }
+  .garland-intro-btn { min-height:40px; padding:.55rem .85rem; font-size:.8rem; }
+}
+
+
+/* Opening portal: clear family-function details, mobile-friendly */
+.portal-function-details{display:flex;flex-direction:column;gap:.32rem;margin:.65rem auto .25rem;padding:.65rem .8rem;max-width:620px;width:100%;box-sizing:border-box;border:1px solid rgba(221,177,84,.62);border-radius:14px;background:rgba(54,12,22,.52);color:#fff3d1;font-size:clamp(.78rem,2.7vw,.96rem);line-height:1.45;text-align:center;text-shadow:0 1px 3px rgba(0,0,0,.65)}
+.portal-function-name{color:#ffdc83;letter-spacing:.055em;font-size:clamp(.78rem,2.8vw,1rem)}
+.guest-form-heading{line-height:1.25}
+@media(max-width:600px){.portal-function-details{padding:.55rem .45rem;margin:.5rem auto;font-size:.78rem;gap:.28rem}.portal-function-name{letter-spacing:.025em;font-size:.82rem}.guest-personalise-form{padding-left:1rem;padding-right:1rem}}
+
+/* v26: clearer entrance/home notes and invitation live links */
+.portal-family-note{display:block;margin-top:.35rem;font-size:.88em;line-height:1.45;color:#ffe7ad;text-align:center}
+.hero-family-note{max-width:760px;margin:1rem auto;color:#fff2d0;text-shadow:0 2px 8px #351019;font-size:clamp(.9rem,2vw,1.05rem);line-height:1.55}
+.hero-admin-access{margin:.65rem auto 1rem;display:flex;justify-content:center}
+.revealed-live-links{display:flex;justify-content:center;flex-wrap:wrap;gap:.65rem;margin:1rem auto;padding:0 .75rem}
+.revealed-live-links .live-tab-btn{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:.55rem .9rem;border-radius:999px}
+@media(max-width:600px){.portal-family-note{font-size:.78em}.revealed-live-links{gap:.45rem}.revealed-live-links .live-tab-btn{font-size:.82rem;padding:.5rem .7rem}}
+
+
+/* V27 corrections: show the full function details on the opening gate and restore Notes at the end. */
+body.invitation-locked #entrancePortal .portal-gopuram-arch {
+  display:flex !important;
+  position:absolute !important;
+  z-index:4 !important;
+  top:max(.55rem, env(safe-area-inset-top)) !important;
+  left:50% !important;
+  transform:translateX(-50%) !important;
+  width:min(920px,96vw) !important;
+  max-height:48dvh !important;
+  margin:0 !important;
+  gap:clamp(.25rem,1vw,.7rem) !important;
+  align-items:flex-start !important;
+  justify-content:center !important;
+  overflow:visible !important;
+}
+body.invitation-locked #entrancePortal .portal-gopuram-arch .arch-title-box {
+  width:100% !important;
+  min-width:0 !important;
+  gap:.08rem !important;
+}
+body.invitation-locked #entrancePortal .portal-gopuram-arch .arch-diya {
+  flex:0 0 auto !important;
+  font-size:clamp(.95rem,2.8vw,1.8rem) !important;
+  margin-top:.25rem !important;
+}
+body.invitation-locked #entrancePortal .portal-sacred-subtitle {
+  font-family:var(--font-tamil) !important;
+  font-size:clamp(.62rem,1.8vw,.95rem) !important;
+  line-height:1.35 !important;
+  letter-spacing:.025em !important;
+  margin:0 0 .25rem !important;
+  color:#ffe7a0 !important;
+  text-shadow:0 2px 8px rgba(0,0,0,.9) !important;
+  overflow-wrap:anywhere !important;
+}
+body.invitation-locked #entrancePortal .portal-wedding-heading {
+  font-size:clamp(1.2rem,4vw,2.55rem) !important;
+  line-height:1.12 !important;
+  margin:.1rem 0 !important;
+  overflow-wrap:anywhere !important;
+}
+body.invitation-locked #entrancePortal .portal-date-tag {
+  font-size:clamp(.61rem,1.6vw,.9rem) !important;
+  letter-spacing:.035em !important;
+  line-height:1.3 !important;
+  text-transform:none !important;
+  margin:.15rem 0 0 !important;
+  overflow-wrap:anywhere !important;
+}
+.portal-function-details {
+  margin:.35rem auto 0 !important;
+  max-width:660px !important;
+  padding:.5rem .65rem !important;
+  background:rgba(35,7,15,.78) !important;
+  border-color:rgba(255,220,135,.78) !important;
+  color:#fff6db !important;
+  gap:.18rem !important;
+  font-size:clamp(.65rem,1.55vw,.88rem) !important;
+  line-height:1.35 !important;
+  text-shadow:0 1px 4px rgba(0,0,0,.95) !important;
+}
+.portal-function-name {
+  display:block !important;
+  color:#ffe19a !important;
+  font-size:clamp(.72rem,1.8vw,1rem) !important;
+  line-height:1.3 !important;
+  letter-spacing:.04em !important;
+}
+.portal-function-details b { color:#ffe6a7 !important; }
+.portal-family-note { color:#fff4d2 !important; }
+body.invitation-locked #entrancePortal .guest-personalise-form {
+  top:auto !important;
+  bottom:max(.65rem,env(safe-area-inset-bottom)) !important;
+  left:50% !important;
+  transform:translateX(-50%) !important;
+  z-index:8 !important;
+  width:min(690px,92vw) !important;
+  max-height:32dvh !important;
+  overflow:auto !important;
+  padding:.55rem .8rem !important;
+  margin:0 !important;
+  background:rgba(38,7,15,.94) !important;
+}
+body.invitation-locked #entrancePortal .guest-form-heading { font-size:clamp(.83rem,2vw,1.1rem) !important; margin:0 0 .35rem !important; }
+body.invitation-locked #entrancePortal .guest-form-hint { font-size:.69rem !important; margin:.25rem 0 !important; }
+body.invitation-locked #entrancePortal .guest-primary-input { padding:.58rem .72rem !important; min-height:42px !important; }
+body.invitation-locked #entrancePortal .guest-complete-btn { min-height:42px !important; padding:.55rem .8rem !important; }
+body.invitation-locked #entrancePortal .portal-center-seal { top:58% !important; }
+body.invitation-locked #entrancePortal .portal-center-seal:hover { transform:translate(-50%,-50%) scale(1.04) !important; }
+@media(max-height:720px) {
+  body.invitation-locked #entrancePortal .portal-gopuram-arch { max-height:43dvh !important; top:.35rem !important; }
+  body.invitation-locked #entrancePortal .portal-wedding-heading { font-size:clamp(1.05rem,4.6vw,1.9rem) !important; }
+  .portal-function-details { padding:.35rem .5rem !important; font-size:.67rem !important; }
+  body.invitation-locked #entrancePortal .portal-center-seal { top:57% !important; }
+}
+@media(max-width:650px) {
+  body.invitation-locked #entrancePortal .portal-gopuram-arch { width:96vw !important; top:max(.35rem,env(safe-area-inset-top)) !important; }
+  body.invitation-locked #entrancePortal .portal-gopuram-arch .arch-diya { display:none !important; }
+  body.invitation-locked #entrancePortal .portal-sacred-subtitle { font-size:.68rem !important; }
+  body.invitation-locked #entrancePortal .portal-wedding-heading { font-size:clamp(1.15rem,5.8vw,1.75rem) !important; }
+  body.invitation-locked #entrancePortal .portal-date-tag { font-size:.67rem !important; }
+  .portal-function-details { width:100% !important; padding:.42rem .48rem !important; font-size:.68rem !important; }
+  .portal-function-name { font-size:.73rem !important; letter-spacing:.015em !important; }
+  body.invitation-locked #entrancePortal .guest-personalise-form { width:94vw !important; max-height:26dvh !important; padding:.48rem .58rem !important; }
+  body.invitation-locked #entrancePortal .guest-primary-label { font-size:.74rem !important; }
+  body.invitation-locked #entrancePortal .guest-form-hint { font-size:.62rem !important; }
+  body.invitation-locked #entrancePortal .portal-center-seal { top:60% !important; width:clamp(140px,40vw,185px) !important; }
+}
+@media(max-width:390px) {
+  body.invitation-locked #entrancePortal .portal-wedding-heading { font-size:1.12rem !important; }
+  body.invitation-locked #entrancePortal .portal-function-details { font-size:.62rem !important; }
+  body.invitation-locked #entrancePortal .guest-personalise-form { max-height:24dvh !important; }
+}
+
+/* V27: Restore the personal Wedding Notes section as the final page section. */
+#notes { display:block !important; }
+#notes .notes-container-card { max-width:900px; margin:0 auto; }
+#notes .notes-template-label { align-self:center; color:var(--crimson-dark); font-size:.82rem; font-weight:800; }
+#notes .notes-textarea-label { display:block; margin:0 0 .45rem; color:var(--crimson-dark); font-weight:700; }
+#notes .notes-action-buttons { display:flex; gap:.6rem; flex-wrap:wrap; }
+#notes .notes-status-msg { font-size:.82rem; font-weight:700; color:var(--crimson); }
+#notes .notes-privacy-note { margin-top:.8rem; color:var(--ink-muted); font-size:.78rem; line-height:1.45; }
+@media(max-width:600px) {
+  #notes { padding-bottom:calc(7rem + env(safe-area-inset-bottom)); }
+  #notes .notes-container-card { padding:1rem; }
+  #notes .notes-footer-actions { align-items:flex-start; }
+  #notes .notes-action-buttons { width:100%; }
+  #notes .notes-action-buttons .btn-regal { flex:1; min-width:0; padding:.65rem .5rem; }
+  #notes .notes-status-msg { width:100%; }
+}
+
+
+/* V28: requested layout and mobile-friendly fit fixes */
+#entrancePortal .portal-inner-container, #entrancePortal .portal-gopuram-arch, #entrancePortal .arch-title-box { text-align:center !important; }
+#entrancePortal .portal-sacred-subtitle, #entrancePortal .portal-wedding-heading, #entrancePortal .portal-date-tag, #entrancePortal .portal-function-details, #entrancePortal .portal-guest-badge { margin-left:auto !important; margin-right:auto !important; text-align:center !important; }
+#entrancePortal .portal-function-details { width:min(760px,94%) !important; box-sizing:border-box !important; }
+#portalVenueValue, #venueTitle, #venueFullAddress { text-align:center; cursor:pointer; text-decoration:underline; text-underline-offset:3px; }
+.reunion-note-card { max-width:780px; margin:0 auto 2rem; padding:clamp(1.2rem,4vw,2.2rem); text-align:center; color:var(--ink,#431820); background:rgba(255,250,239,.82); border:1px solid rgba(184,137,48,.65); border-radius:18px; box-shadow:0 8px 24px rgba(50,10,10,.12); }
+.reunion-note-card p { margin:.45rem 0; font-size:clamp(1rem,2.2vw,1.2rem); line-height:1.8; }
+.reunion-note-ta { font-family:'Noto Sans Tamil',sans-serif; }
+.family-tree-nodes { align-items:stretch !important; }
+.family-tree-node, .family-tree-card, .family-member-card { min-width:0 !important; width:fit-content; max-width:100%; overflow-wrap:anywhere; }
+.family-tree-level h4:empty { display:none !important; }
+@media(max-width:650px){ #entrancePortal .portal-function-details { width:94% !important; padding:.7rem !important; } #entrancePortal .portal-wedding-heading { line-height:1.18 !important; overflow-wrap:anywhere; } .family-tree-node, .family-tree-card, .family-member-card { width:100% !important; } }
+
+
+/* V29: opening gate spacing, concise family sections, and mobile-friendly readable rows. */
+/* Keep the door background full-screen, but bring the guest-name form directly beneath the invitation details. */
+body.invitation-locked #entrancePortal .portal-gopuram-arch {
+  top: max(.45rem, env(safe-area-inset-top)) !important;
+}
+body.invitation-locked #entrancePortal .guest-personalise-form {
+  top: clamp(300px, 43dvh, 430px) !important;
+  bottom: auto !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: min(760px, 92vw) !important;
+  max-height: min(31dvh, 270px) !important;
+  overflow: auto !important;
+  margin: 0 !important;
+}
+body.invitation-locked #entrancePortal .guest-personalise-form.guest-form-finished { display: none !important; }
+body.invitation-locked #entrancePortal .portal-center-seal { top: 58% !important; }
+@media (max-height: 720px) {
+  body.invitation-locked #entrancePortal .guest-personalise-form { top: 38dvh !important; max-height: 34dvh !important; }
+}
+@media (max-width: 650px) {
+  body.invitation-locked #entrancePortal .guest-personalise-form {
+    top: clamp(295px, 43dvh, 375px) !important;
+    width: 94vw !important;
+    max-height: 28dvh !important;
+    padding: .48rem .58rem !important;
+  }
+  body.invitation-locked #entrancePortal .portal-function-details { margin-top: .25rem !important; }
+}
+@media (max-width: 390px) {
+  body.invitation-locked #entrancePortal .guest-personalise-form {
+    top: 40dvh !important;
+    max-height: 27dvh !important;
+  }
+}
+
+/* Notes is the only place where Family Admin Login is displayed. */
+.hero-admin-access { display: none !important; }
+.notes-admin-access { display:flex; justify-content:center; margin:1.25rem auto .25rem; }
+.notes-admin-access .admin-trigger-btn { position:static !important; left:auto !important; right:auto !important; bottom:auto !important; transform:none !important; }
+
+/* Immediate-family tree: two clear side-by-side branches on desktop, stacked on phones. */
+#families .family-exact-frame-stage { display:grid !important; grid-template-columns:repeat(2,minmax(0,1fr)) !important; align-items:start !important; gap:clamp(.55rem,1.5vw,1.1rem) !important; }
+#families .family-branch-panel { min-width:0 !important; margin:0 !important; }
+#families .family-branch-panel h3 { overflow-wrap:anywhere; }
+#families .family-branch-panel > p { line-height:1.45 !important; }
+#families .family-members-grid { display:flex !important; flex-direction:column !important; gap:.4rem !important; margin-top:.65rem !important; }
+#families .family-member-card { width:100% !important; box-sizing:border-box !important; }
+@media (max-width: 650px) {
+  #families .family-exact-frame-stage { grid-template-columns:minmax(0,1fr) !important; gap:.7rem !important; }
+}
+
+/* Family Members & Friends: remove reserved image column and excess vertical whitespace. */
+#people .section-container { padding-top:clamp(1rem,3vw,2rem) !important; padding-bottom:clamp(1.2rem,3vw,2.4rem) !important; }
+#people .section-header { margin-bottom:.65rem !important; }
+#people .section-kicker { margin-bottom:.2rem !important; }
+#people .section-title { margin-bottom:.28rem !important; }
+#people .section-subtitle { margin:.1rem auto .45rem !important; line-height:1.4 !important; }
+#people .people-controls-bar { gap:.45rem !important; margin:0 auto .6rem !important; }
+#people .people-search-box { margin:.1rem auto .2rem !important; }
+#people .people-search-input { padding:.6rem 1rem .6rem 2.4rem !important; }
+#people .people-filter-pills { gap:.3rem !important; }
+#people .filter-pill { padding:.38rem .62rem !important; font-size:.75rem !important; }
+#people .segregated-groups-container { gap:.65rem !important; }
+#people .guest-segregated-block { margin:0 !important; padding:.38rem .48rem !important; }
+#people .guest-group-header { font-size:1rem !important; line-height:1.25 !important; padding-bottom:.28rem !important; margin-bottom:.32rem !important; }
+#people .guest-cards-grid { gap:.15rem !important; }
+#people .guest-interactive-card {
+  display:block !important;
+  width:100% !important;
+  min-height:0 !important;
+  box-sizing:border-box !important;
+  grid-template-columns:minmax(0,1fr) !important;
+  grid-template-rows:auto auto auto !important;
+  padding:.32rem .5rem !important;
+  margin:0 !important;
+  gap:.08rem !important;
+  border-bottom:1px solid rgba(161,111,38,.22) !important;
+  border-radius:5px !important;
+  text-align:left !important;
+}
+#people .guest-couple-row { display:flex !important; align-items:flex-start !important; justify-content:space-between !important; gap:.45rem !important; min-width:0 !important; }
+#people .guest-name-text { min-width:0 !important; font-size:.9rem !important; line-height:1.25 !important; overflow-wrap:anywhere !important; }
+#people .guest-location-badge { max-width:42% !important; flex:0 0 auto !important; font-size:.65rem !important; line-height:1.2 !important; margin:0 !important; padding:.05rem .18rem !important; text-align:right !important; overflow-wrap:anywhere !important; }
+#people .guest-children-line { margin:.08rem 0 0 !important; padding:0 !important; font-size:.73rem !important; line-height:1.28 !important; overflow-wrap:anywhere !important; }
+#people .guest-relation-text { margin:.04rem 0 0 !important; font-size:.68rem !important; line-height:1.22 !important; }
+#people .guest-photo-frame { display:none !important; }
+@media(max-width:650px) {
+  #people .guest-segregated-block { padding:.32rem .36rem !important; }
+  #people .guest-couple-row { flex-wrap:wrap !important; }
+  #people .guest-location-badge { max-width:100% !important; text-align:left !important; }
+}
+
+/* V30: tighten relatives subgroups so each heading sits immediately above its names. */
+#people .segregated-groups-container,
+#people .guest-segregated-block,
+#people .kinship-subgroup,
+#people .kinship-subgroup > .guest-cards-grid {
+  height: auto !important;
+  min-height: 0 !important;
+  align-content: start !important;
+  justify-content: flex-start !important;
+}
+#people .segregated-groups-container { gap: .42rem !important; }
+#people .guest-segregated-block { margin: 0 0 .42rem !important; padding: .28rem .38rem !important; }
+#people .guest-group-header { margin: 0 0 .22rem !important; padding: 0 0 .22rem !important; line-height: 1.2 !important; }
+#people .kinship-subgroup { display: block !important; margin: .22rem 0 !important; padding: 0 !important; }
+#people .kinship-subgroup-heading { min-height: 0 !important; height: auto !important; padding: .24rem .45rem !important; margin: 0 !important; line-height: 1.2 !important; }
+#people .kinship-subgroup > .guest-cards-grid { display: flex !important; flex-direction: column !important; gap: .08rem !important; padding: .08rem .18rem !important; margin: 0 !important; }
+#people .kinship-subgroup .guest-interactive-card { margin: 0 !important; }
+#people .kinship-subgroup + .kinship-subgroup { margin-top: .22rem !important; }
+
+
+/* V31: after entering the guest name, hide the top title/details with the form so the royal key is the sole focus. */
+body.invitation-locked.guest-details-complete #entrancePortal .portal-gopuram-arch { display:none !important; }
+body.invitation-locked.guest-details-complete #entrancePortal .guest-personalise-form,
+body.invitation-locked.guest-details-complete #entrancePortal .guest-personalise-form.guest-form-finished { display:none !important; }
+body.invitation-locked.guest-details-complete #entrancePortal .portal-center-seal { top:50% !important; left:50% !important; transform:translate(-50%,-50%) !important; }
+
+/* V32: keep the Continue button fully visible on small mobile screens. */
+@media (max-width: 650px) {
+  body.invitation-locked #entrancePortal .guest-personalise-form {
+    top: auto !important;
+    bottom: max(.75rem, env(safe-area-inset-bottom)) !important;
+    max-height: min(58dvh, 470px) !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+    padding: .75rem .7rem calc(.9rem + env(safe-area-inset-bottom)) !important;
+    box-sizing: border-box !important;
+  }
+  body.invitation-locked #entrancePortal .guest-personalise-form button,
+  body.invitation-locked #entrancePortal .guest-personalise-form [type="submit"] {
+    display: block !important;
+    visibility: visible !important;
+    position: relative !important;
+    margin-bottom: .2rem !important;
+  }
+}
+
+/* V34: compact immediate-family portrait cards */
+#families .family-members-grid{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(190px,1fr))!important;gap:.85rem!important}
+#families .family-photo-card{display:flex!important;align-items:center!important;gap:.8rem!important;text-align:left!important;width:100%!important;min-width:0!important;padding:.75rem!important;cursor:default!important}
+#families .family-member-photo{width:88px;height:104px;flex:0 0 88px;object-fit:cover;border-radius:12px;border:2px solid var(--gold);background:#f3dfb9}
+#families .family-member-copy{min-width:0;overflow-wrap:anywhere}
+#families .family-member-copy h4{margin:.1rem 0 .3rem;color:#501321;font-size:.98rem}
+#families .family-member-copy p{margin:0;color:#674b3a;font-size:.82rem}
+#families .family-member-copy small{display:block;margin-top:.3rem;color:#946c28;font-weight:700}
+@media(max-width:520px){#families .family-members-grid{grid-template-columns:1fr!important}#families .family-member-photo{width:76px;height:90px;flex-basis:76px}}
+
+/* Full traditional invitation page */
+.full-patrika-paper{max-width:900px;margin:0 auto;padding:clamp(1.1rem,4vw,2.5rem);line-height:1.9;color:#382516;background:rgba(255,250,235,.94);border:1px solid rgba(176,132,54,.55);border-radius:18px;box-shadow:0 12px 36px rgba(45,25,8,.16)}
+.full-patrika-paper h3{text-align:center;color:#7b241f;margin:1rem 0 .5rem;font-family:var(--font-regal,serif)}
+.full-patrika-paper p{margin:.55rem 0;text-align:justify;white-space:normal}
+.full-patrika-paper [hidden]{display:none!important}
+#communityWelcome .reunion-note-card{max-width:900px;margin-inline:auto}
+#communityWelcome [hidden]{display:none!important}
+
+/* V37: clearer bilingual directory and traditional full-patrika layout */
+.guest-name-text{line-height:1.35;overflow-wrap:anywhere}
+.guest-name-tamil{font-family:'Noto Serif Tamil','Latha',serif;font-size:.94em;color:var(--ink-muted);margin-top:2px}
+.family-name-only{min-height:0;display:flex;align-items:center}
+.family-name-only .family-member-copy{width:100%;text-align:center;padding:14px 10px}
+.family-name-only h4+h4{font-size:.96rem;font-weight:600;margin-top:3px}
+.family-member-photo{width:100%;height:clamp(150px,22vw,230px);object-fit:cover;object-position:center 30%;border-radius:12px}
+.family-members-grid{align-items:stretch}
+.full-patrika-paper{position:relative;max-width:1000px;margin-inline:auto;padding:clamp(18px,4vw,42px);border:5px double #315da8;background:linear-gradient(180deg,#fffefb,#fff);box-shadow:0 8px 30px #442b1820;color:#17366f}
+.full-patrika-paper:before{content:'❧  ஸ்ரீ  ❧';display:block;text-align:center;color:#b52e5c;font-size:1.05rem;font-weight:700;letter-spacing:.08em;margin-bottom:8px}
+.full-patrika-paper h3{text-align:center;color:#b52e5c;margin:14px 0 8px;font-family:inherit}
+.full-patrika-paper p{text-align:center;line-height:1.85;margin:9px auto;max-width:850px}
+.full-patrika-paper .full-patrika-ta,.full-patrika-paper .full-patrika-en{font-size:clamp(.94rem,1.5vw,1.08rem)}
+.full-patrika-paper .full-patrika-ta h3:first-child,.full-patrika-paper .full-patrika-en h3:first-child{font-size:clamp(1.25rem,2.6vw,1.8rem);padding-bottom:10px;border-bottom:1px solid #b9c9e8}
+.family-admin-details{line-height:1.65}
+
+/* V38: readable invitation sheet inspired by the supplied blue-bordered patrika */
+#full-patrika{background:radial-gradient(circle at 15% 10%,#fff9e9 0,#f2e8d2 48%,#e8dcc3 100%)!important;padding:clamp(1.2rem,3vw,2.8rem) 0}
+#full-patrika .full-patrika-paper{position:relative;max-width:1080px;margin:0 auto;padding:clamp(1rem,3vw,2.4rem)!important;background:#fffefa!important;color:#173d78!important;border:5px double #315fa6!important;border-radius:4px!important;box-shadow:0 12px 35px rgba(43,55,79,.18)!important;overflow:hidden}
+#full-patrika .full-patrika-paper:before{content:"";position:absolute;inset:9px;border:1px solid #8aa6d5;pointer-events:none}
+#full-patrika .full-patrika-paper h3{color:#b83b65;text-align:center;margin:.8rem auto .4rem;line-height:1.35}
+#full-patrika .full-patrika-paper p{color:#234d89;text-align:center;line-height:1.75;margin:.45rem auto;max-width:95%;font-size:clamp(.88rem,1.3vw,1rem)}
+#full-patrika .full-patrika-paper strong{color:#b43b62}
+#full-patrika .full-patrika-paper h3:first-child{font-size:clamp(1.35rem,3vw,2rem);padding:.6rem 0;border-bottom:1px solid #9bb1d8}
+#full-patrika .full-patrika-paper h3:not(:first-child){display:inline-block;min-width:38%;padding:.35rem .8rem;border:2px solid #4f79b9;background:#f7f9ff}
+#families .groom-family-admin-details{margin:.7rem 0 1rem;padding:.85rem 1rem;border:1px solid rgba(174,133,65,.35);border-radius:12px;background:rgba(255,249,234,.75);line-height:1.65}
+#families .family-exact-frame-stage{width:100%;max-width:1100px!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;align-items:start!important}
+#families .family-branch-panel{min-width:0;width:100%;overflow-wrap:anywhere}
+#people .guest-cards-grid{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))!important;gap:.75rem!important;width:100%}
+#people .guest-interactive-card{min-width:0!important;width:100%!important;display:block!important;padding:.8rem!important;overflow-wrap:anywhere!important}
+#people .guest-couple-row{display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:.3rem!important;min-width:0!important}
+#people .guest-name-text{display:block!important;max-width:100%!important;white-space:normal!important;overflow-wrap:anywhere!important;word-break:normal!important;font-size:clamp(.9rem,1.5vw,1.05rem)!important;line-height:1.4!important}
+@media(max-width:700px){#families .family-exact-frame-stage{grid-template-columns:minmax(0,1fr)!important}#full-patrika .full-patrika-paper{padding:1rem!important}#full-patrika .full-patrika-paper p{max-width:100%}}
+
+
+/* V39 layout repair: temple backdrop, balanced family columns and compact sister row */
+body {
+  background:
+    linear-gradient(rgba(255,248,232,.38), rgba(255,248,232,.50)),
+    url('assets/madurai-temple-background.png') center top / cover fixed no-repeat !important;
+}
+#families .family-exact-frame-stage {
+  width: min(1240px, 100%);
+  max-width: 1240px;
+  padding: 1.25rem;
+  display: grid;
+  grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+  align-items: start;
+  gap: 1.25rem;
+  background: rgba(255,250,240,.76);
+  border: 2px solid rgba(151,105,36,.48);
+  border-radius: 24px;
+  backdrop-filter: blur(7px);
+}
+#families .family-branch-panel {
+  min-width: 0;
+  margin: 0;
+  padding: clamp(12px,2vw,24px);
+  background: rgba(255,252,245,.96);
+}
+#families .family-members-grid {
+  grid-template-columns: repeat(auto-fit,minmax(min(100%,190px),1fr));
+}
+#families .family-member-card { min-width:0; overflow-wrap:anywhere; }
+#families .family-member-photo {
+  width: clamp(76px,9vw,116px);
+  height: clamp(76px,9vw,116px);
+  object-fit: cover;
+}
+#families .groom-sister-row { grid-column: 1 / -1; text-align:left; }
+#families .groom-sister-row .family-member-copy {
+  display:flex; align-items:center; flex-wrap:wrap; gap:.35rem 1rem;
+}
+#families .groom-sister-row h4 { margin:0; white-space:normal; }
+#families .groom-sister-row p, #families .groom-sister-row small { margin:0; }
+@media (max-width: 760px) {
+  #families .family-exact-frame-stage { grid-template-columns:1fr; padding:10px; }
+  #families .family-branch-panel { padding:14px; }
+  #families .family-members-grid { grid-template-columns:1fr; }
+  #families .groom-sister-row .family-member-copy { align-items:flex-start; }
+  body { background-attachment:scroll !important; }
+}
+/* Keep long family/business descriptions readable without forcing narrow columns */
+.groom-family-admin-details { overflow-wrap:anywhere; }
+
+/* V39 traditional invitation palette and framed paper */
+.full-patrika-paper {
+  max-width: 1120px !important;
+  color: #183d70 !important;
+  background: #fffdf7 !important;
+  border: 5px double #315f9e !important;
+  border-radius: 4px !important;
+  box-shadow: 0 14px 40px rgba(16,45,84,.22) !important;
+  position: relative;
+}
+.full-patrika-paper h3 {
+  color: #b52d58 !important;
+  border-bottom: 1px solid rgba(49,95,158,.35);
+  padding-bottom: .35rem;
+}
+.full-patrika-paper p { text-align: justify; }

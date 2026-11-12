@@ -1,0 +1,2 @@
+
+V38 update: relatives and friends now display only the selected language name (Tamil or English), eliminating duplicate bilingual lines. Improved responsive card widths to prevent narrow vertical wrapping. Groom family profile now includes S. Suresh and Valli as owners of Venkatesh Grocery Shop and S. Siva Shankar as a B.E. graduate serving in Tamil Nadu Fire and Rescue Services. Restyled the complete invitation as a white, blue-bordered traditional patrika with centered text and framed headings, inspired by the supplied reference image.

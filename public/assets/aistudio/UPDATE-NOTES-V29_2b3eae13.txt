@@ -1,0 +1,15 @@
+THIRUMOORTHI WEDDING WEBSITE — V29 UPDATE
+
+Changes:
+- Opening page details and name form brought closer together.
+- Sri Vetri Vinayagar Thunai now appears with பொதிகுளம் முத்துமாரியம்மன் and Oor Kavalan Samy on opening and home pages.
+- Video title now reads Wedding Ceremony / திருமண விழா (no “Punitha”).
+- Removed the family reunion tagline and next-ceremony line from Home.
+- Family Admin Login is displayed at the final Notes section only.
+- Removed K. Rajendran – Veeramanali.
+- Moved the four requested bride-side couples into Machan & Akka.
+- Our Beloved Families is restricted to the bride and groom's immediate family.
+- Relatives page title changed to Family Members & Friends, with compact rows and no reserved photo column.
+- Venue helper text removed; venue label opens Google Maps.
+
+Note: Saved browser data is migrated at load to remove the excluded relative and restore the required deity invocation. Browser-local admin edits remain local to that browser/device.

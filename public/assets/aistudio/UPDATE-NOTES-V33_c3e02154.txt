@@ -1,0 +1,7 @@
+V33 UPDATE
+- Replaced the previous extended-relatives directory with the supplied Tamil invitation family list.
+- Added groom-side siblings, maternal uncles, uncles/aunts, paternal uncles, grandparents/elders, elder brothers/sisters-in-law, and sister/machan family groups.
+- Added bride-side aunt/uncle, periyappa/chithappa, anna/anni, akka/machan, grandparents/elders, children, and hosts/welcomers.
+- Kept the bride and groom immediate-family cards separate from the extended-relatives directory.
+- Added a one-time browser-storage migration (thirumoorthiV33DirectoryMigration) so existing visitors receive the updated directory without retaining old relatives.
+- Tamil spellings and qualifications are carried from the text supplied by the family. English language mode currently retains Tamil-script names where no English transliteration was supplied.

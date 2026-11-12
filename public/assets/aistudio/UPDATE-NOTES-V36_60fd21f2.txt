@@ -1,0 +1,8 @@
+VERSION 36 UPDATE
+- Added a separate Complete Wedding Invitation page before the regular Sacred Wedding Invitation section, with Tamil and English versions.
+- Updated Bride's Family Coordinator to M. Deepak (7845051288) and Groom's Family Coordinator to Sankar (Groom) (9655884474). Call and WhatsApp actions use these numbers.
+- Added an Admin Panel audio upload control for adding custom wedding songs. Audio files up to 3 MB each are saved in that browser's local storage and added to the playlist after reload.
+- Added a bilingual welcome message for Pothikulam Yadavar Ilaignar Narpani Mandram, Yadavar Pothikulam village residents, Kalasalingam students, Thaai School friends, Senthamarai College friends, relatives and friends.
+- Existing site language selector continues to switch bilingual page labels and content.
+IMPORTANT: Admin edits and uploaded songs remain local to the browser/device. They do not sync to other guests or Cloudflare. For shared song management, upload audio files to the site's assets folder and redeploy, or add a shared backend.
+ADMIN DEMO LOGIN (existing): familyadmin / Madurai@2026. Change before public use; it is not server-side authentication.

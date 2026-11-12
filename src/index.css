@@ -1,0 +1,157 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-body: 'Plus Jakarta Sans', 'Noto Sans Tamil', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-tamil: 'Noto Sans Tamil', 'Plus Jakarta Sans', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --crimson: #631226;
+    --crimson-dark: #3a0815;
+    --crimson-deep: #24050d;
+    --gold: #c9932d;
+    --gold-light: #f7df94;
+    --sandal: #fff8eb;
+    --parchment: #fdf6e6;
+    --ink: #3b1d16;
+    --ink-muted: #6e463a;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 72px;
+    font-family: var(--font-body);
+  }
+
+  body {
+    color: var(--ink);
+    background:
+      linear-gradient(rgba(255, 248, 232, 0.36), rgba(255, 248, 232, 0.48)),
+      url('/assets/aistudio/madurai-temple-background_6faf5475.png') center top / cover fixed no-repeat;
+    overflow-x: hidden;
+  }
+
+  @media (max-width: 760px) {
+    body {
+      background-attachment: scroll;
+    }
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+  }
+
+  .font-tamil {
+    font-family: var(--font-tamil);
+  }
+
+  .font-mono-num {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* 3D Continuity Perspective Stage & Interactive Depth Cards */
+.continuity-3d-stage {
+  perspective: 1400px;
+}
+
+.card-3d-tilt {
+  transform-style: preserve-3d;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card-3d-tilt:hover {
+  transform: perspective(1000px) translateY(-6px) rotateX(2.5deg) rotateY(-2deg) scale(1.012);
+  box-shadow: 0 24px 48px rgba(45, 12, 20, 0.24);
+}
+
+/* Scroll Progress Top Bar */
+.scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #d4a237, #ff5e62, #ffb347, #d4a237);
+  z-index: 60;
+  pointer-events: none;
+}
+
+/* Traditional Royal Gold & Temple Crimson Patrika Paper */
+.patrika-gold-paper {
+  position: relative;
+  background: rgba(255, 248, 232, 0.84);
+  color: #3a120a;
+  border: 6px double #c9932d;
+  border-radius: 10px;
+  box-shadow: 0 22px 54px rgba(58, 12, 20, 0.34);
+}
+
+.patrika-gold-paper::before {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border: 1.5px solid #d4a237;
+  border-radius: 5px;
+  pointer-events: none;
+}
+
+.patrika-gold-paper h3 {
+  color: #7c1428;
+}
+
+/* Real Rose Petals 3D Drift */
+@keyframes petalDrift3D {
+  0% {
+    transform: translate3d(0, -8vh, 0) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.88;
+  }
+  88% {
+    opacity: 0.82;
+  }
+  100% {
+    transform: translate3d(var(--drift-x, 60px), 108vh, 40px) rotateX(220deg) rotateY(180deg) rotateZ(310deg);
+    opacity: 0;
+  }
+}
+
+.petal-3d-item {
+  position: fixed;
+  top: -10vh;
+  pointer-events: none;
+  z-index: 25;
+  will-change: transform, opacity;
+  animation: petalDrift3D var(--fall-duration, 14s) linear infinite;
+}
+
+/* Holy Diya Flame Pulse */
+@keyframes diyaGlow {
+  0%, 100% {
+    opacity: 0.88;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+
+.animate-diya-glow {
+  animation: diyaGlow 2.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .petal-3d-item,
+  .animate-diya-glow {
+    animation: none !important;
+  }
+  .card-3d-tilt:hover {
+    transform: none !important;
+  }
+}

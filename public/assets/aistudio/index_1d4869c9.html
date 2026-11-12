@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+
+<html lang="ta">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<meta content="#5b1324" name="theme-color"/>
+<meta content="Madurai heritage Tamil wedding invitation with temple-door opening, couple story, family portraits, venue routes, events, relatives and photo album." name="description"/>
+<title>Thirumoorthi Veettu Thirukalyanam | M. Thirisha &amp; Siva Shankar</title>
+<!-- Google Fonts for Regal Traditional & Modern Aesthetics -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&amp;family=Cinzel:wght@500;600;700;800&amp;family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&amp;family=Noto+Sans+Tamil:wght@400;500;600;700&amp;family=Outfit:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="style.css?v=31" rel="stylesheet"/>
+</head>
+<body class="invitation-locked">
+<!-- Top Scroll Progress Indicator -->
+<div aria-hidden="true" class="scroll-progress-bar" id="progressBar"></div>
+<!-- Floating rose artwork canvas -->
+<canvas aria-hidden="true" id="petalsCanvas"></canvas>
+<!-- 3D Drone Light Show Canvas -->
+
+<!-- ==========================================================================
+     TOPBAR NAVIGATION
+     ========================================================================== -->
+<header class="topbar" id="mainHeader">
+<a aria-label="Thirumoorthi Veettu Thirukalyanam Home" class="brand-mark" href="#home">
+
+<span class="brand-text" data-i18n="brandTitle">திருமூர்த்தி வீட்டு திருக்கல்யாணம்</span>
+</a>
+<nav aria-label="Wedding sections" class="nav-container">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a class="nav-link active" data-i18n="navHome" href="#home">Home</a><a class="nav-link" data-i18n="navCouple" href="#couple">Couple</a><a class="nav-link" data-i18n="navVenue" href="#venue">Venue</a><a class="nav-link" data-i18n="navFamilies" href="#families">Families</a><a class="nav-link" data-i18n="fullPatrikaTitle" href="#full-patrika">Complete Invitation</a><a class="nav-link" data-i18n="navInvitation" href="#invitation">Invitation</a><a class="nav-link" data-i18n="navEvents" href="#events">Events</a><a class="nav-link" data-i18n="navGuests" href="#people">Guests</a><a class="nav-link" data-i18n="navAlbum" href="#album">Album</a><a class="nav-link" data-i18n="navWishes" href="#wishes">Wishes</a><a class="nav-link" data-i18n="navThanks" href="#thanks">Gratitude</a><a class="nav-link" data-i18n="navNotes" href="#notes">Notes</a></nav>
+</header>
+<!-- ==========================================================================
+     FLOATING AUDIO, LANGUAGE & DRONE CONTROLS
+     ========================================================================== -->
+<div aria-label="Quick site controls" class="floating-actions">
+<button aria-label="Switch language" class="float-btn lang-btn" id="langToggleBtn" title="மொழியை மாற்றவும்">
+<span id="langFlag">🌐</span> <span id="langText">தமிழ்</span>
+</button>
+<button aria-label="Play or pause wedding music" aria-pressed="false" class="float-btn" id="musicToggleBtn" title="திருமண இசையை இயக்க / நிறுத்த">
+<span id="musicIcon">♫</span> <span id="musicText">இசை</span>
+</button>
+</div>
+<!-- Local wedding music playlist. Audio stays mounted across the invitation, intro video and home page. -->
+<audio id="weddingAudioPlayer" class="built-in-wedding-audio" preload="metadata" playsinline aria-label="Thirumoorthi wedding music"></audio>
+
+<!-- ==========================================================================
+     1. ROYAL ENTRANCE PORTAL WITH 3D TEMPLE DOORS (Section 4 of Master Prompt)
+     ========================================================================== -->
+<div aria-label="Royal Invitation Entrance Doors" class="entrance-portal" id="entrancePortal" role="region">
+<div class="portal-ambient-glow"></div>
+<div class="portal-inner-container">
+<!-- Temple Gopuram Top Arch -->
+<div class="portal-gopuram-arch">
+<div aria-hidden="true" class="arch-diya left-diya">🪔</div>
+<div class="arch-title-box">
+
+<div class="portal-sacred-subtitle" id="portalDeityInvocation">ஸ்ரீ வெற்றி விநாயகர் துணை · பொதிகுளம் முத்துமாரியம்மன் · ஊர் காவலன் சாமி</div>
+<h1 class="portal-wedding-heading" id="portalWeddingHeading">M. Thirisha &amp; Siva Shankar</h1>
+<div class="portal-date-tag" id="portalDateTag">Sunday, 22 November 2026 · MATD Thirumoorthi Mahal, Madurai</div>
+<div class="portal-function-details" aria-label="Thirumoorthi Groups family function details">
+  <strong class="portal-function-name" id="portalFunctionTitle">THIRUMOORTHI GROUPS FAMILY FUNCTION</strong>
+  <span id="portalMuhurthamLine" data-i18n="portalMuhurthamLine"><b>Muhurtham:</b> 6:15–7:15 AM · <b>Wedding feast:</b> 8:00 AM</span>
+  <span id="portalNichayatharthamLine" data-i18n="portalNichayatharthamLine"><b>Nichayathartham:</b> 6:30 PM, 21 November 2026</span>
+  <span><b data-i18n="portalVenueLabel">Venue:</b> <span id="portalVenueValue">MATD Thirumoorthi Mahal, Andipatti Bungalow, T. Vadipatti, Madurai</span></span>
+  <span class="portal-family-note" data-i18n="portalFamilyNote">Our family is delighted to gather again with love, blessings and togetherness.</span>
+</div>
+<div class="portal-guest-badge" id="portalGuestBadge" style="display:none;">
+<span class="guest-salute" data-i18n="persSalute">🌸 Warmly Welcoming</span>
+<strong id="portalGuestName">Our Esteemed Guest</strong>
+</div>
+</div>
+<div aria-hidden="true" class="arch-diya right-diya">🪔</div>
+</div>
+<!-- Name-first invitation gate. Only the guest name is required. -->
+<form class="guest-personalise-form" id="guestPersonaliseForm" autocomplete="on" novalidate>
+  <p class="guest-form-heading" data-i18n="guestFormTitle">Welcome, Family &amp; Friends</p>
+  <label class="guest-primary-label" for="inviteeNameInput"><span data-i18n="guestFormName">Your name</span><span aria-hidden="true"> *</span></label>
+  <input class="guest-primary-input" id="inviteeNameInput" name="inviteeName" maxlength="100" placeholder="Enter your name" data-i18n-placeholder="guestPlaceholderName" autocomplete="name" required aria-describedby="guestNameHint" />
+  <p class="guest-form-hint" id="guestNameHint" data-i18n="guestFormHint">Family &amp; friends: enter just your own name to continue.</p>
+  <button class="guest-complete-btn" id="completeGuestDetailsBtn" type="submit" data-i18n="guestComplete">Continue to the royal key</button>
+</form>
+<!-- 3D Temple Doors Stage -->
+<div class="portal-doors-container" id="portalDoorsStage">
+<!-- Left Carved Wooden Door -->
+<div class="portal-door portal-door-left">
+<div class="door-wood-grain"></div>
+<div class="door-inner-border"></div>
+<div class="door-stud-matrix"></div>
+<div class="door-brass-ornament-top">❧ ❖ ❧</div>
+<div aria-hidden="true" class="door-brass-lion-knocker">🦁</div>
+<div class="door-brass-handle"></div>
+</div>
+<!-- Right Carved Wooden Door -->
+<div class="portal-door portal-door-right">
+<div class="door-wood-grain"></div>
+<div class="door-inner-border"></div>
+<div class="door-stud-matrix"></div>
+<div class="door-brass-ornament-top">❧ ❖ ❧</div>
+<div aria-hidden="true" class="door-brass-lion-knocker">🦁</div>
+<div class="door-brass-handle"></div>
+</div>
+<!-- Center Touch Seal Button -->
+<button aria-label="Enter your name first, then use the royal key to open the temple doors" class="portal-center-seal" id="portalOpenBtn" disabled>
+<img class="royal-key-image" src="assets/royal-key-transparent.png" alt="" aria-hidden="true" />
+<span class="seal-text-main" data-i18n="portalOpenText">Use the Royal Key</span>
+<span class="seal-subtext" data-i18n="portalOpenSub">Open the invitation</span>
+</button>
+<!-- Revealed Mandapam Stage Behind Doors -->
+<div class="portal-revealed-stage" id="portalRevealedStage">
+<div class="revealed-mandapam-backdrop"></div>
+<div class="revealed-content">
+
+<div class="revealed-kicker" data-i18n="invKicker">திருமண அழைப்பிதழ் · Sacred Patrika</div>
+<h2 class="revealed-couple-title" id="revealedCoupleTitle">M. Thirisha &amp; Siva Shankar</h2>
+<div class="revealed-date-badge" id="revealedDateBadge">Sunday, 22 November 2026 · Madurai</div>
+<p class="revealed-blessing-text" data-i18n="patrikaSlokam">
+            மங்கலம் பொங்க, நலம் பல சூழ, அன்புடன் நல்வாழ்வு மலர வாழ்த்தி வருக!
+          </p>
+<div class="revealed-live-links" aria-label="Wedding live stream links">
+  <a class="live-tab-btn" href="https://youtube.com" target="_blank" rel="noopener">▶ YouTube Live</a>
+  <a class="live-tab-btn" href="https://instagram.com" target="_blank" rel="noopener">▣ Instagram Live</a>
+</div>
+<div class="revealed-scroll-cue" id="revealedScrollCue">
+<span class="cue-arrow">↓</span>
+<span class="cue-text" data-i18n="enterCelebration">Scroll to enter the celebration</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Accessible Skip Link -->
+<div class="portal-footer-bar">
+<button class="portal-skip-btn" data-i18n="skipIntro" id="skipPortalBtn">Skip Animation &amp; Enter Website ↓</button>
+</div>
+</div>
+</div>
+<!-- Full-screen garland-exchange video shown after the doors open, before the home page. -->
+<section id="garlandIntro" class="garland-intro" hidden aria-label="Sacred Wedding Ceremony">
+  <video id="garlandIntroVideo" class="garland-intro-video" playsinline muted preload="auto" poster="assets/garland-video-poster.jpg">
+    <source src="assets/garland-ceremony.mp4" type="video/mp4">
+    Your browser cannot play this wedding introduction video.
+  </video>
+  <div class="garland-intro-shade" aria-hidden="true"></div>
+  <div class="garland-intro-overlay">
+    <p class="garland-intro-kicker" data-i18n="bannerTag">THIRUMOORTHI GROUPS FAMILY FUNCTION</p>
+    <h1 data-i18n="videoCeremonyTitle">Wedding Ceremony</h1>
+    <p class="garland-intro-subtitle" data-i18n="videoCeremonySubtitle">M. Thirisha &amp; Siva Shankar · Thirumoorthi Groups Family Function</p>
+    <div class="garland-intro-actions">
+      <button type="button" id="garlandVideoPlayBtn" class="garland-intro-btn" hidden>▶ Play video</button>
+      <button type="button" id="skipGarlandIntroBtn" class="garland-intro-btn primary" data-i18n="videoContinueHome">Continue to Home →</button>
+    </div>
+    <p id="garlandVideoHint" class="garland-intro-hint" data-i18n="videoCeremonyHint">A moment of tradition before the celebration begins.</p>
+  </div>
+</section>
+
+<!-- ==========================================================================
+     2. MADURAI SUNSET PANORAMA CINEMATIC SCROLL SCENE (Section 5 of Master Prompt)
+     ========================================================================== -->
+
+<!-- ==========================================================================
+     3. COUPLE HERO SECTION & LIVE COUNTDOWN (Section 4 & 14)
+     ========================================================================== -->
+<header class="hero-section" id="home">
+<div class="hero-bg-container">
+<img alt="M. Thirisha and Siva Shankar wedding celebration" class="hero-bg-img" id="heroBgImg" src="assets/hero-mandapam-couple.webp"/>
+</div>
+<div class="hero-overlay"></div>
+<div class="hero-temple-glow"></div>
+<div class="hero-content">
+<!-- Wedding Day Mode Banner (Section 14 of Master Prompt) -->
+<div class="wedding-day-mode-banner" id="weddingDayBanner" style="display:none;">
+<span class="day-mode-badge" data-i18n="dayModeBadge">✨ TODAY WE CELEBRATE ✨</span>
+<h2 class="day-mode-title" data-i18n="dayModeTitle">Arulmigu Thirukalyana Vaibhavam</h2>
+<p class="day-mode-desc" data-i18n="dayModeDesc">The sacred Muhurtham rituals are underway at MATD Thirumoorthi Mahal, Madurai.</p>
+</div>
+<div class="sacred-invocation">
+<span id="familyDeityLine">Sri Vetri Vinayagar Thunai · Pothikulam Muthumari Amman · Oor Kavalan Samy</span>
+</div>
+<div class="wedding-banner-tag family-function-title" id="familyFunctionTitle">THIRUMOORTHI GROUPS FAMILY FUNCTION</div>
+<h1 class="couple-hero-title">
+<span id="heroBride">M. Thirisha</span>
+<span class="weds" data-i18n="weds">weds</span>
+<span id="heroGroom">Siva Shankar</span>
+</h1>
+<div class="hero-date-box" id="heroDateDisplay">
+      Sunday, 22 November 2026 · Muhurtham: 6:15–7:15 AM · Feast: 8:00 AM
+    </div>
+<p class="hero-venue-sub" id="heroVenueSub">
+      MATD Thirumoorthi Mahal, Andipatti Bungalow, T. Vadipatti, Madurai
+    </p>
+<!-- Real-time Countdown -->
+<div aria-label="Countdown to auspicious Muhurtham" class="countdown-wrapper" id="countdownWrapper">
+<div class="countdown-box"><strong id="cdDays">00</strong><span data-i18n="days">Days</span></div>
+<div class="countdown-box"><strong id="cdHours">00</strong><span data-i18n="hours">Hours</span></div>
+<div class="countdown-box"><strong id="cdMins">00</strong><span data-i18n="minutes">Minutes</span></div>
+<div class="countdown-box"><strong id="cdSecs">00</strong><span data-i18n="seconds">Seconds</span></div>
+</div>
+<div class="countdown-actions" aria-label="Wedding calendar actions">
+  <a class="btn-regal gold" id="googleCalendarBtn" target="_blank" rel="noopener" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=M.%20Thirisha%20%26%20Siva%20Shankar%20Wedding&amp;dates=20261215T010000Z/20261215T023000Z&amp;details=Sacred%20wedding%20ceremony&amp;location=MATD%20Thirumoorthi%20Mahal%2C%20Madurai">Add to Google Calendar</a>
+  <button class="btn-regal outline" id="downloadWeddingIcsBtn" type="button">Download event file</button>
+</div>
+<!-- Live Stream Tabs as small tabs -->
+<div class="hero-livestream-bar">
+<div class="livestream-label">
+<span aria-hidden="true" class="livestream-pulse"></span> <span data-i18n="liveBroadcast">Live Broadcast Channels</span>
+</div>
+<div class="livestream-tabs">
+<a class="live-tab-btn" href="https://youtube.com" id="liveYt" rel="noopener" target="_blank">
+<span>▶</span> YouTube Live
+        </a>
+<a class="live-tab-btn" href="https://instagram.com" id="liveInsta" rel="noopener" target="_blank">
+<span>📷</span> Instagram Live
+        </a>
+<a class="live-tab-btn" href="https://zoom.us" id="liveZoom" rel="noopener" target="_blank">
+<span>📹</span> Zoom Meeting
+        </a>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="hero-cta-buttons">
+<a class="btn-regal gold" href="#invitation">
+<span>📜</span> <span data-i18n="openPatrika">Sacred Invitation</span>
+</a>
+<a class="btn-regal outline" href="#events">
+<span>📅</span> <span data-i18n="viewSchedule">Events Schedule</span>
+</a>
+
+</div>
+</div>
+</header>
+<main>
+<!-- ==========================================================================
+       4. SACRED INVITATION PATRIKA (Section 4 & 19)
+       ========================================================================== -->
+
+<!-- ==========================================================================
+       5. BRIDE AND GROOM SECTION (Page 1 Artwork: 1671 x 941)
+       ========================================================================== -->
+
+<!-- ==========================================================================
+       6. SACRED KOLAM DRAWING TRANSITION (Section 6 of Master Prompt)
+       ========================================================================== -->
+
+<!-- ==========================================================================
+       7. OUR LOVE STORY & HERITAGE EASTER EGGS (Section 9 & 15A of Master Prompt)
+       ========================================================================== -->
+
+<!-- ==========================================================================
+       8. PHOTO ALBUM - 3-PAGE WIDE HORIZONTAL SCROLL (2048 x 682, Section 7)
+       ========================================================================== -->
+
+<!-- ==========================================================================
+       9. BELOVED FAMILIES - 3-PAGE TALL FAMILY FRAME (682 x 2048, Section 8 & 10)
+       ========================================================================== -->
+
+<!-- ==========================================================================
+       10. RELATIVES, FRIENDS & KIDS (Page 4: 940 x 1672)
+       ========================================================================== -->
+
+<!-- ==========================================================================
+       11. WEDDING EVENTS TIMELINE (Section 11 of Master Prompt)
+       ========================================================================== -->
+
+<!-- ==========================================================================
+       12. VENUE DETAILS WITH 3-PAGE TALL AERIAL TEMPLE GOPURAM (682 x 2048)
+       ========================================================================== -->
+
+<!-- ==========================================================================
+       13. PROPER RSVP EXPERIENCE (Section 12 of Master Prompt)
+       ========================================================================== -->
+
+<!-- ==========================================================================
+       14. SUGGESTIONS, ETIQUETTE & DIGITAL BLESSING WALL (Section 15F)
+       ========================================================================== -->
+
+<!-- ==========================================================================
+       15. THANKING & CONTACT SECTION (Final Thank You Courtyard: 1584 x 672)
+       ========================================================================== -->
+
+<!-- ==========================================================================
+       16. PERSONAL WEDDING DIARY / NOTES TAB
+       ========================================================================== -->
+
+<section id="couple">
+<div class="section-container">
+<div class="section-header">
+<div class="section-kicker" data-i18n="coupleKicker">Divine Union · இரு மனம் இணையும் திருநாள்</div>
+<h2 class="section-title" data-i18n="coupleTitle">The Bride &amp; The Groom</h2>
+<p class="section-subtitle" data-i18n="coupleSubtitle">“Two souls united with the sacred blessings of elders and deities in the temple town of Madurai.”</p>
+<div aria-hidden="true" class="ornament-divider">❧ ❖ ❧</div>
+</div>
+<!-- Exact 1671 x 941 artwork frame -->
+<div class="couple-portrait-pair">
+  <figure class="couple-portrait-card bride-portrait"><img src="assets/bride-photo.webp" alt="M. Thirisha, the bride" loading="lazy" onerror="this.onerror=null;this.src='assets/bride-groom-temple.webp'"><figcaption id="bridePortraitCaption">M. Thirisha · The Bride</figcaption></figure>
+  <figure class="couple-portrait-card groom-portrait"><img src="assets/groom-photo.webp" alt="Siva Shankar, the groom" loading="lazy" onerror="this.onerror=null;this.src='assets/bride-groom-temple.webp'"><figcaption id="groomPortraitCaption">Siva Shankar · The Groom</figcaption></figure>
+</div>
+<div class="couple-showcase">
+<div class="couple-bio-grid">
+<div class="couple-person-card">
+<span class="couple-person-tag" data-i18n="brideTag">மகிழ்ச்சி நாயகி · The Bride</span>
+<h3 class="couple-person-name" id="brideCardName">M. Thirisha</h3>
+<div class="couple-person-title" id="brideQualification">M.A. English Literature</div>
+<p class="couple-person-desc" id="brideBioText">M. Thirisha has completed M.A. in English Literature. Daughter of A. Moorthi and M. Alamelu, founders of Thirumoorthi Groups.
+            </p>
+</div>
+<div aria-hidden="true" class="couple-center-amp">&amp;</div>
+<div class="couple-person-card">
+<span class="couple-person-tag" data-i18n="groomTag">மணமகன் · The Groom</span>
+<h3 class="couple-person-name" id="groomCardName">Siva Shankar</h3>
+<div class="couple-person-title" id="groomQualification"></div>
+<p class="couple-person-desc" id="groomBioText">Siva Shankar is the groom. Additional details can be added by the family administrator.
+            </p>
+</div>
+</div>
+</div>
+</div>
+</section><section id="venue">
+<div class="section-container">
+<div class="section-header">
+<div class="section-kicker" data-i18n="venueKicker">திருமண மண்டபம் · Travel &amp; Directions</div>
+<h2 class="section-title" data-i18n="venueTitle">Venue &amp; Route Planner</h2>
+<p class="section-subtitle" data-i18n="venueSub">Touch below to get instant driving directions from your exact present location.</p>
+<div aria-hidden="true" class="ornament-divider">❧ ❖ ❧</div>
+</div>
+<div class="venue-grid">
+<!-- Venue Card -->
+<div class="venue-main-card">
+<div>
+<div class="venue-header-box">
+<div class="venue-temple-icon">🏛</div>
+<h3 class="venue-name-text" id="venueTitle">MATD Thirumoorthi Mahal, Andipatti Bungalow, T. Vadipatti, Madurai</h3>
+<p class="venue-address-text" id="venueFullAddress">
+                MATD Thirumoorthi Mahal, Andipatti Bungalow, T. Vadipatti, Madurai, Tamil Nadu
+              </p>
+</div>
+<div style="font-size: 0.95rem; line-height: 1.6; color: var(--ink-muted); margin-bottom: 1rem;">
+<p><strong>Auspicious Date:</strong> <span id="venueDateText">Sunday, 22 November 2026</span></p>
+<p><strong>Nichayathartham:</strong> 6:30 PM (previous evening)</p>
+<p><strong>Muhurtham Timings:</strong> 6:15 AM – 7:15 AM</p>
+<p><strong>Virundhu (Feast):</strong> 8:00 AM onwards</p>
+</div>
+</div>
+<!-- Route links with Present Location -->
+<div class="route-actions-grid">
+<button class="route-btn gps-primary" id="gpsRouteBtn" type="button">
+<span>📍 Get Directions From My Location</span>
+<span class="route-icon">➔</span>
+</button>
+<a class="route-btn" href="https://maps.app.goo.gl/GA7fjzCVVkBG7dwv7" id="googleMapLink" rel="noopener" target="_blank">
+<span>🗺 Open in Google Maps</span>
+<span class="route-icon">↗</span>
+</a>
+<a class="route-btn" href="https://www.google.com/search?q=buses+to+Mattuthavani+Bus+Stand+Madurai" id="busRouteLink" rel="noopener" target="_blank">
+<span>🚌 Bus Routes (Mattuthavani &amp; Periyar)</span>
+<span class="route-icon">↗</span>
+</a>
+<a class="route-btn" href="https://www.google.com/search?q=trains+to+Madurai+Junction+MDU" id="trainRouteLink" rel="noopener" target="_blank">
+<span>🚆 Train Routes (Madurai Junction - MDU)</span>
+<span class="route-icon">↗</span>
+</a>
+</div>
+</div>
+</div>
+</section><section id="families">
+<div class="section-container">
+<div class="section-header">
+<div class="section-kicker" data-i18n="famKicker">பெற்றோர்கள் மற்றும் குடும்பத்தினர்</div>
+<h2 class="section-title" data-i18n="famTitle">Our Beloved Families</h2>
+<p class="section-subtitle" data-i18n="famSub">Bride: father, mother and brother. Groom: father, mother and sister's family. Other relatives and friends are listed below.</p>
+<div aria-hidden="true" class="ornament-divider">❧ ❖ ❧</div>
+</div>
+<!-- Fitted within Page 7 Ornate Family Frame (682 x 2048) -->
+<div class="family-exact-frame-stage family-frame-no-artwork">
+<!-- Bride's Family -->
+<div class="family-branch-panel">
+<h3><span>🌸</span> <span data-i18n="brideFamHeading">The Bride's Family</span></h3>
+<p id="brideFamilySummary" style="font-size: 0.95rem; color: var(--ink-muted);">மணமகளின் தந்தை, தாய் மற்றும் சகோதரர்.</p>
+<div class="family-admin-details"><p><strong>Parents:</strong> <span id="brideParentsLine">A. Moorthi — Founder &amp; Chairperson · M. Alamelu — Founder &amp; CEO</span></p><p><strong>Brother:</strong> <span id="brideBrotherLine">M. Deepak — B.Tech ECE, Embedded Engineer &amp; Manager</span></p><p><strong>Thirumoorthi Groups:</strong> <span id="familyBusinessLine">MATD Thirumoorthi Mahal · Thirumoorthi Tea Stall · Thirumoorthi Grocery Shop</span></p></div>
+<div class="family-members-grid" id="brideFamilyMembersGrid">
+<!-- Rendered via JS -->
+</div>
+</div>
+<!-- Groom's Family -->
+<div class="family-branch-panel">
+<h3><span>⚜</span> <span data-i18n="groomFamHeading">The Groom's Family</span></h3>
+<p id="groomFamilySummary" style="font-size: 0.95rem; color: var(--ink-muted);">மணமகனின் தந்தை, தாய் மற்றும் சகோதரியின் குடும்பம்.</p>
+<div class="family-admin-details groom-family-admin-details"><p><strong>Parents:</strong> <span>S. Suresh — Owner, Venkatesh Grocery Shop · Valli — Co-owner, Venkatesh Grocery Shop</span></p><p><strong>Groom:</strong> <span>S. Siva Shankar — B.E. Graduate · Tamil Nadu Fire and Rescue Services</span></p><p><strong>Family Business:</strong> <span>Venkatesh Grocery Shop</span></p></div>
+<div class="family-members-grid" id="groomFamilyMembersGrid">
+<!-- Rendered via JS -->
+</div>
+</div>
+</div>
+</div>
+</section><section id="full-patrika" aria-labelledby="fullPatrikaTitle">
+  <div class="section-container">
+    <div class="section-header"><div class="section-kicker">M.A.T.D. THIRUMOORTHI ILLAM</div><h2 class="section-title" id="fullPatrikaTitle" data-i18n="fullPatrikaTitle">Complete Wedding Invitation</h2><p class="section-subtitle" data-i18n="fullPatrikaSub">The traditional family invitation in Tamil and English.</p></div>
+    <article class="invitation-paper full-patrika-paper">
+      <div class="full-patrika-ta" lang="ta">
+        <h3>M.A.T.D. திருமூர்த்தி இல்லம் – திருமண அழைப்பிதழ்</h3>
+        <p>ஸ்ரீ சிங்கார உடையார் துணை, ஸ்ரீ தாயம்மாள் துணை, ஸ்ரீ திண்ணாயிரமூர்த்தி அய்யனார் துணை, ஸ்ரீ வீரமாகாளியம்மன் துணை, ஸ்ரீ வெற்றி விநாயகர் துணை.</p>
+        <h3>அன்புடையீர்,</h3>
+        <p>நிகழும் மங்களகரமான பராபவ வருடம் கார்த்திகை மாதம் 6-ஆம் தேதி (22.11.2026) ஞாயிற்றுக்கிழமை திரயோதசி திதியும், அசுபதி நட்சத்திரமும் சித்தயோகமும் கூடிய சுபயோக சுபதினத்தில் அன்று காலை 6.00 மணிக்குமேல் 7.35 மணிக்குள் விருச்சிக லக்கினத்தில் எங்கள் இல்லத் திருமணம் நடைபெற உள்ளது.</p>
+        <h3>மணமகன் பக்கம்</h3><p>மணமகனின் பெற்றோர் திரு. S. சுரேஷ் மற்றும் திருமதி வள்ளி அவர்கள் வெங்கடேஷ் மளிகைக் கடையின் உரிமையாளர்கள்.</p><p>யாதவர் பொதிகுளம் திரு. பெ. சிங்கனன் யாதவ் – ராஜலெட்சுமி அம்மாள் அவர்களின் மகன்வழிப் பேரனும், யாதவர் பொதிகுளம் தெய்வத்திருவாளர்கள் வெ. முனியசாமி யாதவ் – ஆராயி அம்மாள் அவர்களின் மகள்வழிப் பேரனும், S. சுரேஷ் – வள்ளி அவர்களின் குமாரனுமாகிய திருநிறைச்செல்வன் <strong>S. சிவசங்கர் B.E. (தமிழ்நாடு தீயணைப்புத்துறை)</strong>.</p>
+        <h3>மணமகள் பக்கம்</h3><p>யாதவர் பொதிகுளம் தெய்வத்திருவாளர்கள் K. அழகர் யாதவ் – சமுந்திரவள்ளி அவர்களின் மகன்வழிப் பேத்தியும், யாதவர் பொதிகுளம் தெய்வத்திருவாளர்கள் A. இராமையா யாதவ் – கிருஷ்ணம்மாள் அவர்களின் மகள்வழிப் பேத்தியும், A. கோபால் கிருஷ்ண மூர்த்தி – அலமேலு அவர்களின் குமாரத்தியுமான திருநிறைச்செல்வி <strong>M. திரிஷா M.A. (English Literature)</strong>.</p>
+        <p>இவர்களது திருமணம் பெரியோர்களால் நிச்சயித்தவண்ணம் T. வாடிப்பட்டி, ஆண்டிப்பட்டி பங்களா, M.A.T.D. திருமூர்த்தி மகாலில் நடைபெறுவதால் தாங்கள் தங்கள் குடும்பத்துடன் வந்திருந்து மணமக்களை வாழ்த்தி ஆசீர்வதிக்குமாறு அன்புடன் அழைக்கின்றோம்.</p>
+        <h3>அவ்வண்ணமே கோரும்</h3><p>A. மூர்த்தி – அலமேலு · M. தீபக் B.Tech (ECE)</p><p>யாதவர் பொதிகுளம். (இருப்பு) ஆண்டிப்பட்டி பங்களா, மதுரை – 625 221.</p><p>செல்: 90424 98664, 96884 43550. (இருவீட்டார் அழைப்பு)</p>
+        <h3>நிச்சயதார்த்தம்</h3><p>21.11.2026 சனிக்கிழமை மாலை 6.30 மணி முதல் T. வாடிப்பட்டி, ஆண்டிப்பட்டி பங்களா, M.A.T.D. திருமூர்த்தி மகாலில் நடைபெறும்.</p>
+      </div>
+      <div class="full-patrika-en" lang="en" hidden>
+        <h3>M.A.T.D. Thirumoorthi Illam – Wedding Invitation</h3><p>With the blessings of Sri Singara Udaiyar, Sri Thayammal, Sri Thinnayiramoorthi Ayyanar, Sri Veeramakaliyamman and Sri Vetri Vinayagar.</p><h3>Dear Respected Family and Friends,</h3>
+        <p>With great joy, we invite you to the auspicious wedding on Sunday, 22 November 2026 (Karthigai 6), during the auspicious morning muhurtham between 6:00 AM and 7:35 AM.</p>
+        <h3>Bridegroom</h3><p>Grandson of the families of Mr. P. Singanan Yadav and Rajalakshmi Ammal, and of the late V. Muniyasamy Yadav and Aarayee Ammal; son of S. Suresh and Valli: <strong>S. Siva Shankar, B.E. graduate, serving in Tamil Nadu Fire and Rescue Services.</strong></p><p>His parents, S. Suresh and Valli, are the owners of Venkatesh Grocery Shop.</p>
+        <h3>Bride</h3><p>Granddaughter of the families of the late K. Azhagar Yadav and Samundhiravalli, and the late A. Ramaiya Yadav and Krishnammal; daughter of A. Gopal Krishna Moorthy and Alamelu: <strong>M. Thirisha, M.A. (English Literature).</strong></p>
+        <p>The wedding will take place at M.A.T.D. Thirumoorthi Mahal, Andipatti Bungalow, T. Vadipatti, Madurai. We warmly invite you and your family to attend and bless the couple.</p>
+        <h3>With regards</h3><p>A. Moorthi – Alamelu · M. Deepak, B.Tech (ECE)</p><p>Yadavar Pothikulam, Andipatti Bungalow, Madurai – 625 221.</p><p>Phone: 90424 98664, 96884 43550. (Invitation from both families)</p><h3>Engagement</h3><p>Saturday, 21 November 2026, from 6:30 PM at M.A.T.D. Thirumoorthi Mahal, Andipatti Bungalow, T. Vadipatti.</p>
+      </div>
+    </article>
+  </div>
+</section>
+<section id="invitation">
+<div class="section-container">
+<div class="section-header">
+<div class="section-kicker" data-i18n="invKicker">திருமண அழைப்பிதழ் · Sacred Patrika</div>
+<h2 class="section-title" data-i18n="invTitle">Auspicious Wedding Invitation</h2>
+<p class="section-subtitle" data-i18n="invSub">With the divine blessings of family deities, grandparents, parents, and loving relatives.</p>
+<div aria-hidden="true" class="ornament-divider">❧ ❖ ❧</div>
+</div>
+<!-- The goddess frame is reserved for this auspicious invitation only. -->
+<div class="invitation-outer-stage invitation-background-scene">
+<div class="invitation-patrika-framed invitation-content-panel">
+
+<div class="patrika-slokam" data-i18n="patrikaSlokam">
+            மங்கலம் பொங்க, நலம் பல சூழ,<br/>
+            அன்புடன் நல்வாழ்வு மலர வாழ்த்தி வருக!
+          </div>
+<!-- Personalized Welcome Line (Section 13 of Master Prompt) -->
+<div class="personalized-guest-box" id="personalizedGuestBox" style="display:none;">
+<span class="personalized-salute" data-i18n="persSalute">🌸 Warmly Welcoming</span>
+<h3 class="personalized-name" id="persGuestName">Respected Guests &amp; Family</h3>
+<p class="personalized-household-line" id="persHouseholdLine" hidden></p>
+</div>
+<div class="patrika-greeting" data-i18n="patrikaGreeting" id="patrikaGreeting">
+            Respected Family, Elders, and Friends,
+          </div>
+<p class="patrika-body-text" id="patrikaBodyText">
+            With the divine blessings of Pothikulam Muthumari Amman and Oor Kavalan Samy, and with the blessings of our beloved parents and elders, the Thirumoorthi Groups family cordially invites you to the wedding of M. Thirisha and Siva Shankar.
+          </p>
+<div class="patrika-couple-names">
+<span id="patrikaBrideName">M. Thirisha</span>
+<span class="patrika-weds" data-i18n="weds">weds</span>
+<span id="patrikaGroomName">Siva Shankar</span>
+</div>
+<div class="patrika-muhurtham-badge" id="patrikaMuhurthamTime">
+            Muhurtham: Sunday, 22 Nov 2026 · 6:15 AM - 7:15 AM
+          </div>
+<div class="patrika-actions-row">
+<a class="btn-regal gold" href="#events">
+<span>📅</span> <span data-i18n="addCalBtn">Ceremonies Timeline</span>
+</a>
+<a class="btn-regal outline" href="#venue">
+<span>📍</span> <span data-i18n="venueDirections">Venue Directions</span>
+</a>
+<button class="btn-regal" id="downloadPersonalInvitationBtn" type="button"><span>⬇</span> <span data-i18n="downloadInvite">Download personalised invitation (PDF)</span></button>
+</div>
+</div>
+</div>
+</div>
+</section><section id="events">
+<div class="section-container">
+<div class="section-header">
+<div class="section-kicker" data-i18n="eventsKicker">திருமண சடங்குகள் &amp; நேர அட்டவணை</div>
+<h2 class="section-title" data-i18n="eventsTitle">Auspicious Events Timeline</h2>
+<p class="section-subtitle" data-i18n="eventsSub">Sacred Vedic rituals and traditional festivities celebrating the divine wedding union.</p>
+<div aria-hidden="true" class="ornament-divider">❧ ❖ ❧</div>
+</div>
+<!-- Connected Vertical Timeline Track -->
+<div class="events-timeline-container" id="eventsTimelineList">
+<!-- Rendered dynamically with Add to Calendar actions via JS -->
+</div>
+</div>
+</section><section id="people">
+<div class="section-container">
+<div class="section-header">
+<div class="section-kicker" data-i18n="peopleKicker">குடும்ப உறுப்பினர்கள் &amp; நண்பர்கள்</div>
+<h2 class="section-title" data-i18n="peopleTitle">Family Members &amp; Friends</h2>
+<p class="section-subtitle" data-i18n="peopleSub">Browse family members and friends by name, relationship, children, or location.</p>
+<div aria-hidden="true" class="ornament-divider">❧ ❖ ❧</div>
+</div>
+<div class="people-controls-bar">
+<!-- Search bar -->
+<div class="people-search-box">
+<span aria-hidden="true" class="search-icon">🔍</span>
+<input aria-label="Search relatives and friends" class="people-search-input" id="guestSearchInput" placeholder="Search by couple name, children, location, or relation..." type="text"/>
+</div>
+<!-- Segregation filter pills including Kids filter -->
+<div class="people-filter-pills" id="peopleFilterPills">
+<button class="filter-pill active" data-filter="all" data-i18n="pillAll" type="button">All Guests</button>
+<button class="filter-pill" data-filter="with-kids" data-i18n="pillKids" type="button">Families with Kids 👶</button>
+<button class="filter-pill" data-filter="relatives-bride" data-i18n="pillBrideRel" type="button">Bride's Relatives</button>
+<button class="filter-pill" data-filter="relatives-groom" data-i18n="pillGroomRel" type="button">Groom's Relatives</button>
+<button class="filter-pill" data-filter="friends-groom" data-i18n="pillGroomFrnd" type="button">Groom's Friends</button>
+<button class="filter-pill" data-filter="friends-bride" data-i18n="pillBrideFrnd" type="button">Bride's Friends</button>
+<button class="filter-pill" data-filter="friends-brothers" data-i18n="pillBroFrnd" type="button">Brothers' Friends</button>
+<button class="filter-pill" data-filter="officials" data-i18n="pillColleagues" type="button">Workplace Colleagues</button>
+</div>
+</div>
+<!-- Segregated Groups Display with Kids Bar in every relative card -->
+<div class="segregated-groups-container" id="segregatedPeopleContainer">
+<!-- Rendered dynamically via JS -->
+</div>
+</div>
+</section><section id="album" class="album-heritage-scene">
+<div class="section-container">
+<div class="section-header">
+<div class="section-kicker" data-i18n="albumKicker">புகைப்பட ஆல்பம் · Memories of Madurai</div>
+<h2 class="section-title" data-i18n="albumTitle">Wedding Moments &amp; Album</h2>
+<p class="section-subtitle" data-i18n="albumSub">Swipe or scroll horizontally through our royal panoramic photo journey. Click any photo for full lightbox view.</p>
+<div aria-hidden="true" class="ornament-divider">❧ ❖ ❧</div>
+</div>
+<div class="album-banner-indicator">
+<span class="album-counter-badge" id="albumCounterBadge">Photo 01 / 06</span>
+<div style="display:flex; gap:0.5rem;">
+<button aria-label="Previous photo" class="template-btn" id="albumPrevBtn" type="button">‹ Scroll Left</button>
+<button aria-label="Next photo" class="template-btn" id="albumNextBtn" type="button">Scroll Right ›</button>
+</div>
+</div>
+<!-- EXACT 3-PAGE WIDE HORIZONTAL TRACK (2048 x 682, 3:1 Ratio) -->
+<div class="album-three-page-scroll-wrap" id="albumScrollWrap">
+<div class="album-three-page-track" id="albumScrollStrip">
+<!-- Album cards rendered via JS -->
+</div>
+</div>
+</div>
+</section><section id="wishes">
+<div class="section-container">
+<div class="section-header">
+<div class="section-kicker" data-i18n="wishesKicker">வழிகாட்டுதல் &amp; வாழ்த்துகள்</div>
+<h2 class="section-title" data-i18n="wishesTitle">Suggestions &amp; Digital Blessing Wall</h2>
+<p class="section-subtitle" data-i18n="wishesSub">Traditional etiquette for attendees and cherished blessings shared by relatives and friends.</p>
+<div aria-hidden="true" class="ornament-divider">❧ ❖ ❧</div>
+</div>
+<div class="expectations-suggestions-grid">
+<!-- Traditional Etiquette & Expectations -->
+<div class="regal-info-box">
+<h3><span>🪔</span> <span data-i18n="etiquetteHeading">Wedding Traditions &amp; Tips</span></h3>
+<div class="etiquette-list">
+<div class="etiquette-item">
+<div class="etiquette-icon">👘</div>
+<div class="etiquette-text">
+<strong data-i18n="attireTitle">Traditional Attire Suggested</strong>
+<p data-i18n="attireDesc">We warmly encourage traditional South Indian attire — vibrant Silk Pattu Sarees for ladies, and silk Dhotis (Veshti) / Kurta for gentlemen.</p>
+</div>
+</div>
+<div class="etiquette-item">
+<div class="etiquette-icon">⏰</div>
+<div class="etiquette-text">
+<strong data-i18n="timeTitle">Auspicious Timings</strong>
+<p data-i18n="timeDesc">The sacred Mangalya Dharanam takes place between 6:15 AM and 7:15 AM. Kindly be seated in the mandapam by 6:00 AM.</p>
+</div>
+</div>
+<div class="etiquette-item">
+<div class="etiquette-icon">🍌</div>
+<div class="etiquette-text">
+<strong data-i18n="feastTitle">Grand Madurai Kalyana Virundhu</strong>
+<p data-i18n="feastDesc">Authentic Madurai traditional feast served on fresh plantain leaves with Madurai Jigarthanda and traditional sweet delicacies.</p>
+</div>
+</div>
+<div class="etiquette-item">
+<div class="etiquette-icon">📸</div>
+<div class="etiquette-text">
+<strong data-i18n="photoTitle">Photography &amp; Blessings</strong>
+<p data-i18n="photoDesc">There will be dedicated photo zones. Tag your photos with #ThirishaWedsSivaShankar to share your lovely clicks!</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Send Suggestions & Digital Blessing Wall -->
+<div class="regal-info-box">
+<h3><span>💌</span> <span data-i18n="wallHeading">Digital Blessing Wall &amp; Wishes</span></h3>
+<!-- Recent Wishes Stream -->
+<div class="blessings-wall-stream" id="blessingsWallStream">
+<!-- Rendered dynamically via JS -->
+</div>
+<form class="suggest-form" id="wishesForm">
+<input aria-label="Your full name" class="form-input-regal" name="guestName" placeholder="Your Full Name" required="" type="text"/>
+<select aria-label="Your relationship" class="form-input-regal" name="guestRelation" required="">
+<option value="Bride's Friend / Relatives">Bride's Well-wisher / Relatives</option>
+<option value="Groom's Friend / Relatives">Groom's Well-wisher / Relatives</option>
+<option value="Family Friend">Family Friend</option>
+<option value="Colleague / Official">Colleague / Work Associate</option>
+</select>
+<textarea aria-label="Your wedding wish" class="form-input-regal" name="guestMessage" placeholder="Write your wedding blessings, prayer, or wishes here..." required="" rows="3"></textarea>
+<div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+<button class="btn-regal gold" style="flex:1;" type="submit">
+<span>🪔</span> <span data-i18n="postWallBtn">Post on Blessing Wall</span>
+</button>
+<button class="btn-regal outline" id="sendWhatsAppWishBtn" type="button">
+<span>💬</span> WhatsApp
+              </button>
+</div>
+</form>
+<div id="wishesAck" style="margin-top: 0.8rem; font-size: 0.85rem; color: var(--crimson); text-align: center;"></div>
+</div>
+</div>
+</div>
+</section><section class="section-container" id="communityWelcome" aria-labelledby="communityWelcomeTitle">
+  <div class="section-header"><div class="section-kicker">THIRUMOORTHI GROUPS FAMILY FUNCTION</div><h2 class="section-title" id="communityWelcomeTitle" data-i18n="welcomeGroupsTitle">Warm Welcome</h2></div>
+  <div class="reunion-note-card">
+    <p class="welcome-groups-en">We warmly welcome the Pothikulam Yadavar Ilaignar Narpani Mandram, the people of Yadavar Pothikulam village, Kalasalingam University students, Thaai School friends, Senthamarai College friends, and all our relatives, friends and well-wishers.</p>
+    <p class="welcome-groups-ta" lang="ta">பொதிகுளம் யாதவர் இளைஞர் நற்பணி மன்றத்தினர், யாதவர் பொதிகுளம் கிராமப் பொதுமக்கள், கலசலிங்கம் மாணவர்கள், தாய் பள்ளி நண்பர்கள், செந்தாமரை கல்லூரி நண்பர்கள் மற்றும் அனைத்து உறவினர்கள், நண்பர்கள், நல்விரும்பிகள் அனைவரையும் அன்புடன் வரவேற்கிறோம்.</p>
+  </div>
+</section>
+<footer id="thanks">
+<div class="thanks-inner">
+<div class="thanks-tamil-blessing" data-i18n="thanksBlessing">வந்தாரை வாழவைக்கும் மதுரை · தங்கள் வருகையே எங்கள் மகிழ்ச்சி</div>
+<h2 class="thanks-title" data-i18n="thanksTitle">With Heartfelt Gratitude</h2>
+<p class="thanks-message" id="thanksBodyText">
+        “We express our deepest thanks for being a part of this blessed milestone in our lives. Your love, presence, and timeless blessings will illuminate our shared future forever.”
+      </p>
+<div aria-hidden="true" class="ornament-divider" style="color: #f7d779;">❧ ❖ ❧</div>
+<div class="contact-coordinators-grid">
+<div class="coordinator-card">
+<div class="coordinator-side" data-i18n="brideCoordTitle">The Bride's Family Coordinator</div>
+<div class="coordinator-name" id="brideCoordName">M. Deepak</div>
+<div class="coordinator-links">
+<a class="coord-btn" href="#" id="brideCoordCall">📞 Call</a><a class="coord-btn" href="#" id="brideCoordWa" rel="noopener" target="_blank">💬 WhatsApp</a>
+</div>
+</div>
+<div class="coordinator-card">
+<div class="coordinator-side" data-i18n="groomCoordTitle">The Groom's Family Coordinator</div>
+<div class="coordinator-name" id="groomCoordName">Sankar (Groom)</div>
+<div class="coordinator-links">
+<a class="coord-btn" href="#" id="groomCoordCall">📞 Call</a><a class="coord-btn" href="#" id="groomCoordWa" rel="noopener" target="_blank">💬 WhatsApp</a>
+</div>
+</div>
+</div>
+<a class="btn-regal outline" href="#home" style="margin-top: 1.5rem;">
+<span>↑</span> <span data-i18n="returnTop">Return to Beginning</span>
+</a>
+</div>
+<div class="site-credit" style="text-align:center;padding:12px 8px;font-weight:700;letter-spacing:.08em">Presented by MATD Digital Groups</div>
+</footer>
+
+<!-- Final section: family reunion note -->
+<section id="notes" aria-labelledby="notesTitle">
+  <div class="section-container">
+    <div class="section-header">
+      <div class="section-kicker" data-i18n="notesKicker">A New Chapter · ஒரு புதிய அத்தியாயம்</div>
+      <h2 class="section-title" id="notesTitle" data-i18n="notesTitle">A New Chapter Together</h2>
+      <div class="ornament-divider" aria-hidden="true">❧ ❖ ❧</div>
+    </div>
+    <div class="reunion-note-card">
+      <p class="reunion-note-en">After our last gathering in 2018, we are delighted to come together once again and begin a new chapter filled with love, memories, blessings, and togetherness.</p>
+      <p class="reunion-note-ta" lang="ta">2018-ஆம் ஆண்டு நம் கடைசி சந்திப்பிற்குப் பிறகு, மீண்டும் ஒன்றாகக் கூடுவதில் மகிழ்ச்சி அடைகிறோம். அன்பு, நினைவுகள், ஆசிகள் மற்றும் ஒற்றுமையுடன் ஒரு புதிய அத்தியாயத்தைத் தொடங்குவோம்.</p>
+    </div>
+    <div class="notes-admin-access"><button aria-label="Open wedding site admin panel" class="admin-trigger-btn" id="openAdminBtn" title="Open family admin login"><span aria-hidden="true">⚙</span> <span data-i18n="adminLoginLabel">Family Admin Login</span></button></div>
+  </div>
+</section>
+</main>
+
+<!-- ==========================================================================
+     SMART FLOATING DOCK NAVIGATION (Section 16 of Master Prompt)
+     ========================================================================== -->
+<nav aria-label="Quick Section Navigation" class="smart-floating-dock" id="smartFloatingDock">
+<a aria-label="Go to Home section" class="dock-item active" href="#home" title="Home"><span>🏛</span><small>Home</small></a>
+
+<a aria-label="Go to Invitation section" class="dock-item" href="#invitation" title="Invitation"><span>📜</span><small>Patrika</small></a>
+<a aria-label="Go to Couple section" class="dock-item" href="#couple" title="Couple"><span>🌸</span><small>Couple</small></a>
+
+<a aria-label="Go to Album section" class="dock-item" href="#album" title="Album"><span>🖼</span><small>Album</small></a>
+<a aria-label="Go to Events section" class="dock-item" href="#events" title="Events"><span>📅</span><small>Events</small></a>
+<a aria-label="Go to Venue section" class="dock-item" href="#venue" title="Venue"><span>📍</span><small>Venue</small></a>
+
+<button aria-label="தானியங்கி உருளலை தொடங்கு அல்லது நிறுத்து" class="dock-item dock-control-item" id="autoScrollBtn" type="button" aria-pressed="false" title="Start or stop automatic scrolling"><span>↕</span><small id="autoScrollText">தானியங்கு உருள்</small></button>
+<button aria-label="Set maximum auto-scroll speed" class="dock-item dock-control-item" id="scrollSpeedBtn" type="button" title="Set auto-scroll to maximum speed"><span>⏩</span><small id="scrollSpeedText">அதிகபட்ச வேகம்</small></button>
+<a aria-label="Go to Notes section" class="dock-item" href="#notes" title="Notes"><span>📝</span><small data-i18n="navNotes">Notes</small></a>
+<a aria-label="Scroll to Top of Page" class="dock-item" href="#home" title="Top"><span>↑</span><small>Top</small></a>
+</nav>
+<!-- ==========================================================================
+     MODAL 1: GUEST DETAIL & INTERACTIVE PHOTO POPUP WITH KIDS DETAILS
+     ========================================================================== -->
+<div aria-labelledby="gPopupTitle" aria-modal="true" class="modal-overlay" id="guestPhotoModal" role="dialog">
+<div class="modal-dialog">
+<div class="modal-header-bar">
+<h3 class="modal-title-text" id="gPopupTitle">Relative / Friend Details</h3>
+<button aria-label="Close modal" class="modal-close-icon" onclick="closeModal('guestPhotoModal')" type="button">✕</button>
+</div>
+<div class="guest-detail-popup">
+<img alt="Guest photo" class="guest-popup-photo" id="gPopupImg" src="assets/floral-invitation-border.webp"/>
+<div class="guest-popup-info">
+<h3 id="gPopupName">Name</h3>
+<span class="guest-popup-badge" id="gPopupCategory">Relationship</span>
+<!-- Kids Section inside modal -->
+<div class="guest-popup-kids-box" id="gPopupKidsBox">
+<div class="guest-popup-kids-title">👶 குழந்தைகள் (Kids / Children):</div>
+<div class="guest-popup-kids-names" id="gPopupKidsNames">None listed</div>
+</div>
+<div class="guest-popup-meta">
+<div><strong>Branch:</strong> <span id="gPopupBranch">Family Branch</span></div>
+<div><strong>Location:</strong> <span id="gPopupLocation">Madurai</span></div>
+<div><strong>Affiliation:</strong> <span id="gPopupSide">Bride's side</span></div>
+</div>
+<div id="gPopupNote" style="font-family: var(--font-serif); font-size: 1.1rem; line-height: 1.6; color: var(--ink-muted);">
+          "Hearty congratulations and prayers for a blissful married life ahead."
+        </div>
+</div>
+</div>
+</div>
+</div>
+<!-- ==========================================================================
+     MODAL 2: ALBUM FULL LIGHTBOX WITH KEYBOARD NAVIGATION
+     ========================================================================== -->
+<div aria-label="Photo Lightbox" aria-modal="true" class="modal-overlay" id="lightboxModal" role="dialog">
+<div class="lightbox-modal-content">
+<button aria-label="Close lightbox" class="modal-close-icon lightbox-close-btn" onclick="closeModal('lightboxModal')" type="button">✕</button>
+<button aria-label="Previous image" class="lightbox-nav-btn prev-btn" id="lightboxPrevBtn" type="button">‹</button>
+<div class="lightbox-image-stage">
+<img alt="Album photo" class="lightbox-full-img" id="lightboxImg" src="assets/page1-bride-groom.webp"/>
+<div class="lightbox-caption-text" id="lightboxCaption"></div>
+</div>
+<button aria-label="Next image" class="lightbox-nav-btn next-btn" id="lightboxNextBtn" type="button">›</button>
+</div>
+</div>
+<!-- ==========================================================================
+     MODAL 3: HERITAGE SYMBOL EASTER EGG POPUP (Section 15A)
+     ========================================================================== -->
+<div aria-labelledby="heritageModalTitle" aria-modal="true" class="modal-overlay" id="heritageModal" role="dialog">
+<div class="modal-dialog" style="max-width: 500px;">
+<div class="modal-header-bar">
+<h3 class="modal-title-text" id="heritageModalTitle">Madurai Temple Heritage</h3>
+<button aria-label="Close heritage modal" class="modal-close-icon" onclick="closeModal('heritageModal')" type="button">✕</button>
+</div>
+<div style="padding: 1.5rem; text-align: center;">
+<div id="heritageModalIcon" style="font-size: 3.5rem; margin-bottom: 0.8rem;">🦜</div>
+<h4 id="heritageModalHeadline" style="font-family: var(--font-regal); color: var(--crimson-dark); font-size: 1.25rem; margin-bottom: 0.6rem;">Symbol Title</h4>
+<p id="heritageModalText" style="font-family: var(--font-serif); font-size: 1.05rem; line-height: 1.6; color: var(--ink);">
+        Symbol description text...
+      </p>
+<button class="btn-regal gold" onclick="closeModal('heritageModal')" style="margin-top: 1.2rem;" type="button">
+        Close &amp; Continue
+      </button>
+</div>
+</div>
+</div>
+<!-- ==========================================================================
+     MODAL 4: ADMIN EDIT PANEL (Section 17 of Master Prompt)
+     ========================================================================== -->
+<div aria-labelledby="adminModalHeading" aria-modal="true" class="modal-overlay" id="adminModal" role="dialog">
+<div class="modal-dialog">
+<div class="modal-header-bar">
+<h3 class="modal-title-text" id="adminModalHeading">⚙ Wedding Site Admin Panel</h3>
+<button aria-label="Close admin panel" class="modal-close-icon" onclick="closeModal('adminModal')" type="button">✕</button>
+</div>
+<p style="font-size: 0.85rem; color: var(--ink-muted); margin-bottom: 1.2rem;">
+      Update bride and groom names, event dates, venue directions, wedding day mode, personalized WhatsApp invitations, family members, relatives and friends photos, and download JSON backup. Saved securely in local browser storage.
+    </p>
+<!-- Personalized Link Generator Card (Section 13) -->
+<div class="admin-tool-box">
+<h4>💌 Generate Personalized Invitation Link for WhatsApp</h4>
+<p style="font-size:0.8rem; color:var(--ink-muted); margin-top:0.2rem;">
+        Type the guest's name below to create a direct link with their custom greeting prefilled on the invitation:
+      </p>
+<div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.6rem;">
+<input class="form-input-regal" id="admGuestParamInput" placeholder="Guest Name (e.g. Sundar &amp; Family)" style="flex:1;" type="text"/>
+<button class="btn-regal gold" id="admGenerateLinkBtn" type="button">Generate Link</button>
+</div>
+<div id="admGeneratedLinkOutput" style="display:none; margin-top:0.6rem;">
+<input class="form-input-regal" id="admLinkBox" readonly="" style="background:#fffdf6;" type="text"/>
+<button class="template-btn" id="copyLinkBtn" style="margin-top:0.4rem;" type="button">📋 Copy Link to Clipboard</button>
+<span id="copyLinkAck" style="margin-left:0.5rem; font-size:0.8rem; color:var(--crimson); font-weight:600;"></span>
+</div>
+</div>
+<div class="admin-tool-box" id="adminSongTool">
+<h4>🎵 Add Wedding Songs / திருமணப் பாடல்களைச் சேர்க்கவும்</h4>
+<p style="font-size:.82rem;color:var(--ink-muted)">Upload MP3, M4A or other browser-supported audio files. Files are saved in this browser only; use small files (up to 3 MB each).</p>
+<label for="admSongUpload">Choose audio files</label>
+<input class="form-input-regal" id="admSongUpload" type="file" accept="audio/*" multiple />
+<p id="admSongUploadStatus" aria-live="polite" style="font-size:.8rem;margin-top:.4rem"></p>
+</div>
+<!-- Admin Form -->
+<form id="adminSiteForm">
+<div class="admin-grid-layout">
+<div class="admin-form-group" style="grid-column:1/-1"><label for="admFamilyFunction">Family Function Title (English)</label><input class="form-input-regal" id="admFamilyFunction" type="text"/></div>
+<div class="admin-form-group" style="grid-column:1/-1"><label for="admFamilyFunctionTa">குடும்ப விழா தலைப்பு (தமிழ்)</label><input class="form-input-regal" id="admFamilyFunctionTa" type="text"/></div>
+<div class="admin-form-group" style="grid-column:1/-1"><label for="admDeities">Family Deities / Blessings (English)</label><input class="form-input-regal" id="admDeities" type="text"/></div>
+<div class="admin-form-group" style="grid-column:1/-1"><label for="admDeitiesTa">குலதெய்வங்கள் / அருளாசி (தமிழ்)</label><input class="form-input-regal" id="admDeitiesTa" type="text"/></div>
+<div class="admin-form-group"><label for="admBrideQualification">Bride Qualification (English)</label><input class="form-input-regal" id="admBrideQualification" type="text"/></div>
+<div class="admin-form-group"><label for="admBrideQualificationTa">மணமகள் கல்வித் தகுதி (தமிழ்)</label><input class="form-input-regal" id="admBrideQualificationTa" type="text"/></div>
+<div class="admin-form-group"><label for="admGroomQualification">Groom Qualification / Profession</label><input class="form-input-regal" id="admGroomQualification" type="text"/></div>
+<div class="admin-form-group" style="grid-column:1/-1"><label for="admBrideFather">Bride's Father (English)</label><input class="form-input-regal" id="admBrideFather" type="text"/></div>
+<div class="admin-form-group" style="grid-column:1/-1"><label for="admBrideFatherTa">மணமகளின் தந்தை (தமிழ்)</label><input class="form-input-regal" id="admBrideFatherTa" type="text"/></div>
+<div class="admin-form-group" style="grid-column:1/-1"><label for="admBrideMother">Bride's Mother (English)</label><input class="form-input-regal" id="admBrideMother" type="text"/></div>
+<div class="admin-form-group" style="grid-column:1/-1"><label for="admBrideMotherTa">மணமகளின் தாய் (தமிழ்)</label><input class="form-input-regal" id="admBrideMotherTa" type="text"/></div>
+<div class="admin-form-group" style="grid-column:1/-1"><label for="admBrideBrother">Bride's Brother (English)</label><input class="form-input-regal" id="admBrideBrother" type="text"/></div>
+<div class="admin-form-group" style="grid-column:1/-1"><label for="admBrideBrotherTa">மணமகளின் சகோதரர் (தமிழ்)</label><input class="form-input-regal" id="admBrideBrotherTa" type="text"/></div>
+<div class="admin-form-group" style="grid-column:1/-1"><label for="admBusinesses">Thirumoorthi Groups Businesses (English)</label><input class="form-input-regal" id="admBusinesses" type="text"/></div>
+<div class="admin-form-group" style="grid-column:1/-1"><label for="admBusinessesTa">திருமூர்த்தி குழுமத் தொழில்கள் (தமிழ்)</label><input class="form-input-regal" id="admBusinessesTa" type="text"/></div>
+<div class="admin-form-group">
+<label for="admBride">Bride's Name</label>
+<input class="form-input-regal" id="admBride" required="" type="text"/>
+</div>
+<div class="admin-form-group">
+<label for="admGroom">Groom's Name</label>
+<input class="form-input-regal" id="admGroom" required="" type="text"/>
+</div>
+<div class="admin-form-group">
+<label for="admDate">Wedding Date &amp; Time</label>
+<input class="form-input-regal" id="admDate" required="" type="datetime-local"/>
+</div>
+<div class="admin-form-group">
+<label for="admDisplayMode">Wedding-Day Display Mode (Section 14)</label>
+<select class="form-input-regal" id="admDisplayMode">
+<option value="auto">Auto (Based on Date Countdown)</option>
+<option value="before">Before Wedding (Countdown &amp; RSVP)</option>
+<option value="today">Today We Celebrate (Day of Wedding)</option>
+<option value="after">Post-Wedding (Gratitude &amp; Gallery)</option>
+</select>
+</div>
+<div class="admin-form-group">
+<label for="admVenue">Venue Name</label>
+<input class="form-input-regal" id="admVenue" required="" type="text"/>
+</div>
+<div class="admin-form-group" style="grid-column: 1 / -1;">
+<label for="admAddress">Venue Address</label>
+<input class="form-input-regal" id="admAddress" required="" type="text"/>
+</div>
+<div class="admin-form-group">
+<label for="admMap">Google Maps Directions URL</label>
+<input class="form-input-regal" id="admMap" type="url"/>
+</div>
+<div class="admin-form-group">
+<label for="admBus">Bus Routes URL</label>
+<input class="form-input-regal" id="admBus" type="url"/>
+</div>
+<div class="admin-form-group">
+<label for="admTrain">Train Routes URL</label>
+<input class="form-input-regal" id="admTrain" type="url"/>
+</div>
+<div class="admin-form-group">
+<label for="admWhatsapp">Family WhatsApp Number (international format, digits only)</label>
+<input class="form-input-regal" id="admWhatsapp" type="text"/>
+</div>
+<div class="admin-form-group"><label for="admBrideCoordName">Bride Family Contact Name</label><input class="form-input-regal" id="admBrideCoordName" type="text"/></div>
+<div class="admin-form-group"><label for="admBrideCoordPhone">Bride Family Contact Phone</label><input class="form-input-regal" id="admBrideCoordPhone" type="tel"/></div>
+<div class="admin-form-group"><label for="admGroomCoordName">Groom Family Contact Name</label><input class="form-input-regal" id="admGroomCoordName" type="text"/></div>
+<div class="admin-form-group"><label for="admGroomCoordPhone">Groom Family Contact Phone</label><input class="form-input-regal" id="admGroomCoordPhone" type="tel"/></div>
+<div class="admin-form-group" style="grid-column: 1 / -1;">
+<label for="admBrideBio">Bride Introduction &amp; Qualities</label>
+<textarea class="form-input-regal" id="admBrideBio" rows="2"></textarea>
+<label for="admBrideBioTa">மணமகள் அறிமுகம் (தமிழ்)</label><textarea class="form-input-regal" id="admBrideBioTa" rows="2"></textarea>
+</div>
+<div class="admin-form-group" style="grid-column: 1 / -1;">
+<label for="admGroomBio">Groom Introduction &amp; Qualities</label>
+<textarea class="form-input-regal" id="admGroomBio" rows="2"></textarea>
+<label for="admGroomBioTa">மணமகன் அறிமுகம் (தமிழ்)</label><textarea class="form-input-regal" id="admGroomBioTa" rows="2"></textarea>
+</div>
+<div class="admin-form-group" style="grid-column: 1 / -1;">
+<label for="admInviteMsg">Invitation Message / Note</label>
+<textarea class="form-input-regal" id="admInviteMsg" rows="2"></textarea>
+<label for="admInviteMsgTa">அழைப்பிதழ் செய்தி (தமிழ்)</label><textarea class="form-input-regal" id="admInviteMsgTa" rows="2"></textarea>
+</div>
+</div>
+<div style="display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 1.4rem;">
+<button class="btn-regal gold" type="submit">Save All Site Changes</button>
+<button class="btn-regal outline" onclick="openAddPersonModal()" type="button">+ Add Relative / Friend</button>
+<button class="btn-regal outline" onclick="exportDataBackup()" type="button">📥 Export Backup</button>
+<label class="btn-regal outline" style="cursor: pointer;">
+          📤 Import Backup <input accept=".json" hidden="" id="importJsonInput" type="file"/>
+</label>
+</div>
+<div id="admStatus" style="margin-top: 0.6rem; font-size: 0.85rem; color: var(--crimson); font-weight: 600;"></div>
+</form>
+<hr style="margin: 1.6rem 0; border: 0; border-top: 1px solid var(--border-gold);"/>
+<!-- Manage Relatives & Friends Records -->
+<h4 style="font-family: var(--font-regal); color: var(--crimson-dark); margin-bottom: 0.8rem;">
+      Manage Relatives &amp; Friends Records
+    </h4>
+<div class="admin-bulk-people-tools" style="display:flex;gap:.6rem;flex-wrap:wrap;margin:.6rem 0 1rem;align-items:center;">
+  <label class="btn-regal outline" style="cursor:pointer;">📤 Import relatives CSV <input id="importPeopleCsvInput" type="file" accept=".csv,text/csv" hidden></label>
+  <button class="btn-regal outline" id="downloadPeopleCsvTemplateBtn" type="button">⬇ Download CSV template</button>
+  <span style="font-size:.8rem;color:var(--ink-muted);">For large lists, use photo URLs or local asset paths rather than embedding thousands of image files.</span>
+</div>
+<input id="adminPeopleSearchInput" class="form-input-regal" type="search" placeholder="Search records by name, role, or location" aria-label="Search admin people records" style="margin:.3rem 0 .7rem;width:100%;"/>
+<div id="adminPersonsList" style="max-height: 250px; overflow-y: auto;">
+<!-- Persons list rendered dynamically -->
+</div>
+<hr style="margin: 1.6rem 0; border: 0; border-top: 1px solid var(--border-gold);"/>
+<!-- RSVP Submissions Viewer (Section 12) -->
+<div class="admin-rsvp-section">
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem;">
+<h4 style="font-family: var(--font-regal); color: var(--crimson-dark); margin:0;">
+          Recorded RSVPs (<span id="admRsvpCount">0</span>)
+        </h4>
+<div style="display:flex; gap:0.4rem;">
+<button class="template-btn" id="admExportRsvpsBtn" type="button">📥 Export RSVPs</button>
+<button class="template-btn" id="admClearRsvpsBtn" style="color:red;" type="button">🗑 Clear RSVPs</button>
+</div>
+</div>
+<div id="adminRsvpsList" style="max-height: 200px; overflow-y: auto; background:#fffdf8; border:1px solid var(--border-gold); border-radius:10px; padding:0.6rem;">
+<!-- RSVP entries rendered dynamically -->
+</div>
+</div>
+</div>
+</div>
+<!-- ==========================================================================
+     MODAL 5: ADD / EDIT PERSON WITH KIDS FIELD
+     ========================================================================== -->
+<div aria-labelledby="personModalTitle" aria-modal="true" class="modal-overlay" id="personEditModal" role="dialog">
+<div class="modal-dialog" style="max-width: 580px;">
+<div class="modal-header-bar">
+<h3 class="modal-title-text" id="personModalTitle">Add Relative or Friend</h3>
+<button aria-label="Close person modal" class="modal-close-icon" onclick="closeModal('personEditModal')" type="button">✕</button>
+</div>
+<form id="personForm">
+<input id="pId" type="hidden"/>
+<div class="admin-form-group" style="margin-bottom: 0.8rem;">
+<label for="pName">Display Name / Fallback</label>
+<input class="form-input-regal" id="pName" required="" type="text"/>
+</div>
+<div class="admin-grid-layout" style="margin-bottom: .8rem;">
+<div class="admin-form-group"><label for="pNameTa">பெயர் (தமிழ்)</label><input class="form-input-regal" id="pNameTa" type="text"/></div>
+<div class="admin-form-group"><label for="pNameEn">Name (English)</label><input class="form-input-regal" id="pNameEn" type="text"/></div>
+</div>
+<div class="admin-grid-layout" style="margin-bottom: 0.8rem;">
+<div class="admin-form-group">
+<label for="pCategory">Category / Affiliation</label>
+<select class="form-input-regal" id="pCategory" required="">
+<option value="relatives-bride">Bride's Relatives</option>
+<option value="relatives-groom">Groom's Relatives</option>
+<option value="friends-groom">Groom's Friends</option>
+<option value="friends-bride">Bride's Friends</option>
+<option value="friends-brothers">Brothers' Friends</option>
+<option value="officials">Workplace Colleagues / Officials</option>
+</select>
+</div>
+<div class="admin-form-group">
+<label for="pRole">Relationship / Branch (English)</label>
+<input class="form-input-regal" id="pRole" placeholder="e.g. Uncle / Elder Brother / Cousin" required="" type="text"/>
+</div>
+<div class="admin-form-group"><label for="pRoleTa">உறவு / பிரிவு (தமிழ்)</label><input class="form-input-regal" id="pRoleTa" type="text"/></div>
+<div class="admin-form-group"><label for="pKidsTa">குழந்தைகள் (தமிழ்)</label><input class="form-input-regal" id="pKidsTa" type="text"/></div>
+<div class="admin-form-group"><label for="pKidsEn">Children (English)</label><input class="form-input-regal" id="pKidsEn" type="text"/></div>
+<div class="admin-form-group">
+<label for="pKinship">Family relationship group</label>
+<select class="form-input-regal" id="pKinship">
+<option value="auto">Auto-detect from relationship</option>
+
+<option value="groom-sisters-samayars">மணமகன் 10 சாமியாரிகள் – சகோதரிகள் / Bridegroom’s 10 Samayars – Sisters</option>
+<option value="groom-samayars">மணமகன் சாமியாரிகள் / Bridegroom’s Samayars</option>
+<option value="groom-elder-brothers">மணமகன் மனை – அண்ணன்கள் / Groom’s Household – Elder Brothers</option>
+<option value="groom-parent-special-guests">மணமகன் பெற்றோர் – சிறப்பு விருந்தினர்கள் / Groom’s Parents – Special Guests</option>
+<option value="groom-brothers">மணமகன் சகோதரர்கள் / Groom’s Brothers</option>
+<option value="machan-akka">மச்சான் &amp; அக்கா / Machan &amp; Akka</option>
+<option value="anna-anni">அண்ணன் &amp; அண்ணி / Anna &amp; Anni</option>
+<option value="periyappa-periyamma">பெரியப்பா &amp; பெரியம்மா / Periyappa &amp; Periyamma</option>
+<option value="chithappa-chithi">சித்தப்பா &amp; சித்தி / Chithappa &amp; Chithi</option>
+<option value="thatha-patti">தாத்தா &amp; பாட்டி / Thatha &amp; Patti</option>
+<option value="mama-athai">மாமா &amp; அத்தை / Mama &amp; Athai</option>
+<option value="other">மற்ற உறவினர்கள் / Other relatives</option>
+</select>
+</div>
+</div>
+<!-- KIDS / CHILDREN FIELD IN ADMIN -->
+<div class="admin-form-group" style="margin-bottom: 0.8rem;">
+<label for="pKids">👶 Kids / Children Names (Below Relative Name Bar)</label>
+<input class="form-input-regal" id="pKids" placeholder="e.g. Baby Ananya &amp; Master Sai Arjun" type="text"/>
+</div>
+<div class="admin-grid-layout" style="margin-bottom: 0.8rem;">
+<div class="admin-form-group">
+<label for="pLocation">Location (English)</label>
+<input class="form-input-regal" id="pLocation" placeholder="e.g. Madurai / Chennai / USA" required="" type="text"/>
+</div>
+<div class="admin-form-group"><label for="pLocationTa">இடம் (தமிழ்)</label><input class="form-input-regal" id="pLocationTa" type="text"/></div>
+<div class="admin-form-group">
+<label for="pPhotoFile">Photo (Upload from Device)</label>
+<input accept="image/*" class="form-input-regal" id="pPhotoFile" type="file"/>
+</div>
+</div>
+<div class="admin-form-group" style="margin-bottom: 1.2rem;">
+<label for="pNote">Warm Wishes or Note</label>
+<textarea class="form-input-regal" id="pNote" placeholder="Hearty wishes..." rows="2"></textarea>
+</div>
+<div style="display: flex; gap: 0.6rem;">
+<button class="btn-regal gold" type="submit">Save Person</button>
+<button class="btn-regal outline" onclick="closeModal('personEditModal')" type="button">Cancel</button>
+</div>
+</form>
+</div>
+</div>
+<script defer="" src="assets/qr-encode.js"></script>
+<script defer="" src="script.js?v=31"></script>
+</body>
+</html>

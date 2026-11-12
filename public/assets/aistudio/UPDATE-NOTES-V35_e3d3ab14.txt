@@ -1,0 +1,5 @@
+V35 update
+- Added the groom's father S. Suresh and mother Valli to Our Beloved Families.
+- Kept the groom's sister and her family in the same section.
+- Updated Tamil and English section descriptions to list both groom's parents.
+- Groom parent photo cards currently fall back to the existing groom-parents record until individual photos are uploaded.

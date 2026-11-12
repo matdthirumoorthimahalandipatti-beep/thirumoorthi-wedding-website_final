@@ -1,0 +1,12 @@
+VERSION 34 UPDATE
+- Removed the family-tree hierarchy from Our Beloved Families.
+- Bride's immediate-family display is limited to father, mother and brother.
+- Groom's sister-family display uses the supplied P. Thirumanikandan – Sivasandhiya entry (M.Pharm., Aurobindo Pharma Ltd., Andhra Pradesh).
+- Family portrait cards are ready for real image uploads through Family Admin > Manage Relatives & Friends > edit person > Photo (Upload from Device). The groom sister-family entry and bride family members need their own photos uploaded; the current assets are placeholders until supplied.
+- Reordered Family Members & Friends relationship groups from elders to younger groups, followed by hosts, children and friends.
+- Existing Tamil source names are retained. English transliterations were not invented where none were supplied; add verified English spellings in the admin bilingual name fields.
+SECURITY / BROWSER NOTE
+- The family admin gate is client-side demo protection only. Do not use it to protect sensitive information on a public site.
+- Browsers do not reliably allow automatic file downloads on tab close/website exit. Keep the invitation download action visible and let guests download it with a tap; automatic exit downloads cannot be guaranteed.
+- Uploaded family portrait images (stored as image data in a person's photo field) are also automatically included in the Wedding Moments & Album carousel/lightbox.
+- Photo uploads are stored in that browser's local storage. For all guests/devices to see them, export/deploy the updated website data or use a shared backend; local browser storage does not sync across visitors.
