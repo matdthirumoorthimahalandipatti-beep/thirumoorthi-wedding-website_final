@@ -199,21 +199,21 @@ export default function EntranceDoorsPortal({
         {/* Top Sacred Header + Event Info Boxes (only on form step) */}
         {portalStep === 'form' && (
           <div className="mx-auto w-full max-w-4xl text-center">
-            <div className="rounded-2xl border border-[#c9932d]/65 bg-[#1d040b]/82 px-3 py-3 shadow-2xl sm:px-6 sm:py-4">
+            <div className="rounded-2xl border border-[#c9932d]/65 bg-[#1d040b]/82 px-3 py-3 shadow-2xl sm:px-6 sm:py-4 overflow-hidden">
               <p className="text-[10px] font-semibold tracking-[0.14em] text-[#f7df94] uppercase sm:text-xs sm:tracking-[0.18em]">
                 {lang === 'ta' ? WEDDING_CONFIG.deitiesTa : WEDDING_CONFIG.deities}
               </p>
               <p className="mt-1 text-[11px] font-extrabold tracking-[0.16em] text-[#fff4d4] uppercase sm:text-sm">
                 {lang === 'ta' ? WEDDING_CONFIG.familyFunctionTa : WEDDING_CONFIG.familyFunction}
               </p>
-              <h1 className="mt-1 font-display text-2xl leading-tight font-bold text-[#fff8eb] sm:text-4xl">
+              <h1 className="mt-1 font-display text-xl leading-tight font-bold text-[#fff8eb] sm:text-4xl">
                 {lang === 'ta'
                   ? `${WEDDING_CONFIG.brideTa} & ${WEDDING_CONFIG.groomTa}`
                   : `${WEDDING_CONFIG.bride} & ${WEDDING_CONFIG.groomShort}`}
               </h1>
 
               {/* Compact Event & Venue Boxes */}
-              <div className="mx-auto mt-2.5 grid max-w-3xl gap-1.5 text-[10px] sm:grid-cols-3 sm:gap-2 sm:text-xs">
+              <div className="mx-auto mt-2.5 grid max-w-3xl gap-1.5 grid-cols-1 text-[10px] sm:grid-cols-3 sm:gap-2 sm:text-xs">
                 <div className="rounded-xl border border-[#c9932d]/55 bg-[#120207]/90 px-2.5 py-1.5">
                   <span className="block text-[9px] font-bold tracking-wider text-[#f7df94] uppercase sm:text-[10px]">
                     {lang === 'ta' ? 'சுப முகூர்த்தம்' : 'Muhurtham'}

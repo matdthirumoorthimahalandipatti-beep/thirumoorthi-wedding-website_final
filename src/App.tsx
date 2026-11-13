@@ -393,7 +393,7 @@ export default function App() {
         : 'Esteemed Guest';
 
   return (
-    <div className="min-h-screen text-[#3b1d16] selection:bg-[#c9932d] selection:text-[#24050d]">
+    <div className="min-h-screen w-full max-w-[100vw] overflow-x-hidden text-[#3b1d16] selection:bg-[#c9932d] selection:text-[#24050d]">
       {/* Scroll Depth Indicator */}
       <div
         aria-hidden="true"
@@ -557,7 +557,7 @@ export default function App() {
          ==================================================================== */}
       <section
         id="home"
-        className="relative flex min-h-[calc(100vh-4rem)] flex-col justify-between overflow-hidden bg-[#24050d] text-[#fff8eb]"
+        className="relative flex w-full min-h-[calc(100vh-4rem)] flex-col justify-between overflow-hidden bg-[#24050d] text-[#fff8eb]"
       >
         {/* User-Requested Couple Mandapam Heritage Background */}
         <img
