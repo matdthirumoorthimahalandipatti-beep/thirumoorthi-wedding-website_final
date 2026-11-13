@@ -26,12 +26,13 @@ export default function SacredOracle({
 }: SacredOracleProps) {
   const [spinning, setSpinning] = useState(false);
   const [rotationDeg, setRotationDeg] = useState(0);
-  const [hasSpun, setHasSpun] = useState(false);
+  const [hasOpened, setHasOpened] = useState(false);
 
-  const handleSpinLamp = () => {
+  const handleOpenMagicDiya = () => {
     if (spinning) return;
     setSpinning(true);
     soundFx.playOracleSpin();
+    soundFx.playPointsEarned(50);
     setRotationDeg((prev) => prev + 720 + Math.floor(Math.random() * 180));
 
     window.setTimeout(() => {
@@ -39,8 +40,8 @@ export default function SacredOracle({
       const next = pool[Math.floor(Math.random() * pool.length)] || ORACLE_FORTUNES[0];
       onFortuneRevealed(next);
       setSpinning(false);
-      setHasSpun(true);
-      soundFx.playTempleBell();
+      setHasOpened(true);
+      soundFx.playTraditionalBronzeBell(1046.5, 2.0, 0.22, 0);
     }, 950);
   };
 
@@ -57,29 +58,29 @@ export default function SacredOracle({
       <div className="mx-auto max-w-5xl px-4 sm:px-6">
         <div className="text-center">
           <p className="text-xs font-bold tracking-[0.22em] text-[#f7df94] uppercase">
-            ❖ {lang === 'ta' ? 'விளையாட்டு நிறைவுப் பகுதி · அருள்வாக்கு' : 'Grand Games Finale · Sacred Wedding Oracle'} ❖
+            ❖ {lang === 'ta' ? '100% சிரிப்பு & நகைச்சுவை கணிப்பு அரங்கம்' : "100% Hilarious Wedding Future Predictor"} ❖
           </p>
           <h2 className="mt-2 font-display text-3xl font-bold text-[#fff8eb] sm:text-5xl">
             {lang === 'ta'
-              ? 'புனிதத் திருமணத் தீப அருள்வாக்கு'
-              : 'Sacred Wedding Oracle · Funny & 100% Positive Fortunes'}
+              ? '🔮 உங்கள் அடுத்த அதிர்ஷ்டத்தை கணிப்போம் வாருங்கள்!'
+              : "🔮 Let's Predict Your Next Luck!"}
           </h2>
           <p className="mx-auto mt-2 max-w-2xl text-sm text-[#f5deb3]">
             {lang === 'ta'
-              ? 'சுடர்விடும் புனிதத் தீபத்தைத் தட்டிச் சுழற்றுங்கள் — உங்கள் 1080×1920 ஸ்டோரி கார்டிற்கான நகைச்சுவையும் மங்களமும் நிறைந்த வாழ்த்து வாக்கு தோன்றும்!'
-              : 'Tap the glowing holy diya lamp right after the games to spin and reveal humorous, heartwarming life prophecies for your Story Card!'}
+              ? 'சுடர்விடும் மாய தீபத்தைத் தொட்டுத் திறக்கவும் — திறந்த பிறகே உங்கள் 100% சிரிப்பு & நகைச்சுவை நிறைந்த அடுத்த அதிர்ஷ்டம் இங்கே தோன்றும்!'
+              : 'Touch & Open the Glowing Magic Lamp — only after it opens, your 100% funny & humorous prediction will be revealed!'}
           </p>
         </div>
 
         {/* Interactive Diya Mandala Stage */}
         <div className="card-3d-tilt mt-10 grid items-center gap-8 rounded-3xl border border-[#c9932d]/70 bg-[#24050d]/90 p-6 shadow-2xl md:grid-cols-12 md:p-10">
-          {/* Glowing Holy Diya Lamp Spinner */}
+          {/* Glowing Magic Diya Lamp Spinner */}
           <div className="flex flex-col items-center justify-center md:col-span-5">
             <button
               type="button"
-              onClick={handleSpinLamp}
+              onClick={handleOpenMagicDiya}
               disabled={spinning}
-              aria-label={lang === 'ta' ? 'புனித தீபத்தைச் சுழற்றுக' : 'Tap holy diya lamp to spin fortune'}
+              aria-label={lang === 'ta' ? 'மாய தீபத்தைத் தொட்டுத் திறக்கவும்' : 'Touch magic lamp to predict your next luck'}
               className="group relative flex h-56 w-56 items-center justify-center rounded-full focus:outline-none cursor-pointer"
             >
               <div
@@ -99,74 +100,122 @@ export default function SacredOracle({
 
               <div className="animate-diya-glow flex h-40 w-40 flex-col items-center justify-center rounded-full border-2 border-[#f7df94] bg-gradient-to-b from-[#631226] via-[#3a0815] to-[#24050d] shadow-[0_0_45px_rgba(247,223,148,0.4)] transition group-hover:scale-105">
                 <Flame className="h-11 w-11 text-[#ffcf56] drop-shadow-[0_0_12px_rgba(255,207,86,0.9)]" />
-                <span className="mt-2 text-xs font-bold tracking-wider text-[#fff8eb] uppercase">
+                <span className="mt-2 text-xs font-bold tracking-wider text-[#fff8eb] uppercase text-center px-2">
                   {spinning
                     ? lang === 'ta'
-                      ? 'சுழல்கிறது...'
-                      : 'Divining...'
-                    : lang === 'ta'
-                      ? 'தீபத்தைத் தட்டுக'
-                      : 'Tap Holy Diya'}
+                      ? 'கணிக்கிறது... 🔮'
+                      : 'Predicting... 🔮'
+                    : hasOpened
+                      ? lang === 'ta'
+                        ? 'அதிர்ஷ்டம் திறந்தது!'
+                        : 'Luck Unlocked! ✨'
+                      : lang === 'ta'
+                        ? 'தட்டித் திறக்கவும் 🪔'
+                        : 'Touch to Open 🪔'}
                 </span>
               </div>
             </button>
 
             <button
               type="button"
-              onClick={handleSpinLamp}
+              onClick={handleOpenMagicDiya}
               disabled={spinning}
-              className="mt-4 inline-flex items-center gap-2 rounded-full border border-[#c9932d] bg-[#3a0815] px-4 py-2 text-xs font-bold text-[#f7df94] transition hover:bg-[#520d20] cursor-pointer"
+              className="mt-4 inline-flex items-center gap-2 rounded-full border border-[#c9932d] bg-[#3a0815] px-5 py-2.5 text-xs font-bold text-[#f7df94] transition hover:bg-[#520d20] cursor-pointer"
             >
               <RotateCw className={`h-3.5 w-3.5 ${spinning ? 'animate-spin' : ''}`} />
-              <span>{lang === 'ta' ? 'மற்றொரு அருள்வாக்கு சுழற்று' : 'Spin Another Blessing'}</span>
+              <span>
+                {hasOpened
+                  ? lang === 'ta'
+                    ? '🔮 மற்றொரு நகைச்சுவை அதிர்ஷ்டத்தைக் காண்க'
+                    : '🔮 Predict Another Funny Luck!'
+                  : lang === 'ta'
+                    ? '🪔 தீபத்தைத் தொட்டுத் திறக்கவும்'
+                    : '🪔 Touch & Open Magic Lamp'}
+              </span>
             </button>
           </div>
 
-          {/* Revealed Fortune Prophecy Card */}
+          {/* Revealed Fortune Prophecy Card — Only Revealed Once Opened! */}
           <div className="md:col-span-7">
-            <div className="rounded-2xl border border-[#c9932d]/60 bg-[#fffdf7] p-6 text-[#3b1d16] shadow-xl sm:p-8">
-              <div className="flex items-center justify-between gap-2 text-xs font-bold tracking-wider text-[#631226] uppercase">
-                <span>
-                  {hasSpun
-                    ? lang === 'ta'
-                      ? `${guestName} அவர்களுக்கான அருள்வாக்கு`
-                      : `Prophecy for ${guestName}`
-                    : lang === 'ta'
-                      ? 'இன்றைய மங்கள அருள்வாக்கு'
-                      : "Today's Sacred Blessing"}
-                </span>
-                <Sparkles className="h-4 w-4 text-[#c9932d]" />
-              </div>
-
-              <div className="mt-4 flex items-start gap-4">
-                <span className="shrink-0 text-4xl sm:text-5xl" aria-hidden="true">
-                  {selectedFortune.emoji}
-                </span>
-                <div>
-                  <p className="font-display text-xl leading-snug font-bold text-[#3a0815] sm:text-2xl">
-                    “{lang === 'ta' ? selectedFortune.ta : selectedFortune.en}”
+            <div className="rounded-2xl border border-[#c9932d]/60 bg-[#fffdf7] p-6 text-[#3b1d16] shadow-xl sm:p-8 min-h-[260px] flex flex-col justify-center">
+              {!hasOpened ? (
+                /* Sealed Mystery State Before Diya is Touched */
+                <div className="flex flex-col items-center justify-center p-4 text-center space-y-3">
+                  <span className="text-6xl animate-bounce" aria-hidden="true">
+                    🎁
+                  </span>
+                  <h4 className="font-display text-lg font-bold text-[#631226] sm:text-xl">
+                    {lang === 'ta'
+                      ? 'அதிர்ஷ்டப் பெட்டகம் பூட்டப்பட்டுள்ளது!'
+                      : 'Your Next Luck is Locked!'}
+                  </h4>
+                  <p className="text-xs text-[#6e463a] max-w-md leading-relaxed">
+                    {lang === 'ta'
+                      ? 'இடதுபுறமுள்ள மாய தீபத்தைத் தொட்டுத் திறக்கவும்! திறந்த பிறகே உங்கள் 100% சிரிப்பு நிறைந்த அடுத்த அதிர்ஷ்டம் இங்கே தோன்றும்!'
+                      : 'Touch and open the Magic Lamp on the left! Only after opening, your 100% hilarious next luck prophecy will appear here!'}
                   </p>
-                  <p className="mt-2 text-xs text-[#6e463a]">
-                    {lang === 'ta' ? selectedFortune.en : selectedFortune.ta}
-                  </p>
+                  <button
+                    type="button"
+                    onClick={handleOpenMagicDiya}
+                    disabled={spinning}
+                    className="mt-2 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#f7df94] via-[#c9932d] to-[#b3822a] px-6 py-2.5 text-xs font-bold text-[#24050d] shadow-lg transition hover:brightness-105 cursor-pointer"
+                  >
+                    <Sparkles className="h-4 w-4" />
+                    <span>
+                      {lang === 'ta'
+                        ? 'மாய தீபத்தைத் தட்டித் திறக்கவும் 🪔'
+                        : 'Touch Magic Lamp to Open 🪔'}
+                    </span>
+                  </button>
                 </div>
-              </div>
+              ) : (
+                /* Unlocked 100% Funny & Humorous Prediction Words */
+                <div className="animate-in fade-in zoom-in-95 duration-500">
+                  <div className="flex items-center justify-between gap-2 text-xs font-bold tracking-wider text-[#631226] uppercase">
+                    <span className="flex items-center gap-1.5">
+                      <Sparkles className="h-4 w-4 text-[#c9932d]" />
+                      <span>
+                        {lang === 'ta'
+                          ? `🤣 ${guestName} அவர்களுக்கான நகைச்சுவை அதிர்ஷ்டம்:`
+                          : `🤣 100% Hilarious Prediction for ${guestName}:`}
+                      </span>
+                    </span>
+                    <span className="rounded-full bg-[#fde8e8] px-2.5 py-0.5 text-[10px] font-bold text-[#a62040]">
+                      100% Comedy
+                    </span>
+                  </div>
 
-              <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-[#c9932d]/30 pt-4">
-                <span className="text-xs font-medium text-[#6e463a]">
-                  {lang === 'ta'
-                    ? 'இந்த அருள்வாக்கு உங்கள் மங்கள திருமண அழைப்பிதழில் தானாக இணைக்கப்படும்.'
-                    : 'Auto-synced to your personalized Auspicious Wedding Invitation.'}
-                </span>
-                <button
-                  type="button"
-                  onClick={onJumpToInvitation}
-                  className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#e6b247] to-[#ba8222] px-5 py-2.5 text-xs font-bold text-[#310d15] shadow transition hover:brightness-105 cursor-pointer"
-                >
-                  <Share2 className="h-3.5 w-3.5" />
-                  <span>{lang === 'ta' ? 'மங்கள அழைப்பிதழில் காண்க →' : 'Open Personalized Invite →'}</span>
-                </button>
-              </div>
+                  <div className="mt-4 flex items-start gap-4">
+                    <span className="shrink-0 text-5xl sm:text-6xl" aria-hidden="true">
+                      {selectedFortune.emoji}
+                    </span>
+                    <div>
+                      <p className="font-display text-xl leading-snug font-bold text-[#3a0815] sm:text-2xl">
+                        “{lang === 'ta' ? selectedFortune.ta : selectedFortune.en}”
+                      </p>
+                      <p className="mt-2 text-xs text-[#6e463a] font-medium leading-relaxed">
+                        {lang === 'ta' ? selectedFortune.en : selectedFortune.ta}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-[#c9932d]/30 pt-4">
+                    <span className="text-xs font-medium text-[#6e463a]">
+                      {lang === 'ta'
+                        ? 'இந்த நகைச்சுவை அதிர்ஷ்டம் உங்கள் திருமண அழைப்பிதழில் இணைக்கப்படும்!'
+                        : 'Synced to your personalized wedding invitation card!'}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={onJumpToInvitation}
+                      className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#e6b247] to-[#ba8222] px-5 py-2.5 text-xs font-bold text-[#310d15] shadow transition hover:brightness-105 cursor-pointer"
+                    >
+                      <Share2 className="h-3.5 w-3.5" />
+                      <span>{lang === 'ta' ? 'அழைப்பிதழில் காண்க →' : 'View in Invitation →'}</span>
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

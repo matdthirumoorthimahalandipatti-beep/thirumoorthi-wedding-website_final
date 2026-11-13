@@ -858,20 +858,20 @@ export default function WeddingGamesArena({
           )}
         </div>
 
-        {/* Finale Transition CTA right below Games -> Sacred Wedding Oracle */}
+        {/* Finale Transition CTA right below Games -> Let's Predict Your Next Luck */}
         <div className="mt-6 flex flex-col items-center justify-between gap-4 rounded-2xl border border-[#c9932d] bg-gradient-to-r from-[#631226] via-[#4a0c1d] to-[#631226] px-6 py-4 text-white shadow-xl sm:flex-row">
           <div className="flex items-center gap-3">
             <Flame className="h-6 w-6 shrink-0 text-[#f7df94]" />
             <div>
               <p className="text-sm font-bold">
                 {lang === 'ta'
-                  ? 'விளையாட்டு நிறைவு: புனித திருமண ஜோதிட தீபத்தைச் சுழற்றுங்கள்!'
-                  : 'Games Finale: Ready for your Sacred Wedding Oracle Prophecy?'}
+                  ? '🔮 விளையாட்டு நிறைவு: உங்கள் அடுத்த அதிர்ஷ்டத்தை கணிக்க வாருங்கள்!'
+                  : "🔮 Games Finale: Let's Predict Your Next Luck!"}
               </p>
               <p className="text-xs text-[#f5deb3]">
                 {lang === 'ta'
-                  ? 'உங்கள் புள்ளிகளுடன் நேர்மறையான & நகைச்சுவையான வாழ்த்து அருள்வாக்கைப் பெறுங்கள்.'
-                  : 'Tap the glowing holy diya lamp next to reveal your funny & 100% positive fortune.'}
+                  ? 'சுடர்விடும் மாய தீபத்தைத் தொட்டுத் திறக்கவும் — 100% நகைச்சுவை & சிரிப்பு நிறைந்த எதிர்கால கணிப்பு!'
+                  : 'Touch the glowing magic lamp to unlock your 100% hilarious next luck prophecy!'}
               </p>
             </div>
           </div>
@@ -881,7 +881,7 @@ export default function WeddingGamesArena({
             className="inline-flex shrink-0 items-center gap-2 rounded-full bg-gradient-to-r from-[#f7df94] to-[#c9932d] px-5 py-2.5 text-xs font-bold text-[#310d15] shadow transition hover:brightness-105 cursor-pointer"
           >
             <Sparkles className="h-4 w-4" />
-            <span>{lang === 'ta' ? 'புனித தீபத்தைச் சுழற்று →' : 'Reveal Oracle Finale →'}</span>
+            <span>{lang === 'ta' ? 'அதிர்ஷ்டத்தை கணிக்க →' : 'Predict Next Luck →'}</span>
           </button>
         </div>
       </div>

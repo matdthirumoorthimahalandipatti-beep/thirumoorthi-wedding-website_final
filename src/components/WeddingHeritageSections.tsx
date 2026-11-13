@@ -804,8 +804,8 @@ export function HeritageUpperSections({
                   அன்புடன் அழைக்கின்றோம்.
                 </p>
 
-                {/* 3-Column Bottom Inviters Block */}
-                <div className="grid items-center gap-6 border-t-2 border-[#c9932d]/45 pt-5 text-center sm:grid-cols-3">
+                {/* 2-Column Bottom Inviters Block (Bride Hosts & Groom Hosts) */}
+                <div className="grid items-start gap-6 border-t-2 border-[#c9932d]/45 pt-5 text-center sm:grid-cols-2">
                   {/* Left: Bride Hosts */}
                   <div className="space-y-1 text-xs leading-relaxed sm:text-sm">
                     <p className="font-bold text-[#8c5a12] underline decoration-[#c9932d]/70 underline-offset-4">
@@ -817,14 +817,6 @@ export function HeritageUpperSections({
                     <p className="font-semibold">யாதவர் பொதிகுளம்.</p>
                     <p>(இருப்பு) ஆண்டிப்பட்டி பங்களா, மதுரை – 625 221.</p>
                     <p className="font-bold text-[#6b1024]">செல் : 90424 98664, 96884 43550.</p>
-                  </div>
-
-                  {/* Center: Traditional Kuthuvilakku */}
-                  <div className="flex flex-col items-center justify-center space-y-2 py-2">
-                    <span className="text-5xl" aria-hidden="true">
-                      🪔
-                    </span>
-                    <p className="text-xs font-bold text-[#7c1428] sm:text-sm">(இருவீட்டார் அழைப்பு)</p>
                   </div>
 
                   {/* Right: Groom Hosts */}
