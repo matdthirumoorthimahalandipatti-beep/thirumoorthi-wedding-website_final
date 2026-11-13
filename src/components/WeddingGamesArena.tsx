@@ -18,7 +18,7 @@ interface WeddingGamesArenaProps {
   totalScore: number;
   ponnuScore: number;
   mappillaiScore: number;
-  onAddPoints: (pts: number) => void;
+  onAddPoints: (pts: number, gameTitle?: string) => void;
   onSelectTeam: (t: TeamSide) => void;
   onProceedToOracle: () => void;
 }
@@ -31,7 +31,7 @@ function MothiramGame({
   onWinPoints,
 }: {
   lang: Lang;
-  onWinPoints: (pts: number) => void;
+  onWinPoints: (pts: number, gameTitle?: string) => void;
 }) {
   const [round, setRound] = useState(1);
   const [ringIndex, setRingIndex] = useState(() => Math.floor(Math.random() * 9));
@@ -59,8 +59,9 @@ function MothiramGame({
       const earned = Math.max(25, 110 - (tries - 1) * 15);
       setRoundPoints((prev) => prev + earned);
       setStatus('found');
-      soundFx.playWinFanfare();
-      onWinPoints(earned);
+      // Ceremonial points indication and victory fanfare sound
+      soundFx.playGameVictory(earned);
+      onWinPoints(earned, lang === 'ta' ? 'மோதிரம் தேடல்' : 'Ring in the Pot');
     } else {
       soundFx.playSplash();
     }
@@ -156,7 +157,7 @@ function VirundhuGame({
   onWinPoints,
 }: {
   lang: Lang;
-  onWinPoints: (pts: number) => void;
+  onWinPoints: (pts: number, gameTitle?: string) => void;
 }) {
   const [running, setRunning] = useState(false);
   const [timeLeft, setTimeLeft] = useState(25);
@@ -178,14 +179,14 @@ function VirundhuGame({
       setTimeLeft((prev) => {
         if (prev <= 1) {
           setRunning(false);
-          soundFx.playWinFanfare();
+          soundFx.playGameVictory(score);
           return 0;
         }
         return prev - 1;
       });
     }, 1000);
     return () => window.clearInterval(timer);
-  }, [running]);
+  }, [running, score]);
 
   const shuffleSlots = (nextTarget: string) => {
     const ids = DISHES.map((d) => d.id);
@@ -222,10 +223,11 @@ function VirundhuGame({
     }
 
     if (dish.id === targetDishId) {
-      soundFx.playChime();
       const gained = dish.pts + 10;
+      // Sound indication of points earned!
+      soundFx.playPointsEarned(gained);
       setScore((s) => s + gained);
-      onWinPoints(gained);
+      onWinPoints(gained, lang === 'ta' ? 'கல்யாண விருந்து' : 'Wedding Feast');
       setFeedback(
         lang === 'ta'
           ? `சரியான விருந்து உபசரிப்பு! +${gained}`
@@ -239,7 +241,7 @@ function VirundhuGame({
       soundFx.playThavilTap();
       const gained = 5;
       setScore((s) => s + gained);
-      onWinPoints(gained);
+      onWinPoints(gained, lang === 'ta' ? 'கல்யாண விருந்து' : 'Wedding Feast');
       setFeedback(lang === 'ta' ? `இனிமையான பந்தி பரிமாற்றம் +5` : `Tasty extra serving +5 pts`);
     }
   };
@@ -344,7 +346,7 @@ function MaalaiGame({
   onWinPoints,
 }: {
   lang: Lang;
-  onWinPoints: (pts: number) => void;
+  onWinPoints: (pts: number, gameTitle?: string) => void;
 }) {
   const [pos, setPos] = useState(50);
   const dirRef = useRef(1);
@@ -390,8 +392,9 @@ function MaalaiGame({
     if (dist <= 7) {
       const pts = 60 + streak * 15;
       setStreak((s) => s + 1);
-      onWinPoints(pts);
-      soundFx.playWinFanfare();
+      // Play full victory sound on perfect garland exchange!
+      soundFx.playGameVictory(pts);
+      onWinPoints(pts, lang === 'ta' ? 'மாலை மாற்றல்' : 'Garland Exchange');
       setResultMsg(
         lang === 'ta'
           ? `மணமாலை கச்சிதமாக விழுந்தது! +${pts} புள்ளிகள் (தொடர் வெற்றி ${streak + 1})`
@@ -400,8 +403,9 @@ function MaalaiGame({
     } else if (dist <= 18) {
       const pts = 30;
       setStreak((s) => s + 1);
-      onWinPoints(pts);
-      soundFx.playChime();
+      // Play points earned sound indication!
+      soundFx.playPointsEarned(pts);
+      onWinPoints(pts, lang === 'ta' ? 'மாலை மாற்றல்' : 'Garland Exchange');
       setResultMsg(
         lang === 'ta'
           ? `அருமை! மாலை மாற்றப்பட்டது +${pts} புள்ளிகள்`
@@ -478,7 +482,7 @@ function ThengaiGame({
 }: {
   lang: Lang;
   team: TeamSide;
-  onWinPoints: (pts: number) => void;
+  onWinPoints: (pts: number, gameTitle?: string) => void;
 }) {
   const [playerPos, setPlayerPos] = useState(0);
   const [rivalPos, setRivalPos] = useState(0);
@@ -516,8 +520,9 @@ function ThengaiGame({
       if (next >= 100) {
         setRacing(false);
         setWinner('player');
-        soundFx.playWinFanfare();
-        onWinPoints(75);
+        // Play victory celebration with points chime and temple bells
+        soundFx.playGameVictory(75);
+        onWinPoints(75, lang === 'ta' ? 'தேங்காய் உருட்டல்' : 'Coconut Rolling Race');
       }
       return next;
     });
@@ -761,9 +766,13 @@ export default function WeddingGamesArena({
           </button>
 
           <div className="text-center">
-            <div className="flex items-center justify-center gap-2 text-xs font-bold text-[#631226]">
+            <div className="flex flex-wrap items-center justify-center gap-2 text-xs font-bold text-[#631226]">
               <Trophy className="h-4 w-4 text-[#c9932d]" />
               <span>{lang === 'ta' ? 'நேரடி அணிப் போட்டி' : 'Live Wedding Cup'}</span>
+              <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-bold text-emerald-800 border border-emerald-300">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-600 animate-pulse" />
+                <span>{lang === 'ta' ? 'GitHub நேரலை' : 'GitHub Live'}</span>
+              </span>
             </div>
             <div className="mt-2 flex h-2.5 overflow-hidden rounded-full bg-[#e8d5b3]">
               <div

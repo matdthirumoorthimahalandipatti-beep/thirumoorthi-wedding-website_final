@@ -45,10 +45,16 @@ export default function EntranceDoorsPortal({
 
   const handleUnlockDoor = () => {
     if (doorsOpen) return;
-    soundFx.playTempleBell();
-    if (!soundFx.isMuted()) {
-      soundFx.startRandomCollection(true);
-    }
+    // Play authentic multi-strike traditional temple bell sequence (கோவில் மணி ஓசை)
+    soundFx.playTraditionalTempleBellSequence();
+    
+    // Start auspicious wedding music smoothly after the opening bells resound
+    window.setTimeout(() => {
+      if (!soundFx.isMuted()) {
+        soundFx.startRandomCollection(true);
+      }
+    }, 1200);
+
     setDoorsOpen(true);
 
     // Full-screen carved temple door swing (~2.4s) + sanctum reveal before garland ceremony video

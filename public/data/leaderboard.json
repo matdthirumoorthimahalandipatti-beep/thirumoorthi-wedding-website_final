@@ -1,0 +1,26 @@
+{
+  "ponnuScore": 240,
+  "mappillaiScore": 225,
+  "recentWinners": [
+    {
+      "guestName": "தீபக் (மணமகள் சகோதரர்)",
+      "team": "ponnu",
+      "points": 75,
+      "game": "தேங்காய் உருட்டல்",
+      "timestamp": "2026-11-13T10:45:00.000Z"
+    },
+    {
+      "guestName": "சிவா நண்பர்கள்",
+      "team": "mappillai",
+      "points": 60,
+      "game": "மாலை மாற்றல்",
+      "timestamp": "2026-11-13T10:30:00.000Z"
+    }
+  ],
+  "topPlayers": [
+    { "name": "தீபக்", "team": "ponnu", "score": 210, "title": "மதுரை அரசர்" },
+    { "name": "சுந்தர்", "team": "mappillai", "score": 180, "title": "வீர இளவரசர்" },
+    { "name": "கலசலிங்கம் நண்பர்கள்", "team": "ponnu", "score": 150, "title": "மந்திரியார்" }
+  ],
+  "lastUpdated": "2026-11-13T10:45:00.000Z"
+}

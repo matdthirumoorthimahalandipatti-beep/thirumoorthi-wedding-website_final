@@ -32,6 +32,7 @@ import {
   type TeamSide,
 } from './data/weddingData';
 import { soundFx, type MusicPlayerState } from './utils/soundFx';
+import { githubSync } from './utils/githubSync';
 import Petal3DFloat from './components/Petal3DFloat';
 import EntranceDoorsPortal from './components/EntranceDoorsPortal';
 import AdminPortalModal, { type CouplePhotosState } from './components/AdminPortalModal';
@@ -237,6 +238,38 @@ export default function App() {
     const timer = window.setInterval(() => {
       setCountdown(getMuhurthamCountdown());
     }, 1000);
+
+    // Live Sync with GitHub: Load initial community leaderboard scores
+    void githubSync.fetchLeaderboard().then((data) => {
+      if (data) {
+        if (typeof data.ponnuScore === 'number' && data.ponnuScore > 0) {
+          setPonnuScore((prev) => Math.max(prev, data.ponnuScore));
+        }
+        if (typeof data.mappillaiScore === 'number' && data.mappillaiScore > 0) {
+          setMappillaiScore((prev) => Math.max(prev, data.mappillaiScore));
+        }
+      }
+    });
+
+    // Live Sync with GitHub: Load remote admin directory updates
+    void githubSync.fetchAdminData().then((adminData) => {
+      if (adminData) {
+        const deletedSet = new Set(adminData.deletedPersonIds || []);
+        const customList = adminData.customPersons || [];
+        setDirectoryPersons((prev) => {
+          const filtered = prev.filter((p) => !deletedSet.has(p.id));
+          const existingIds = new Set(filtered.map((p) => p.id));
+          const merged = [...filtered];
+          for (const c of customList) {
+            if (!existingIds.has(c.id) && !deletedSet.has(c.id)) {
+              merged.push(c);
+            }
+          }
+          return merged;
+        });
+      }
+    });
+
     return () => window.clearInterval(timer);
   }, []);
 
@@ -320,10 +353,24 @@ export default function App() {
     setShowPortal(false);
   };
 
-  const handleAddPoints = (pts: number) => {
+  const handleAddPoints = (pts: number, gameTitle?: string) => {
     setTotalScore((s) => s + pts);
-    if (team === 'ponnu') setPonnuScore((p) => p + pts);
-    else setMappillaiScore((m) => m + pts);
+    let nextPonnu = ponnuScore;
+    let nextMappillai = mappillaiScore;
+    if (team === 'ponnu') {
+      nextPonnu = ponnuScore + pts;
+      setPonnuScore(nextPonnu);
+    } else {
+      nextMappillai = mappillaiScore + pts;
+      setMappillaiScore(nextMappillai);
+    }
+    // Update GitHub repository leaderboard whenever someone completes a game or wins points!
+    githubSync.triggerLeaderboardUpdate(nextPonnu, nextMappillai, {
+      guestName: effectiveGuest,
+      team,
+      points: pts,
+      game: gameTitle || 'திருமண விளையாட்டு',
+    });
   };
 
   const handleAddTrack = (track: Omit<JukeboxTrack, 'id' | 'votes' | 'addedAt'>) => {

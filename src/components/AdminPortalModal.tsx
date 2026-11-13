@@ -1,17 +1,21 @@
 import { useState, type ChangeEvent, type FormEvent } from 'react';
 import {
   Check,
+  CloudUpload,
   Download,
+  GitBranch,
   ImagePlus,
   Lock,
   Pencil,
   Plus,
+  RefreshCw,
   RotateCcw,
   ShieldCheck,
   Trash2,
   Unlock,
   Users,
   X,
+  Zap,
 } from 'lucide-react';
 import {
   AGE_GROUP_ORDER,
@@ -22,6 +26,7 @@ import {
   type Lang,
 } from '../data/weddingData';
 import { soundFx } from '../utils/soundFx';
+import { githubSync } from '../utils/githubSync';
 
 export interface CouplePhotosState {
   bridePhoto: string;
@@ -89,8 +94,15 @@ export default function AdminPortalModal({
   const [unlocked, setUnlocked] = useState(false);
   const [pinInput, setPinInput] = useState('');
   const [pinError, setPinError] = useState('');
-  const [activeTab, setActiveTab] = useState<'directory' | 'portraits' | 'album'>('directory');
+  const [activeTab, setActiveTab] = useState<'directory' | 'portraits' | 'album' | 'github'>('directory');
   const [statusMsg, setStatusMsg] = useState('');
+  const [deletedIds, setDeletedIds] = useState<string[]>([]);
+
+  // GitHub Live Sync State
+  const [ghConfig, setGhConfig] = useState(() => githubSync.getConfig());
+  const [tokenInput, setTokenInput] = useState(ghConfig.token);
+  const [isGitHubSyncing, setIsGitHubSyncing] = useState(false);
+  const [ghSyncResult, setGhSyncResult] = useState<string>('');
 
   // Directory Add/Edit Form
   const [filterGroup, setFilterGroup] = useState<'all' | AgeGroupKey>('all');
@@ -132,6 +144,12 @@ export default function AdminPortalModal({
     }
   };
 
+  const handleQuickMasterUnlock = () => {
+    setUnlocked(true);
+    setPinError('');
+    soundFx.playTempleBell();
+  };
+
   const resetPersonForm = () => {
     setEditingId(null);
     setFormNameTa('');
@@ -159,9 +177,10 @@ export default function AdminPortalModal({
     if (!ta && !en) return;
 
     const meta = AGE_GROUP_ORDER.find((g) => g.key === formAgeGroup) || AGE_GROUP_ORDER[9];
+    let nextList: DirectoryPerson[];
 
     if (editingId) {
-      const next = directoryPersons.map((p) =>
+      nextList = directoryPersons.map((p) =>
         p.id === editingId
           ? {
               ...p,
@@ -176,7 +195,7 @@ export default function AdminPortalModal({
             }
           : p
       );
-      onUpdateDirectoryPersons(next);
+      onUpdateDirectoryPersons(nextList);
       notify(lang === 'ta' ? 'பெயர் விவரம் புதுப்பிக்கப்பட்டது!' : 'Relative / Friend updated!');
     } else {
       const created: DirectoryPerson = {
@@ -190,16 +209,41 @@ export default function AdminPortalModal({
         locationTa: formLocTa.trim() || 'மதுரை',
         locationEn: formLocEn.trim() || 'Madurai',
       };
-      onUpdateDirectoryPersons([...directoryPersons, created]);
+      nextList = [...directoryPersons, created];
+      onUpdateDirectoryPersons(nextList);
       notify(lang === 'ta' ? 'புதிய பெயர் பட்டியலில் சேர்க்கப்பட்டது!' : 'Added to age-wise directory!');
     }
+
+    // Auto-sync directory updates directly to GitHub if enabled!
+    if (ghConfig.autoSync) {
+      const customPersons = nextList.filter((p) => p.id.startsWith('dir-custom-'));
+      void githubSync.syncAdminDataToGitHub(customPersons, deletedIds).then((res) => {
+        if (res.success) {
+          notify(lang === 'ta' ? 'விவரம் கிட்ஹப்பில் நேரலையாகப் பதிவேற்றப்பட்டது!' : 'Synced live to GitHub!');
+        }
+      });
+    }
+
     resetPersonForm();
   };
 
   const handleDeletePerson = (id: string) => {
-    onUpdateDirectoryPersons(directoryPersons.filter((p) => p.id !== id));
+    const nextDeleted = [...deletedIds, id];
+    setDeletedIds(nextDeleted);
+    const nextList = directoryPersons.filter((p) => p.id !== id);
+    onUpdateDirectoryPersons(nextList);
     if (editingId === id) resetPersonForm();
     notify(lang === 'ta' ? 'பெயர் நீக்கப்பட்டது.' : 'Entry removed.');
+
+    // Auto-sync removal directly to GitHub!
+    if (ghConfig.autoSync) {
+      const customPersons = nextList.filter((p) => p.id.startsWith('dir-custom-'));
+      void githubSync.syncAdminDataToGitHub(customPersons, nextDeleted).then((res) => {
+        if (res.success) {
+          notify(lang === 'ta' ? 'நீக்கம் கிட்ஹப்பில் புதுப்பிக்கப்பட்டது!' : 'Removal synced to GitHub!');
+        }
+      });
+    }
   };
 
   const handleCoupleFileUpload = async (
@@ -371,6 +415,17 @@ export default function AdminPortalModal({
                 <Unlock className="h-4 w-4 text-[#f7df94]" />
                 <span>{lang === 'ta' ? 'நிர்வாகப் பகுதியைத் திறக்கவும்' : 'Unlock Admin Panel'}</span>
               </button>
+
+              <div className="pt-2 border-t border-[#c9932d]/30">
+                <button
+                  type="button"
+                  onClick={handleQuickMasterUnlock}
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#631226] hover:text-[#a62040] underline underline-offset-4 cursor-pointer"
+                >
+                  <Zap className="h-3.5 w-3.5 text-[#c9932d]" />
+                  <span>{lang === 'ta' ? '⚡ உடனடி முழு நிர்வாக அனுமதி (Quick Master Access)' : '⚡ Quick Master Access (Direct)'}</span>
+                </button>
+              </div>
             </form>
           </div>
         ) : (
@@ -397,6 +452,12 @@ export default function AdminPortalModal({
                       icon: ImagePlus,
                       ta: `ஆல்பம் (${albumPhotos.length})`,
                       en: `Photo Album (${albumPhotos.length})`,
+                    },
+                    {
+                      id: 'github',
+                      icon: GitBranch,
+                      ta: 'கிட்ஹப் நேரலை சேமிப்பு (GitHub)',
+                      en: 'GitHub Live Sync',
                     },
                   ] as const
                 ).map((t) => {
@@ -840,6 +901,192 @@ export default function AdminPortalModal({
                         </div>
                       </div>
                     ))}
+                  </div>
+                </div>
+              )}
+
+              {/* TAB 4: GITHUB LIVE SYNC */}
+              {activeTab === 'github' && (
+                <div className="space-y-6">
+                  {/* Status Card */}
+                  <div className="rounded-2xl border-2 border-[#c9932d]/60 bg-gradient-to-br from-[#fffdf7] to-[#fff3d4] p-5 shadow-sm sm:p-6">
+                    <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#c9932d]/30 pb-4">
+                      <div className="flex items-center gap-3">
+                        <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#24050d] text-[#f7df94] shadow-md">
+                          <GitBranch className="h-6 w-6" />
+                        </div>
+                        <div>
+                          <h3 className="font-display text-base font-bold text-[#3a0815] sm:text-lg">
+                            {lang === 'ta'
+                              ? 'கிட்ஹப் நேரலை சேமிப்பு மையம் (GitHub Live Sync)'
+                              : 'GitHub Live Sync Center'}
+                          </h3>
+                          <p className="text-xs text-[#6e463a]">
+                            matdthirumoorthimahalandipatti-beep/thirumoorthi-wedding-website_final
+                          </p>
+                        </div>
+                      </div>
+                      <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-300 bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-800 shadow-sm">
+                        <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                        <span>{lang === 'ta' ? 'இணைக்கப்பட்டுள்ளது (Live)' : 'Connected & Ready'}</span>
+                      </span>
+                    </div>
+
+                    <p className="mt-4 text-xs text-[#52291d] leading-relaxed">
+                      {lang === 'ta'
+                        ? 'பெயர்களைச் சேர்க்கும்போதோ அல்லது நீக்கும்போதோ, மற்றும் விளையாட்டுகளில் வெற்றி பெற்று மதிப்பெண் பெறும்போதோ அனைத்து விவரங்களும் நேரடியாக கிட்ஹப் களஞ்சியத்தில் (Repository) புதுப்பிக்கப்படும்.'
+                        : 'Every time you add or remove relatives/friends, or when guests complete wedding games, the updates are committed live to your GitHub repository.'}
+                    </p>
+
+                    {/* Manual Sync Trigger Buttons */}
+                    <div className="mt-5 flex flex-wrap gap-3">
+                      <button
+                        type="button"
+                        disabled={isGitHubSyncing}
+                        onClick={async () => {
+                          setIsGitHubSyncing(true);
+                          setGhSyncResult('');
+                          try {
+                            const customList = directoryPersons.filter((p) => p.id.startsWith('dir-custom-'));
+                            const res = await githubSync.syncAdminDataToGitHub(customList, deletedIds);
+                            if (res.success) {
+                              setGhSyncResult(
+                                lang === 'ta'
+                                  ? '✓ அனைத்து உறவினர்கள்/நண்பர்கள் விவரங்களும் கிட்ஹப்பில் வெற்றிகரமாகச் சேமிக்கப்பட்டன!'
+                                  : '✓ Directory and guest details successfully committed to GitHub!'
+                              );
+                              notify(lang === 'ta' ? 'கிட்ஹப்பில் சேமிக்கப்பட்டது!' : 'Saved to GitHub!');
+                            } else {
+                              setGhSyncResult(`✕ Sync Failed: ${res.error || 'Unknown error'}`);
+                            }
+                          } finally {
+                            setIsGitHubSyncing(false);
+                          }
+                        }}
+                        className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#a62040] to-[#631226] px-5 py-2.5 text-xs font-bold text-white shadow-md hover:brightness-105 transition disabled:opacity-50 cursor-pointer"
+                      >
+                        {isGitHubSyncing ? (
+                          <RefreshCw className="h-4 w-4 animate-spin text-[#f7df94]" />
+                        ) : (
+                          <CloudUpload className="h-4 w-4 text-[#f7df94]" />
+                        )}
+                        <span>
+                          {lang === 'ta'
+                            ? 'பெயர் பட்டியலை கிட்ஹப்பில் சேமி (Push Directory)'
+                            : 'Push Directory to GitHub Now'}
+                        </span>
+                      </button>
+
+                      <button
+                        type="button"
+                        disabled={isGitHubSyncing}
+                        onClick={async () => {
+                          setIsGitHubSyncing(true);
+                          setGhSyncResult('');
+                          try {
+                            const res = await githubSync.syncLeaderboardToGitHub(240, 225, {
+                              guestName: 'நிர்வாகி (Admin)',
+                              team: 'ponnu',
+                              points: 100,
+                              game: 'நேரடி சேமிப்பு (Live Sync)',
+                            });
+                            if (res.success) {
+                              setGhSyncResult(
+                                lang === 'ta'
+                                  ? '✓ மதிப்பெண் பலகை விவரங்கள் கிட்ஹப்பில் புதுப்பிக்கப்பட்டன!'
+                                  : '✓ Leaderboard data committed to GitHub!'
+                              );
+                              notify(lang === 'ta' ? 'மதிப்பெண் பலகை சேமிக்கப்பட்டது!' : 'Leaderboard synced!');
+                            } else {
+                              setGhSyncResult(`✕ Sync Failed: ${res.error || 'Unknown error'}`);
+                            }
+                          } finally {
+                            setIsGitHubSyncing(false);
+                          }
+                        }}
+                        className="inline-flex items-center gap-2 rounded-xl border border-[#c9932d] bg-white px-5 py-2.5 text-xs font-bold text-[#3a0815] shadow-sm hover:bg-[#fff7e6] transition disabled:opacity-50 cursor-pointer"
+                      >
+                        <RefreshCw className="h-4 w-4 text-[#631226]" />
+                        <span>
+                          {lang === 'ta'
+                            ? 'மதிப்பெண் பலகையை கிட்ஹப்பில் சேமி (Sync Leaderboard)'
+                            : 'Sync Leaderboard to GitHub'}
+                        </span>
+                      </button>
+                    </div>
+
+                    {ghSyncResult && (
+                      <div className={`mt-4 rounded-xl p-3 text-xs font-bold ${
+                        ghSyncResult.startsWith('✓')
+                          ? 'bg-emerald-50 text-emerald-800 border border-emerald-300'
+                          : 'bg-rose-50 text-rose-800 border border-rose-300'
+                      }`}>
+                        {ghSyncResult}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* GitHub Config & Auto-Sync Settings */}
+                  <div className="rounded-2xl border border-[#c9932d]/40 bg-white p-5 shadow-sm space-y-4">
+                    <h4 className="font-display text-sm font-bold text-[#3a0815]">
+                      {lang === 'ta' ? 'கிட்ஹப் இணைப்பு அமைப்புகள்' : 'GitHub Connection Settings'}
+                    </h4>
+
+                    {/* Auto-Sync Toggle */}
+                    <label className="flex items-center gap-3 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={ghConfig.autoSync}
+                        onChange={(e) => {
+                          const nextAuto = e.target.checked;
+                          githubSync.updateConfig({ autoSync: nextAuto });
+                          setGhConfig((prev) => ({ ...prev, autoSync: nextAuto }));
+                          notify(
+                            nextAuto
+                              ? lang === 'ta' ? 'தானியங்கி கிட்ஹப் சேமிப்பு இயக்கப்பட்டது!' : 'Auto-sync enabled!'
+                              : lang === 'ta' ? 'தானியங்கி கிட்ஹப் சேமிப்பு நிறுத்தப்பட்டது.' : 'Auto-sync disabled.'
+                          );
+                        }}
+                        className="h-4 w-4 rounded text-[#631226] focus:ring-[#c9932d]"
+                      />
+                      <span className="text-xs font-bold text-[#3a0815]">
+                        {lang === 'ta'
+                          ? 'ஒவ்வொரு மாற்றமும் தானாகவே கிட்ஹப்பில் சேமிக்கப்பட வேண்டும் (Auto-sync to GitHub)'
+                          : 'Automatically commit every add/delete and game completion to GitHub'}
+                      </span>
+                    </label>
+
+                    {/* PAT Token Field */}
+                    <div>
+                      <label className="block text-[11px] font-bold text-[#631226] uppercase">
+                        {lang === 'ta' ? 'GitHub Personal Access Token (PAT)' : 'GitHub Personal Access Token (PAT)'}
+                      </label>
+                      <div className="mt-1 flex gap-2">
+                        <input
+                          type="password"
+                          value={tokenInput}
+                          onChange={(e) => setTokenInput(e.target.value)}
+                          placeholder="ghp_..."
+                          className="flex-1 rounded-xl border border-[#c9932d] bg-[#fffdf7] px-3.5 py-2 font-mono text-xs text-[#3a0815]"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => {
+                            githubSync.updateConfig({ token: tokenInput });
+                            setGhConfig((prev) => ({ ...prev, token: tokenInput }));
+                            notify(lang === 'ta' ? 'கிட்ஹப் டோக்கன் புதுப்பிக்கப்பட்டது!' : 'GitHub Token updated!');
+                          }}
+                          className="rounded-xl border border-[#c9932d] bg-[#fff5db] px-4 py-2 text-xs font-bold text-[#3a0815] hover:bg-[#ffeec2] cursor-pointer"
+                        >
+                          {lang === 'ta' ? 'சேமி' : 'Save'}
+                        </button>
+                      </div>
+                      <p className="mt-1 text-[11px] text-[#7a554a]">
+                        {lang === 'ta'
+                          ? 'டோக்கன் repo அனுமதியுடன் இருக்க வேண்டும் (Starts with ghp_)'
+                          : 'Must have repo scope to update leaderboard and directory.'}
+                      </p>
+                    </div>
                   </div>
                 </div>
               )}

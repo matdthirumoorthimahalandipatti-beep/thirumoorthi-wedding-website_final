@@ -269,9 +269,100 @@ class SoundEngine {
   }
 
   public playTempleBell(): void {
-    this.playTone(523.25, 1.4, 'sine', 0.14, 0);
-    this.playTone(1046.5, 1.0, 'triangle', 0.07, 0);
-    this.playTone(1567.98, 0.7, 'sine', 0.04, 0.01);
+    this.playTraditionalBronzeBell(523.25, 2.2, 0.2, 0);
+  }
+
+  /**
+   * Traditional South Indian Bronze Temple Bell (கோவில் மணி ஓசை)
+   * Modeled with authentic non-harmonic modal frequencies and long resonant metallic decay.
+   */
+  public playTraditionalBronzeBell(baseFreq = 523.25, duration = 2.4, gainPeak = 0.22, delay = 0): void {
+    const ctx = this.getContext();
+    if (!ctx) return;
+    const now = ctx.currentTime + delay;
+
+    // Authentic bronze bell modal ratios: fundamental, prime, tierce, quint, octave, and upper shimmer
+    const partials = [
+      { ratio: 1.0, gain: 0.65, decay: 1.0 },      // Fundamental
+      { ratio: 1.52, gain: 0.45, decay: 0.8 },     // Minor third / tierce
+      { ratio: 2.0, gain: 0.35, decay: 0.65 },     // Octave
+      { ratio: 2.76, gain: 0.25, decay: 0.5 },     // Upper fifth
+      { ratio: 4.18, gain: 0.18, decay: 0.35 },    // Metallic strike clapper ring
+    ];
+
+    partials.forEach(({ ratio, gain, decay }) => {
+      const osc = ctx.createOscillator();
+      const g = ctx.createGain();
+      osc.type = ratio > 2.5 ? 'triangle' : 'sine';
+      osc.frequency.setValueAtTime(baseFreq * ratio, now);
+
+      const partGain = gainPeak * gain;
+      g.gain.setValueAtTime(0.0001, now);
+      // Fast strike attack (5ms)
+      g.gain.linearRampToValueAtTime(partGain, now + 0.006);
+      // Exponential bronze resonance decay
+      g.gain.exponentialRampToValueAtTime(0.0001, now + duration * decay);
+
+      osc.connect(g);
+      g.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + duration * decay + 0.05);
+    });
+  }
+
+  /**
+   * Traditional Temple Door Opening Ceremony Bell Sequence
+   * Authentic multi-strike bronze bell tolls (Mani Osai) accompanied by auspicious temple reverberation
+   */
+  public playTraditionalTempleBellSequence(): void {
+    // 1. Initial gentle clapper strike
+    this.playTraditionalBronzeBell(440, 2.2, 0.16, 0.0);
+    // 2. Second resonant strike
+    this.playTraditionalBronzeBell(523.25, 2.5, 0.22, 0.38);
+    // 3. Third joyous temple toll
+    this.playTraditionalBronzeBell(659.25, 2.8, 0.25, 0.85);
+    // 4. Fourth bright toll
+    this.playTraditionalBronzeBell(783.99, 3.0, 0.26, 1.4);
+    // 5. Grand ceremonial double ring
+    this.playTraditionalBronzeBell(1046.5, 3.2, 0.28, 2.05);
+    this.playTraditionalBronzeBell(523.25, 3.5, 0.24, 2.15);
+    // Auspicious low thavil drum resonant pulse in background
+    this.playThavilTap();
+  }
+
+  /**
+   * Sound indication of points earned in games (sparkling celebration arpeggio)
+   */
+  public playPointsEarned(points = 25): void {
+    const ctx = this.getContext();
+    if (!ctx) return;
+
+    // Fast ascending golden chime scale
+    const baseFreqs = [587.33, 739.99, 880, 1174.66, 1479.98, 1760];
+    const steps = points >= 50 ? baseFreqs : baseFreqs.slice(0, 4);
+
+    steps.forEach((freq, idx) => {
+      this.playTone(freq, 0.22, 'sine', 0.12, idx * 0.045);
+    });
+    // Add bright high shimmer ping at the top
+    this.playTone(steps[steps.length - 1] * 1.5, 0.35, 'triangle', 0.08, steps.length * 0.045);
+  }
+
+  /**
+   * Game Victory Celebration Fanfare with points indication
+   */
+  public playGameVictory(points = 75): void {
+    // 1. Auspicious Thavil pulse
+    this.playThavilTap();
+    // 2. Points indication chime
+    this.playPointsEarned(points);
+    // 3. Victory fanfare
+    const notes = [523.25, 659.25, 783.99, 1046.5, 1318.5];
+    notes.forEach((f, i) => {
+      this.playTone(f, 0.5, 'triangle', 0.14, 0.22 + i * 0.08);
+    });
+    // 4. Concluding temple bell chime
+    this.playTraditionalBronzeBell(1046.5, 1.8, 0.18, 0.65);
   }
 
   public playChime(): void {
