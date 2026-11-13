@@ -96,13 +96,13 @@ export default function EntranceDoorsPortal({
           muted
           controls={false}
           onEnded={onEnter}
-          className="absolute inset-0 h-full w-full object-contain sm:object-cover"
+          className="absolute inset-0 h-full w-full object-cover object-center"
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#19060c]/95 via-[#19060c]/20 to-[#19060c]/60"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#19060c]/95 via-transparent to-[#19060c]/40"
         />
-        <div className="relative z-10 mx-auto flex w-full max-w-2xl flex-col items-center px-4 pb-8 pt-10 text-center sm:px-6 sm:pb-12">
+        <div className="relative z-10 mx-auto flex w-full max-w-2xl flex-col items-center px-4 pb-6 pt-6 text-center sm:pb-12">
           <p className="text-[11px] font-bold tracking-[0.2em] text-[#f7df94] uppercase sm:text-xs">
             {lang === 'ta' ? WEDDING_CONFIG.familyFunctionTa : WEDDING_CONFIG.familyFunction}
           </p>
@@ -200,50 +200,50 @@ export default function EntranceDoorsPortal({
         }}
       />
 
-      {/* Floating Foreground Controls Layer Over the Full-Screen Doors */}
-      <div className="relative z-10 flex h-full w-full flex-col justify-between overflow-y-auto px-3 py-4 sm:px-6 sm:py-5">
+      {/* Floating Foreground Controls Layer Over the Full-Screen Doors — Fits 100% in 1 screen on Mobile */}
+      <div className="relative z-10 flex h-full max-h-[100dvh] w-full flex-col justify-between overflow-hidden p-2 sm:p-5">
         {/* Top Sacred Header + Event Info Boxes (only on form step) */}
         {portalStep === 'form' && (
           <div className="mx-auto w-full max-w-4xl text-center">
-            <div className="rounded-2xl border border-[#c9932d]/65 bg-[#1d040b]/82 px-3 py-3 shadow-2xl sm:px-6 sm:py-4 overflow-hidden">
-              <p className="text-[10px] font-semibold tracking-[0.14em] text-[#f7df94] uppercase sm:text-xs sm:tracking-[0.18em]">
+            <div className="rounded-xl border border-[#c9932d]/65 bg-[#1d040b]/88 px-2.5 py-1.5 shadow-2xl sm:rounded-2xl sm:px-6 sm:py-3.5 overflow-hidden">
+              <p className="text-[9px] font-semibold tracking-[0.1em] text-[#f7df94] uppercase sm:text-xs sm:tracking-[0.18em]">
                 {lang === 'ta' ? WEDDING_CONFIG.deitiesTa : WEDDING_CONFIG.deities}
               </p>
-              <p className="mt-1 text-[11px] font-extrabold tracking-[0.16em] text-[#fff4d4] uppercase sm:text-sm">
+              <p className="text-[10px] font-extrabold tracking-[0.12em] text-[#fff4d4] uppercase sm:text-sm">
                 {lang === 'ta' ? WEDDING_CONFIG.familyFunctionTa : WEDDING_CONFIG.familyFunction}
               </p>
-              <h1 className="mt-1 font-display text-xl leading-tight font-bold text-[#fff8eb] sm:text-4xl">
+              <h1 className="font-display text-base leading-tight font-bold text-[#fff8eb] sm:text-3xl">
                 {lang === 'ta'
                   ? `${WEDDING_CONFIG.brideTa} & ${WEDDING_CONFIG.groomTa}`
                   : `${WEDDING_CONFIG.bride} & ${WEDDING_CONFIG.groomShort}`}
               </h1>
 
-              {/* Compact Event & Venue Boxes */}
-              <div className="mx-auto mt-2.5 grid max-w-3xl gap-1.5 grid-cols-1 text-[10px] sm:grid-cols-3 sm:gap-2 sm:text-xs">
-                <div className="rounded-xl border border-[#c9932d]/55 bg-[#120207]/90 px-2.5 py-1.5">
-                  <span className="block text-[9px] font-bold tracking-wider text-[#f7df94] uppercase sm:text-[10px]">
+              {/* Compact Event & Venue Boxes — Single horizontal row on mobile */}
+              <div className="mx-auto mt-1 grid max-w-3xl grid-cols-3 gap-1 text-[8.5px] sm:mt-2.5 sm:gap-2 sm:text-xs">
+                <div className="rounded-lg border border-[#c9932d]/55 bg-[#120207]/90 px-1 py-1 sm:rounded-xl sm:px-2.5 sm:py-1.5">
+                  <span className="block font-bold tracking-wider text-[#f7df94] uppercase">
                     {lang === 'ta' ? 'சுப முகூர்த்தம்' : 'Muhurtham'}
                   </span>
-                  <span className="font-semibold text-[#fff8eb]">
-                    {lang === 'ta' ? '22.11.2026 · காலை 6:15–7:15' : '22 Nov 2026 · 6:15–7:15 AM'}
+                  <span className="font-semibold text-[#fff8eb] truncate block">
+                    {lang === 'ta' ? '22.11 · 6:15–7:15 AM' : '22 Nov · 6:15 AM'}
                   </span>
                 </div>
 
-                <div className="rounded-xl border border-[#c9932d]/55 bg-[#120207]/90 px-2.5 py-1.5">
-                  <span className="block text-[9px] font-bold tracking-wider text-[#f7df94] uppercase sm:text-[10px]">
+                <div className="rounded-lg border border-[#c9932d]/55 bg-[#120207]/90 px-1 py-1 sm:rounded-xl sm:px-2.5 sm:py-1.5">
+                  <span className="block font-bold tracking-wider text-[#f7df94] uppercase">
                     {lang === 'ta' ? 'நிச்சயதார்த்தம்' : 'Nichayathartham'}
                   </span>
-                  <span className="font-semibold text-[#fff8eb]">
-                    {lang === 'ta' ? '21.11.2026 · மாலை 6:30' : '21 Nov 2026 · 6:30 PM'}
+                  <span className="font-semibold text-[#fff8eb] truncate block">
+                    {lang === 'ta' ? '21.11 · மாலை 6:30' : '21 Nov · 6:30 PM'}
                   </span>
                 </div>
 
-                <div className="rounded-xl border border-[#c9932d]/55 bg-[#120207]/90 px-2.5 py-1.5">
-                  <span className="block text-[9px] font-bold tracking-wider text-[#f7df94] uppercase sm:text-[10px]">
-                    {lang === 'ta' ? 'திருமண மண்டபம்' : 'Venue'}
+                <div className="rounded-lg border border-[#c9932d]/55 bg-[#120207]/90 px-1 py-1 sm:rounded-xl sm:px-2.5 sm:py-1.5">
+                  <span className="block font-bold tracking-wider text-[#f7df94] uppercase">
+                    {lang === 'ta' ? 'மண்டபம்' : 'Venue'}
                   </span>
-                  <span className="font-semibold text-[#fff8eb]">
-                    {lang === 'ta' ? 'MATD திருமூர்த்தி மஹால், மதுரை' : 'MATD Thirumoorthi Mahal, Madurai'}
+                  <span className="font-semibold text-[#fff8eb] truncate block">
+                    {lang === 'ta' ? 'MATD மஹால்' : 'MATD Mahal'}
                   </span>
                 </div>
               </div>
@@ -252,25 +252,25 @@ export default function EntranceDoorsPortal({
         )}
 
         {/* Center Interactive Overlay Over Full-Screen Temple Doors */}
-        <div className="my-auto flex flex-col items-center justify-center py-4">
+        <div className="my-auto flex flex-col items-center justify-center py-1 sm:py-3">
           {portalStep === 'form' ? (
             <form
               onSubmit={handleSubmitNameStep}
-              className="w-full max-w-md rounded-2xl border-2 border-[#f7df94]/85 bg-[#1a040a]/90 p-5 shadow-2xl sm:p-6"
+              className="w-full max-w-md rounded-xl border border-[#f7df94]/85 bg-[#1a040a]/92 p-3 shadow-2xl sm:rounded-2xl sm:border-2 sm:p-5"
             >
-              <p className="text-center font-display text-lg font-bold text-[#f7df94] sm:text-xl">
+              <p className="text-center font-display text-sm font-bold text-[#f7df94] sm:text-xl">
                 {lang === 'ta' ? 'குடும்பத்தினர் & நண்பர்கள் வருக!' : 'Welcome, Family & Friends'}
               </p>
-              <p className="mt-1 text-center text-xs text-[#f3d9ad]/85">
+              <p className="mt-0.5 text-center text-[10px] text-[#f3d9ad]/85 sm:text-xs">
                 {lang === 'ta'
-                  ? 'உங்கள் பெயரை உள்ளிட்டு அரச சாவியைப் பெற்றுத் திருமண வாயிலைத் திறக்கவும்.'
-                  : 'Enter your name below to receive the Royal Key and open the temple doors.'}
+                  ? 'உங்கள் பெயரை உள்ளிட்டு அரச சாவியைப் பெற்று வாயிலைத் திறக்கவும்.'
+                  : 'Enter your name below to receive the Royal Key and open the doors.'}
               </p>
 
-              <div className="mt-4">
+              <div className="mt-2 sm:mt-3">
                 <label
                   htmlFor="portalGuestNameInput"
-                  className="block text-[11px] font-bold tracking-wider text-[#f7df94] uppercase sm:text-xs"
+                  className="block text-[10px] font-bold tracking-wider text-[#f7df94] uppercase sm:text-xs"
                 >
                   {lang === 'ta'
                     ? 'உங்கள் பெயர் (அழைப்பிதழ் & QR-க்காக) *'
@@ -286,16 +286,16 @@ export default function EntranceDoorsPortal({
                     if (nameError) setNameError('');
                   }}
                   placeholder={lang === 'ta' ? 'உங்கள் பெயரை உள்ளிடவும்' : 'Enter your name (e.g. Sundar & Family)'}
-                  className="mt-1.5 w-full rounded-lg border border-[#c9932d]/70 bg-[#120207] px-3.5 py-2.5 text-sm text-[#fff8eb] placeholder-[#d4b898]/60 focus:border-[#f7df94] focus:outline-none"
+                  className="mt-1 w-full rounded-lg border border-[#c9932d]/70 bg-[#120207] px-2.5 py-1.5 text-xs text-[#fff8eb] placeholder-[#d4b898]/60 focus:border-[#f7df94] focus:outline-none sm:px-3.5 sm:py-2.5 sm:text-sm"
                 />
-                {nameError && <p className="mt-1.5 text-xs font-bold text-[#ffb4b4]">{nameError}</p>}
+                {nameError && <p className="mt-1 text-[11px] font-bold text-[#ffb4b4]">{nameError}</p>}
               </div>
 
-              <div className="mt-3 grid grid-cols-2 gap-2.5">
+              <div className="mt-2 grid grid-cols-2 gap-2 sm:mt-3 sm:gap-2.5">
                 <button
                   type="button"
                   onClick={() => setSelectedTeam('ponnu')}
-                  className={`rounded-xl border px-3 py-2.5 text-xs font-bold transition cursor-pointer ${
+                  className={`rounded-lg border px-2 py-1.5 text-[11px] font-bold transition cursor-pointer sm:rounded-xl sm:px-3 sm:py-2.5 sm:text-xs ${
                     selectedTeam === 'ponnu'
                       ? 'border-[#f7df94] bg-[#631226] text-[#fff8eb] shadow'
                       : 'border-[#c9932d]/40 bg-[#140308] text-[#e7d4b5]/80'
@@ -306,7 +306,7 @@ export default function EntranceDoorsPortal({
                 <button
                   type="button"
                   onClick={() => setSelectedTeam('mappillai')}
-                  className={`rounded-xl border px-3 py-2.5 text-xs font-bold transition cursor-pointer ${
+                  className={`rounded-lg border px-2 py-1.5 text-[11px] font-bold transition cursor-pointer sm:rounded-xl sm:px-3 sm:py-2.5 sm:text-xs ${
                     selectedTeam === 'mappillai'
                       ? 'border-[#f7df94] bg-[#1e3a8a] text-[#fff8eb] shadow'
                       : 'border-[#c9932d]/40 bg-[#140308] text-[#e7d4b5]/80'
@@ -318,10 +318,10 @@ export default function EntranceDoorsPortal({
 
               <button
                 type="submit"
-                className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#f7df94] via-[#c9932d] to-[#b3822a] px-4 py-3 text-sm font-bold text-[#24050d] shadow-lg transition hover:brightness-105 cursor-pointer"
+                className="mt-2.5 flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#f7df94] via-[#c9932d] to-[#b3822a] px-3 py-2 text-xs font-bold text-[#24050d] shadow-lg transition hover:brightness-105 cursor-pointer sm:mt-4 sm:rounded-xl sm:px-4 sm:py-3 sm:text-sm"
               >
                 <span>{lang === 'ta' ? 'அரச சாவிக்குத் தொடரவும்' : 'Continue to the Royal Key'}</span>
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight className="h-3.5 w-3.5" />
               </button>
             </form>
           ) : (

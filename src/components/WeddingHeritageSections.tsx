@@ -300,7 +300,7 @@ export function HeritageUpperSections({
           <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-2">
             {/* Bride Card with Description Box Under Image */}
             <article className="overflow-hidden rounded-3xl border-2 border-[#c9932d]/80 bg-[#fffaf0]/95 shadow-2xl">
-              <div className="aspect-[3/4] w-full overflow-hidden bg-[#f4e5c5]">
+              <div className="aspect-[4/4.2] sm:aspect-[3/4] w-full overflow-hidden bg-[#1a040b]">
                 <img
                   src={couplePhotos.bridePhoto}
                   alt={lang === 'ta' ? 'மணமகள் M. திரிஷா' : 'M. Thirisha, the bride'}
@@ -309,6 +309,7 @@ export function HeritageUpperSections({
                     e.currentTarget.src = HERITAGE_ASSETS.coupleTemple;
                   }}
                   className="h-full w-full object-cover object-top"
+                  style={{ height: '100%', width: '100%', objectFit: 'cover', objectPosition: 'top center' }}
                 />
               </div>
               <div className="border-t-2 border-[#c9932d]/50 bg-[#fff8eb] p-6 text-center">
@@ -329,9 +330,9 @@ export function HeritageUpperSections({
               </div>
             </article>
 
-            {/* Groom Card with Description Box Under Image */}
+            {/* Groom Card with Description Box Under Image — Fills Completely Without Empty Space */}
             <article className="overflow-hidden rounded-3xl border-2 border-[#c9932d]/80 bg-[#fffaf0]/95 shadow-2xl">
-              <div className="aspect-[3/4] w-full overflow-hidden bg-[#f4e5c5]">
+              <div className="aspect-[4/4.2] sm:aspect-[3/4] w-full overflow-hidden bg-[#1a040b]">
                 <img
                   src={couplePhotos.groomPhoto}
                   alt={lang === 'ta' ? 'மணமகன் S. சிவசங்கர்' : 'Siva Shankar, the groom'}
@@ -340,6 +341,7 @@ export function HeritageUpperSections({
                     e.currentTarget.src = HERITAGE_ASSETS.coupleTemple;
                   }}
                   className="h-full w-full object-cover object-top"
+                  style={{ height: '100%', width: '100%', objectFit: 'cover', objectPosition: 'top center' }}
                 />
               </div>
               <div className="border-t-2 border-[#c9932d]/50 bg-[#fff8eb] p-6 text-center">
@@ -577,7 +579,8 @@ export function HeritageUpperSections({
                         onError={(e) => {
                           e.currentTarget.src = HERITAGE_ASSETS.portraitPlaceholder;
                         }}
-                        className="h-full w-full object-cover object-top"
+                        className="h-full w-full object-cover object-center"
+                        style={{ height: '100%', width: '100%', objectFit: 'cover' }}
                       />
                     </div>
                     <p className="mt-2.5 text-[11px] font-bold tracking-wide text-[#8c6418] uppercase">
@@ -650,7 +653,8 @@ export function HeritageUpperSections({
                         onError={(e) => {
                           e.currentTarget.src = HERITAGE_ASSETS.portraitPlaceholder;
                         }}
-                        className="h-full w-full object-cover object-top"
+                        className="h-full w-full object-cover object-center"
+                        style={{ height: '100%', width: '100%', objectFit: 'cover' }}
                       />
                     </div>
                     <p className="mt-2.5 text-[11px] font-bold tracking-wide text-[#8c6418] uppercase">

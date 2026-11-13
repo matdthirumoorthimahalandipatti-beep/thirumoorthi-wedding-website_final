@@ -439,9 +439,9 @@ export default function SangeetJukebox({
           <div className="lg:col-span-5">
             <form
               onSubmit={handleSubmitSuggestion}
-              className="card-3d-tilt rounded-3xl border border-[#c9932d]/70 bg-[#fffaf0]/95 p-5 shadow-2xl sm:p-6"
+              className="card-3d-tilt w-full max-w-full overflow-hidden rounded-2xl border border-[#c9932d]/70 bg-[#fffaf0]/95 p-3.5 shadow-2xl sm:rounded-3xl sm:p-6"
             >
-              <h3 className="font-display text-2xl font-bold text-[#3a0815]">
+              <h3 className="font-display text-xl font-bold text-[#3a0815] sm:text-2xl">
                 {lang === 'ta' ? 'YouTube பாடல் பரிந்துரைப் பெட்டி' : 'Suggest a Song from YouTube'}
               </h3>
               <p className="mt-1 text-xs text-[#6e463a]">
@@ -450,17 +450,17 @@ export default function SangeetJukebox({
                   : 'Paste any YouTube watch/share URL or tap a quick Tamil wedding hit below to prefill.'}
               </p>
 
-              <div className="mt-4">
+              <div className="mt-3 sm:mt-4">
                 <span className="block text-[11px] font-bold tracking-wider text-[#631226] uppercase">
                   {lang === 'ta' ? 'விரைவுத் தேர்வு (YouTube)' : 'Quick YouTube Picks'}
                 </span>
-                <div className="mt-2 grid grid-cols-2 gap-2">
+                <div className="mt-1.5 grid grid-cols-2 gap-1.5 sm:mt-2 sm:gap-2">
                   {QUICK_YOUTUBE_PICKS.map((pick) => (
                     <button
                       key={pick.youtubeId}
                       type="button"
                       onClick={() => handleQuickPick(pick)}
-                      className="truncate rounded-xl border border-[#c9932d]/45 bg-white px-3 py-2 text-left text-xs font-semibold text-[#3a0815] transition hover:border-[#631226] hover:bg-[#fff4d9] cursor-pointer"
+                      className="truncate rounded-lg border border-[#c9932d]/45 bg-white px-2 py-1.5 text-left text-[11px] font-semibold text-[#3a0815] transition hover:border-[#631226] hover:bg-[#fff4d9] cursor-pointer sm:rounded-xl sm:px-3 sm:py-2 sm:text-xs"
                     >
                       + {pick.title}
                     </button>
@@ -468,9 +468,9 @@ export default function SangeetJukebox({
                 </div>
               </div>
 
-              <div className="mt-4 space-y-3">
+              <div className="mt-3 space-y-2.5 sm:mt-4 sm:space-y-3">
                 <div>
-                  <label htmlFor="ytUrlInput" className="block text-xs font-bold text-[#3a0815]">
+                  <label htmlFor="ytUrlInput" className="block text-[11px] font-bold text-[#3a0815] sm:text-xs">
                     {lang === 'ta' ? 'YouTube பாடல் இணைப்பு அல்லது ID *' : 'YouTube Link or Video ID *'}
                   </label>
                   <input
@@ -479,7 +479,7 @@ export default function SangeetJukebox({
                     value={youtubeInput}
                     onChange={(e) => void handleYoutubeInputChange(e.target.value)}
                     placeholder="https://www.youtube.com/watch?v=..."
-                    className="mt-1 w-full rounded-xl border border-[#c9932d] bg-white px-3 py-2 text-sm text-[#3b1d16] focus:border-[#631226] focus:outline-none"
+                    className="mt-1 w-full max-w-full rounded-lg border border-[#c9932d] bg-white px-3 py-1.5 text-xs text-[#3b1d16] focus:border-[#631226] focus:outline-none sm:rounded-xl sm:py-2 sm:text-sm"
                   />
                   {isLookingUp && (
                     <p className="mt-1 text-[11px] font-semibold text-[#631226]">
@@ -488,9 +488,9 @@ export default function SangeetJukebox({
                   )}
                 </div>
 
-                <div className="grid gap-3 sm:grid-cols-2">
+                <div className="grid gap-2.5 sm:grid-cols-2 sm:gap-3">
                   <div>
-                    <label htmlFor="ytSongTitle" className="block text-xs font-bold text-[#3a0815]">
+                    <label htmlFor="ytSongTitle" className="block text-[11px] font-bold text-[#3a0815] sm:text-xs">
                       {lang === 'ta' ? 'பாடல் பெயர்' : 'Song Title'}
                     </label>
                     <input
@@ -499,11 +499,11 @@ export default function SangeetJukebox({
                       value={songTitle}
                       onChange={(e) => setSongTitle(e.target.value)}
                       placeholder={lang === 'ta' ? 'எ.கா. வாத்தி கமிங்' : 'e.g. Arabic Kuthu'}
-                      className="mt-1 w-full rounded-xl border border-[#c9932d] bg-white px-3 py-2 text-sm text-[#3b1d16] focus:border-[#631226] focus:outline-none"
+                      className="mt-1 w-full max-w-full rounded-lg border border-[#c9932d] bg-white px-3 py-1.5 text-xs text-[#3b1d16] focus:border-[#631226] focus:outline-none sm:rounded-xl sm:py-2 sm:text-sm"
                     />
                   </div>
                   <div>
-                    <label htmlFor="ytArtist" className="block text-xs font-bold text-[#3a0815]">
+                    <label htmlFor="ytArtist" className="block text-[11px] font-bold text-[#3a0815] sm:text-xs">
                       {lang === 'ta' ? 'இசை / கலைஞர்' : 'Artist / Film'}
                     </label>
                     <input
@@ -512,13 +512,13 @@ export default function SangeetJukebox({
                       value={artistName}
                       onChange={(e) => setArtistName(e.target.value)}
                       placeholder={lang === 'ta' ? 'எ.கா. அனிருத்' : 'e.g. Anirudh'}
-                      className="mt-1 w-full rounded-xl border border-[#c9932d] bg-white px-3 py-2 text-sm text-[#3b1d16] focus:border-[#631226] focus:outline-none"
+                      className="mt-1 w-full max-w-full rounded-lg border border-[#c9932d] bg-white px-3 py-1.5 text-xs text-[#3b1d16] focus:border-[#631226] focus:outline-none sm:rounded-xl sm:py-2 sm:text-sm"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="ytSuggestedBy" className="block text-xs font-bold text-[#3a0815]">
+                  <label htmlFor="ytSuggestedBy" className="block text-[11px] font-bold text-[#3a0815] sm:text-xs">
                     {lang === 'ta' ? 'உங்கள் பெயர்' : 'Your Name'}
                   </label>
                   <input
@@ -527,12 +527,12 @@ export default function SangeetJukebox({
                     value={suggestedBy}
                     onChange={(e) => setSuggestedBy(e.target.value)}
                     placeholder={lang === 'ta' ? 'எ.கா. கார்த்திக் & குடும்பத்தினர்' : 'e.g. Karthik & Cousins'}
-                    className="mt-1 w-full rounded-xl border border-[#c9932d] bg-white px-3 py-2 text-sm text-[#3b1d16] focus:border-[#631226] focus:outline-none"
+                    className="mt-1 w-full max-w-full rounded-lg border border-[#c9932d] bg-white px-3 py-1.5 text-xs text-[#3b1d16] focus:border-[#631226] focus:outline-none sm:rounded-xl sm:py-2 sm:text-sm"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="ytDedication" className="block text-xs font-bold text-[#3a0815]">
+                  <label htmlFor="ytDedication" className="block text-[11px] font-bold text-[#3a0815] sm:text-xs">
                     {lang === 'ta' ? 'வாழ்த்து / நடன சவால்' : 'Dance Dedication Note'}
                   </label>
                   <input
@@ -545,13 +545,13 @@ export default function SangeetJukebox({
                         ? 'எ.கா. மாப்பிள்ளை நண்பர்கள் ஆட்டத்திற்கு!'
                         : 'e.g. Calling all cousins to the Sangeet stage!'
                     }
-                    className="mt-1 w-full rounded-xl border border-[#c9932d] bg-white px-3 py-2 text-sm text-[#3b1d16] focus:border-[#631226] focus:outline-none"
+                    className="mt-1 w-full max-w-full rounded-lg border border-[#c9932d] bg-white px-3 py-1.5 text-xs text-[#3b1d16] focus:border-[#631226] focus:outline-none sm:rounded-xl sm:py-2 sm:text-sm"
                   />
                 </div>
 
                 <button
                   type="submit"
-                  className="flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#e6b247] to-[#ba8222] px-4 py-2.5 text-sm font-bold text-[#310d15] shadow-lg transition hover:brightness-105 cursor-pointer"
+                  className="flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#e6b247] to-[#ba8222] px-4 py-2 text-xs font-bold text-[#310d15] shadow-lg transition hover:brightness-105 cursor-pointer sm:py-2.5 sm:text-sm"
                 >
                   <Plus className="h-4 w-4" />
                   <span>{lang === 'ta' ? 'சங்கீத் பட்டியலில் சேர்' : 'Add to Sangeet Playlist'}</span>

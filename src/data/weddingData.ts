@@ -640,12 +640,12 @@ export const ORACLE_FORTUNES: OracleFortune[] = [
 export const INITIAL_JUKEBOX_TRACKS: JukeboxTrack[] = [
   {
     id: 'tr-1',
-    youtubeId: 'fRD_3vJagxk',
-    title: 'Vaathi Coming (Master)',
-    artist: 'Anirudh Ravichander',
+    youtubeId: 'z5_klHXYZS4',
+    title: 'Venmegam (Yaaradi Nee Mohini)',
+    artist: 'Yuvan Shankar Raja · Hariharan',
     suggestedBy: 'M. Deepak',
-    dedication: 'Opening the Sangeet dance floor for Team Ponnu & Team Mappillai!',
-    votes: 18,
+    dedication: 'Special Sangeet melody dedication from M. Deepak for Thirisha & Siva Shankar!',
+    votes: 28,
     addedAt: 1,
   },
   {

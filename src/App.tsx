@@ -153,7 +153,13 @@ export default function App() {
       const saved = localStorage.getItem(STORAGE_KEYS.jukebox);
       if (saved) {
         const parsed = JSON.parse(saved) as JukeboxTrack[];
-        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed.map((t) =>
+            t.id === 'tr-1' && (t.youtubeId === 'fRD_3vJagxk' || t.title.includes('Vaathi'))
+              ? INITIAL_JUKEBOX_TRACKS[0]
+              : t
+          );
+        }
       }
     } catch {
       // fall back to initial seed
@@ -452,84 +458,86 @@ export default function App() {
       <Petal3DFloat />
 
       {/* Persistent Side Floating Dock — Language & Random Music accessible throughout the website */}
-      <div
-        aria-label={lang === 'ta' ? 'மொழி மற்றும் இசை கட்டுப்பாடுகள்' : 'Language and Music Controls'}
-        className="fixed top-20 right-2.5 z-[60] flex flex-col items-end gap-2 sm:top-24 sm:right-4 floating-ui-dock"
-      >
-        <button
-          type="button"
-          onClick={() => setLang((prev) => (prev === 'en' ? 'ta' : 'en'))}
-          title={lang === 'en' ? 'Switch to Tamil' : 'Switch to English'}
-          className="inline-flex items-center gap-1.5 rounded-full border border-[#c9932d]/80 bg-[#2b0711]/95 px-3 py-1.5 text-[11px] font-bold text-[#fff8eb] shadow-xl transition hover:border-[#f7df94] hover:bg-[#3a0815] cursor-pointer sm:px-3.5 sm:py-2 sm:text-xs"
+      {!showPortal && (
+        <div
+          aria-label={lang === 'ta' ? 'மொழி மற்றும் இசை கட்டுப்பாடுகள்' : 'Language and Music Controls'}
+          className="fixed bottom-4 right-3 z-40 flex flex-col items-end gap-1.5 sm:bottom-auto sm:top-24 sm:right-4 sm:gap-2 floating-ui-dock"
         >
-          <Globe className="h-3.5 w-3.5 shrink-0 text-[#f7df94]" />
-          <span>{lang === 'en' ? 'தமிழ்' : 'English'}</span>
-        </button>
-
-        <div className="flex items-center gap-1.5">
           <button
             type="button"
-            onClick={handleToggleMusicDock}
-            aria-label={
-              musicState.isPlaying
-                ? lang === 'ta'
-                  ? 'இசையை நிறுத்து'
-                  : 'Pause wedding music'
-                : lang === 'ta'
-                  ? 'திருமண இசையை இயக்கு'
-                  : 'Play random wedding music'
-            }
-            title={
-              musicState.isPlaying
-                ? `${lang === 'ta' ? musicState.currentTrack.titleTa : musicState.currentTrack.titleEn}`
-                : lang === 'ta'
-                  ? 'ரேண்டம் திருமண பாடலை இயக்கு'
-                  : 'Play random wedding song'
-            }
+            onClick={() => setLang((prev) => (prev === 'en' ? 'ta' : 'en'))}
+            title={lang === 'en' ? 'Switch to Tamil' : 'Switch to English'}
             className="inline-flex items-center gap-1.5 rounded-full border border-[#c9932d]/80 bg-[#2b0711]/95 px-3 py-1.5 text-[11px] font-bold text-[#fff8eb] shadow-xl transition hover:border-[#f7df94] hover:bg-[#3a0815] cursor-pointer sm:px-3.5 sm:py-2 sm:text-xs"
           >
-            {muted ? (
-              <VolumeX className="h-3.5 w-3.5 shrink-0 text-[#f7df94]" />
-            ) : musicState.isPlaying ? (
-              <Pause className="h-3.5 w-3.5 shrink-0 text-[#f7df94]" />
-            ) : (
-              <Play className="h-3.5 w-3.5 shrink-0 text-[#f7df94]" />
-            )}
-            <span>
-              {muted
-                ? lang === 'ta'
-                  ? 'நிறுத்தம்'
-                  : 'Muted'
-                : musicState.isPlaying
+            <Globe className="h-3.5 w-3.5 shrink-0 text-[#f7df94]" />
+            <span>{lang === 'en' ? 'தமிழ்' : 'English'}</span>
+          </button>
+
+          <div className="flex items-center gap-1.5">
+            <button
+              type="button"
+              onClick={handleToggleMusicDock}
+              aria-label={
+                musicState.isPlaying
                   ? lang === 'ta'
-                    ? 'இசை · நிறுத்து'
-                    : 'Playing'
+                    ? 'இசையை நிறுத்து'
+                    : 'Pause wedding music'
                   : lang === 'ta'
-                    ? 'இசை இயக்கு'
-                    : 'Play Music'}
-            </span>
-          </button>
+                    ? 'திருமண இசையை இயக்கு'
+                    : 'Play random wedding music'
+              }
+              title={
+                musicState.isPlaying
+                  ? `${lang === 'ta' ? musicState.currentTrack.titleTa : musicState.currentTrack.titleEn}`
+                  : lang === 'ta'
+                    ? 'ரேண்டம் திருமண பாடலை இயக்கு'
+                    : 'Play random wedding song'
+              }
+              className="inline-flex items-center gap-1.5 rounded-full border border-[#c9932d]/80 bg-[#2b0711]/95 px-3 py-1.5 text-[11px] font-bold text-[#fff8eb] shadow-xl transition hover:border-[#f7df94] hover:bg-[#3a0815] cursor-pointer sm:px-3.5 sm:py-2 sm:text-xs"
+            >
+              {muted ? (
+                <VolumeX className="h-3.5 w-3.5 shrink-0 text-[#f7df94]" />
+              ) : musicState.isPlaying ? (
+                <Pause className="h-3.5 w-3.5 shrink-0 text-[#f7df94]" />
+              ) : (
+                <Play className="h-3.5 w-3.5 shrink-0 text-[#f7df94]" />
+              )}
+              <span>
+                {muted
+                  ? lang === 'ta'
+                    ? 'நிறுத்தம்'
+                    : 'Muted'
+                  : musicState.isPlaying
+                    ? lang === 'ta'
+                      ? 'இசை · நிறுத்து'
+                      : 'Playing'
+                    : lang === 'ta'
+                      ? 'இசை இயக்கு'
+                      : 'Play Music'}
+              </span>
+            </button>
 
-          <button
-            type="button"
-            onClick={handleNextRandomSong}
-            aria-label={lang === 'ta' ? 'அடுத்த ரேண்டம் பாடல்' : 'Play next random wedding song'}
-            title={lang === 'ta' ? 'புதிய ரேண்டம் பாடல்' : 'Next random song'}
-            className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#c9932d]/80 bg-[#2b0711]/95 text-[#f7df94] shadow-xl transition hover:border-[#f7df94] hover:bg-[#3a0815] cursor-pointer sm:h-9 sm:w-9"
-          >
-            <Shuffle className="h-3.5 w-3.5" />
-          </button>
-        </div>
-
-        {musicState.isPlaying && (
-          <div className="hidden max-w-[190px] items-center gap-1.5 rounded-full border border-[#c9932d]/55 bg-[#24050d]/90 px-3 py-1 text-[10px] font-semibold text-[#f7df94] shadow-lg sm:inline-flex">
-            <Volume2 className="h-3 w-3 shrink-0 animate-pulse text-[#f7df94]" />
-            <span className="truncate">
-              {lang === 'ta' ? musicState.currentTrack.titleTa : musicState.currentTrack.titleEn}
-            </span>
+            <button
+              type="button"
+              onClick={handleNextRandomSong}
+              aria-label={lang === 'ta' ? 'அடுத்த ரேண்டம் பாடல்' : 'Play next random wedding song'}
+              title={lang === 'ta' ? 'புதிய ரேண்டம் பாடல்' : 'Next random song'}
+              className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-[#c9932d]/80 bg-[#2b0711]/95 text-[#f7df94] shadow-xl transition hover:border-[#f7df94] hover:bg-[#3a0815] cursor-pointer sm:h-9 sm:w-9"
+            >
+              <Shuffle className="h-3.5 w-3.5" />
+            </button>
           </div>
-        )}
-      </div>
+
+          {musicState.isPlaying && (
+            <div className="hidden max-w-[190px] items-center gap-1.5 rounded-full border border-[#c9932d]/55 bg-[#24050d]/90 px-3 py-1 text-[10px] font-semibold text-[#f7df94] shadow-lg sm:inline-flex">
+              <Volume2 className="h-3 w-3 shrink-0 animate-pulse text-[#f7df94]" />
+              <span className="truncate">
+                {lang === 'ta' ? musicState.currentTrack.titleTa : musicState.currentTrack.titleEn}
+              </span>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* 3D Temple Doors & Garland Video Intro Gate */}
       {showPortal && (
@@ -605,6 +613,11 @@ export default function App() {
       <section
         id="home"
         className="relative flex w-full min-h-[calc(100vh-4rem)] flex-col justify-between overflow-hidden bg-[#24050d] text-[#fff8eb]"
+        style={{
+          backgroundImage: `url('${heroImgSrc}'), url('${HERITAGE_ASSETS.heroMandapamCouple}')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center top',
+        }}
       >
         {/* User-Requested Couple Mandapam Heritage Background */}
         <img
@@ -615,13 +628,13 @@ export default function App() {
               setHeroImgSrc(HERITAGE_ASSETS.heroMandapamCouple);
             }
           }}
-          className="absolute inset-0 z-0 h-full w-full object-cover object-center"
+          className="absolute inset-0 z-0 h-full w-full object-cover object-top sm:object-center"
         />
 
-        {/* Contrast Gradient Scrim Keeping Center Couple & Temple Vivid */}
+        {/* Contrast Gradient Scrim Keeping Center Couple & Temple Vivid Across Complete Page */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-b from-[#1e040c]/65 via-[#24050d]/30 to-[#24050d]/85"
+          className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-b from-[#1e040c]/50 via-transparent to-[#1e040c]/70"
         />
 
         {/* Guest Personalization & Temple Doors Bar */}
