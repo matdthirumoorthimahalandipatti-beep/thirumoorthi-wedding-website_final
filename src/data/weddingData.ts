@@ -224,7 +224,7 @@ export const WEDDING_CONFIG = {
   brideCoordPhone: '7845051288',
   groomCoordName: 'Sankar (Groom)',
   groomCoordPhone: '9655884474',
-  websiteUrl: 'https://thirumoorthi-wedding-website.pages.dev/',
+  websiteUrl: 'https://thirumoorthi-gourps-family-wedding.vercel.app/',
   auspiciousNoticeTa:
     'நிகழும் மங்களகரமான பராபவ வருடம் கார்த்திகை மாதம் 6-ஆம் தேதி (22.11.2026) ஞாயிற்றுக்கிழமை திரயோதசி திதியும், அசுபதி நட்சத்திரமும் சித்தயோகமும் கூடிய சுபயோக சுபதினத்தில் அன்று காலை 6.00 மணிக்குமேல் 7.35 மணிக்குள் விருச்சிக லக்கினத்தில்',
   auspiciousNoticeEn:

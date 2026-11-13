@@ -296,8 +296,14 @@ html, body {
   .fixed img {
     max-width: 100%;
   }
-  /* Petal container: clip at viewport so petals landing outside don't widen page */
-  .petal-3d-item {
-    max-width: 32px;
+  /* Sangeet & Form mobile constraint rules */
+  #sangeet input,
+  #sangeet select,
+  #sangeet form,
+  #sangeet iframe,
+  #sangeet .card-3d-tilt {
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
   }
 }

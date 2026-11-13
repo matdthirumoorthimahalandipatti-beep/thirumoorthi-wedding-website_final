@@ -1168,7 +1168,7 @@ export function HeritageUpperSections({
                       {lang === 'ta' ? 'திருமண அழைப்பிதழ் தளம்' : 'Wedding Website'}
                     </p>
                     <p className="w-full truncate font-mono-num text-[7px] font-semibold text-[#3a0815] sm:text-[8.5px]">
-                      thirumoorthi-wedding-website.pages.dev
+                      thirumoorthi-gourps-family-wedding.vercel.app
                     </p>
                   </div>
                 </div>
@@ -1265,7 +1265,7 @@ export function HeritageUpperSections({
                   {qrDataUrl && (
                     <img
                       src={qrDataUrl}
-                      alt="QR Code to thirumoorthi-wedding-website.pages.dev"
+                      alt="QR Code to thirumoorthi-gourps-family-wedding.vercel.app"
                       className="h-24 w-24 shrink-0 rounded-xl border-2 border-[#c9932d] bg-white p-1.5 shadow"
                     />
                   )}

@@ -344,9 +344,9 @@ export async function renderPersonalizedInvitationCanvas({
   );
 
   ctx.fillStyle = '#8c5a12';
-  ctx.font = '700 15px "JetBrains Mono", monospace';
-  ctx.fillText('thirumoorthi-wedding-', 478, qrBoxY + 118);
-  ctx.fillText('website.pages.dev', 478, qrBoxY + 142);
+  ctx.font = '700 13px "JetBrains Mono", monospace';
+  ctx.fillText('thirumoorthi-gourps-', 478, qrBoxY + 118);
+  ctx.fillText('family-wedding.vercel.app', 478, qrBoxY + 140);
 
   return canvas;
 }
