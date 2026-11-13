@@ -454,7 +454,7 @@ export default function App() {
       {/* Persistent Side Floating Dock — Language & Random Music accessible throughout the website */}
       <div
         aria-label={lang === 'ta' ? 'மொழி மற்றும் இசை கட்டுப்பாடுகள்' : 'Language and Music Controls'}
-        className="fixed top-20 right-2.5 z-[60] flex flex-col items-end gap-2 sm:top-24 sm:right-4"
+        className="fixed top-20 right-2.5 z-[60] flex flex-col items-end gap-2 sm:top-24 sm:right-4 floating-ui-dock"
       >
         <button
           type="button"

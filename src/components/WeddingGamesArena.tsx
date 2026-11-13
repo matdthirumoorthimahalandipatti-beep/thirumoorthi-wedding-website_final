@@ -3,6 +3,7 @@ import { Crown, Flame, Play, RotateCcw, Sparkles, Trophy } from 'lucide-react';
 import {
   getRoyalTitle,
   HERITAGE_ASSETS,
+  GAMES_THEME_SRC,
   type Lang,
   type TeamSide,
 } from '../data/weddingData';
@@ -648,6 +649,56 @@ export default function WeddingGamesArena({
 }: WeddingGamesArenaProps) {
   const [activeGame, setActiveGame] = useState<GameId>('mothiram');
   const royalTitle = getRoyalTitle(totalScore, lang);
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const gameMusicRef = useRef<HTMLAudioElement | null>(null);
+  const gamesMusicPlayedRef = useRef(false);
+
+  // Games section dedicated music — play once when user enters games area
+  useEffect(() => {
+    if (typeof window === 'undefined' || typeof Audio === 'undefined') return;
+
+    const audio = new Audio(GAMES_THEME_SRC);
+    audio.volume = 0.72;
+    audio.preload = 'none';
+    gameMusicRef.current = audio;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry && entry.isIntersecting && !gamesMusicPlayedRef.current && !soundFx.isMuted()) {
+          gamesMusicPlayedRef.current = true;
+          // Pause wedding background music
+          soundFx.pauseMusic();
+          // Play game theme once
+          const el = gameMusicRef.current;
+          if (el) {
+            el.currentTime = 0;
+            void el.play().catch(() => undefined);
+            el.addEventListener('ended', () => {
+              // Resume wedding music after game theme finishes
+              if (!soundFx.isMuted()) {
+                soundFx.startRandomCollection(true);
+              }
+            }, { once: true });
+          }
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    // Observe the section element
+    const sectionEl = document.getElementById('games');
+    if (sectionEl) observer.observe(sectionEl);
+
+    return () => {
+      observer.disconnect();
+      const el = gameMusicRef.current;
+      if (el) {
+        el.pause();
+        el.src = '';
+      }
+    };
+  }, []);
 
   const gameCards: Array<{
     id: GameId;

@@ -261,3 +261,43 @@ pre, code { overflow-wrap: anywhere; }
   .card-3d-tilt:hover { transform: none !important; }
   * { scroll-behavior: auto; }
 }
+
+/* =====================================================================
+   CRITICAL MOBILE 100% WIDTH FIX
+   Prevent any fixed/absolute/floating element from causing horizontal
+   scroll or the dreaded "50% content + 50% blue void" on mobile.
+   ===================================================================== */
+html, body {
+  /* Belt-AND-suspenders: both overflow-x and clip so nothing escapes */
+  overflow-x: hidden !important;
+  /* Prevent iOS elastic scroll beyond viewport horizontally */
+  overscroll-behavior-x: none;
+}
+
+/* Force the React root and every top-level section to stay within 100vw */
+#root {
+  width: 100% !important;
+  max-width: 100vw !important;
+  overflow-x: hidden !important;
+  position: relative;
+}
+
+/* Fixed UI dock: keep it inside visible area on narrow screens */
+@media (max-width: 639px) {
+  .floating-ui-dock {
+    max-width: calc(100vw - 12px);
+    right: 6px !important;
+  }
+  /* Any fixed element should not push the scroll width */
+  .fixed {
+    max-width: 100vw;
+  }
+  /* Ensure images in fixed containers don't overflow */
+  .fixed img {
+    max-width: 100%;
+  }
+  /* Petal container: clip at viewport so petals landing outside don't widen page */
+  .petal-3d-item {
+    max-width: 32px;
+  }
+}
