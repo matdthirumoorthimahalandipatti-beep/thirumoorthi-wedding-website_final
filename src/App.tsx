@@ -56,8 +56,8 @@ const STORAGE_KEYS = {
   portalDismissed: 'tvm_portal_dismissed_v1',
   couplePhotos: 'tvm_admin_couple_photos_v2',
   familyMembers: 'tvm_admin_family_members_v3',
-  albumPhotos: 'tvm_admin_album_photos_v1',
-  directoryPersons: 'tvm_admin_directory_v3',
+  albumPhotos: 'tvm_admin_album_photos_v2',
+  directoryPersons: 'tvm_admin_directory_v4',
 };
 
 interface CountdownParts {

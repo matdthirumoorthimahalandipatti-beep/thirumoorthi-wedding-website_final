@@ -496,8 +496,8 @@ export function HeritageUpperSections({
 
             <div className="card-3d-tilt overflow-hidden rounded-3xl border-4 border-white bg-[#24050d] shadow-2xl ring-2 ring-[#c9932d] lg:col-span-5">
               <img
-                src={HERITAGE_ASSETS.wishesBg}
-                alt="Madurai Meenakshi Amman Temple"
+                src={HERITAGE_ASSETS.venuePhoto}
+                alt={lang === 'ta' ? 'MATD திருமூர்த்தி மஹால்' : 'MATD Thirumoorthi Mahal'}
                 className="h-64 w-full object-cover lg:h-full"
               />
             </div>
@@ -1538,8 +1538,14 @@ export function HeritageDirectoryAndAlbum({
             labelEn: 'Kalasalingam University · Mentors',
           },
           {
-            key: 'kalasalingam_friends',
+            key: 'kalasalingam_seniors',
             order: 3,
+            labelTa: 'கலசலிங்கம் பல்கலைக்கழகம் · சீனியர்கள்',
+            labelEn: 'Kalasalingam University · Seniors',
+          },
+          {
+            key: 'kalasalingam_friends',
+            order: 4,
             labelTa: 'கலசலிங்கம் பல்கலைக்கழகம் · நண்பர்கள்',
             labelEn: 'Kalasalingam University · Friends',
           },
@@ -1798,7 +1804,7 @@ export function HeritageDirectoryAndAlbum({
                                   className={`shrink-0 rounded px-1.5 py-0.5 text-[10px] font-bold ${
                                     person.friendCategory === 'kalasalingam_mentors'
                                       ? 'bg-[#631226]/12 text-[#631226]'
-                                      : person.isSenior
+                                      : person.friendCategory === 'kalasalingam_seniors' || person.isSenior
                                         ? 'bg-[#c9932d]/25 text-[#631226]'
                                         : person.side === 'bride'
                                           ? 'bg-[#631226]/10 text-[#631226]'
@@ -1811,7 +1817,7 @@ export function HeritageDirectoryAndAlbum({
                                     ? lang === 'ta'
                                       ? 'வழிகாட்டி'
                                       : 'Mentor'
-                                    : person.isSenior
+                                    : person.friendCategory === 'kalasalingam_seniors' || person.isSenior
                                       ? lang === 'ta'
                                         ? 'சீனியர்'
                                         : 'Senior'
