@@ -1,10 +1,11 @@
 import { useRef, useState, type FormEvent } from 'react';
-import { ArrowRight, Play } from 'lucide-react';
+import { ArrowRight, Globe, Play } from 'lucide-react';
 import { HERITAGE_ASSETS, WEDDING_CONFIG, type Lang, type TeamSide } from '../data/weddingData';
 import { soundFx } from '../utils/soundFx';
 
 interface EntranceDoorsPortalProps {
   lang: Lang;
+  onToggleLang?: () => void;
   guestName: string;
   team: TeamSide;
   onUpdateGuest: (name: string, team: TeamSide) => void;
@@ -13,6 +14,7 @@ interface EntranceDoorsPortalProps {
 
 export default function EntranceDoorsPortal({
   lang,
+  onToggleLang,
   guestName,
   team,
   onUpdateGuest,
@@ -202,6 +204,24 @@ export default function EntranceDoorsPortal({
 
       {/* Floating Foreground Controls Layer Over the Full-Screen Doors — Fits 100% in 1 screen on Mobile */}
       <div className="relative z-10 flex h-full max-h-[100dvh] w-full flex-col justify-between overflow-hidden p-2 sm:p-5">
+        {/* Top Language Bar alone on the first name typing screen */}
+        {portalStep === 'form' && onToggleLang && (
+          <div className="mx-auto flex w-full max-w-md items-center justify-between px-1 sm:max-w-4xl">
+            <span className="text-[10px] font-bold tracking-widest text-[#f7df94]/90 uppercase sm:text-xs">
+              {lang === 'ta' ? 'அழைப்பிதழ் வாயில்' : 'Wedding Portal'}
+            </span>
+            <button
+              type="button"
+              onClick={onToggleLang}
+              title={lang === 'en' ? 'தமிழில் மாற்ற' : 'Switch to English'}
+              className="inline-flex items-center gap-1.5 rounded-full border border-[#f7df94] bg-[#2b0711]/95 px-3 py-1 text-xs font-bold text-[#f7df94] shadow-md transition hover:bg-[#4a0d1b] cursor-pointer"
+            >
+              <Globe className="h-3.5 w-3.5 text-[#f7df94]" />
+              <span>{lang === 'en' ? 'தமிழ்' : 'English'}</span>
+            </button>
+          </div>
+        )}
+
         {/* Top Sacred Header + Event Info Boxes (only on form step) */}
         {portalStep === 'form' && (
           <div className="mx-auto w-full max-w-4xl text-center">
@@ -258,6 +278,21 @@ export default function EntranceDoorsPortal({
               onSubmit={handleSubmitNameStep}
               className="w-full max-w-md rounded-xl border border-[#f7df94]/85 bg-[#1a040a]/92 p-3 shadow-2xl sm:rounded-2xl sm:border-2 sm:p-5"
             >
+              {/* Language Selector Bar Alone on the First Name Typing Page */}
+              {onToggleLang && (
+                <div className="mb-2 flex justify-end">
+                  <button
+                    type="button"
+                    onClick={onToggleLang}
+                    title={lang === 'en' ? 'தமிழில் மாற்ற' : 'Switch to English'}
+                    className="inline-flex items-center gap-1.5 rounded-full border border-[#f7df94]/80 bg-[#3a0815]/95 px-3 py-1 text-[11px] font-bold text-[#f7df94] shadow transition hover:border-[#f7df94] hover:bg-[#520d20] cursor-pointer sm:text-xs"
+                  >
+                    <Globe className="h-3.5 w-3.5 text-[#f7df94]" />
+                    <span>{lang === 'en' ? 'தமிழ்' : 'English'}</span>
+                  </button>
+                </div>
+              )}
+
               <p className="text-center font-display text-sm font-bold text-[#f7df94] sm:text-xl">
                 {lang === 'ta' ? 'குடும்பத்தினர் & நண்பர்கள் வருக!' : 'Welcome, Family & Friends'}
               </p>
@@ -291,34 +326,9 @@ export default function EntranceDoorsPortal({
                 {nameError && <p className="mt-1 text-[11px] font-bold text-[#ffb4b4]">{nameError}</p>}
               </div>
 
-              <div className="mt-2 grid grid-cols-2 gap-2 sm:mt-3 sm:gap-2.5">
-                <button
-                  type="button"
-                  onClick={() => setSelectedTeam('ponnu')}
-                  className={`rounded-lg border px-2 py-1.5 text-[11px] font-bold transition cursor-pointer sm:rounded-xl sm:px-3 sm:py-2.5 sm:text-xs ${
-                    selectedTeam === 'ponnu'
-                      ? 'border-[#f7df94] bg-[#631226] text-[#fff8eb] shadow'
-                      : 'border-[#c9932d]/40 bg-[#140308] text-[#e7d4b5]/80'
-                  }`}
-                >
-                  {lang === 'ta' ? 'பொண்ணு அணி (திரிஷா)' : 'Team Ponnu (Bride)'}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setSelectedTeam('mappillai')}
-                  className={`rounded-lg border px-2 py-1.5 text-[11px] font-bold transition cursor-pointer sm:rounded-xl sm:px-3 sm:py-2.5 sm:text-xs ${
-                    selectedTeam === 'mappillai'
-                      ? 'border-[#f7df94] bg-[#1e3a8a] text-[#fff8eb] shadow'
-                      : 'border-[#c9932d]/40 bg-[#140308] text-[#e7d4b5]/80'
-                  }`}
-                >
-                  {lang === 'ta' ? 'மாப்பிள்ளை அணி (சிவா)' : 'Team Mappillai (Groom)'}
-                </button>
-              </div>
-
               <button
                 type="submit"
-                className="mt-2.5 flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#f7df94] via-[#c9932d] to-[#b3822a] px-3 py-2 text-xs font-bold text-[#24050d] shadow-lg transition hover:brightness-105 cursor-pointer sm:mt-4 sm:rounded-xl sm:px-4 sm:py-3 sm:text-sm"
+                className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-[#f7df94] via-[#c9932d] to-[#b3822a] px-3 py-2 text-xs font-bold text-[#24050d] shadow-lg transition hover:brightness-105 cursor-pointer sm:mt-4 sm:rounded-xl sm:px-4 sm:py-3 sm:text-sm"
               >
                 <span>{lang === 'ta' ? 'அரச சாவிக்குத் தொடரவும்' : 'Continue to the Royal Key'}</span>
                 <ArrowRight className="h-3.5 w-3.5" />

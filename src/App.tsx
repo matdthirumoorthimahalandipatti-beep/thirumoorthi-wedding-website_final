@@ -543,6 +543,7 @@ export default function App() {
       {showPortal && (
         <EntranceDoorsPortal
           lang={lang}
+          onToggleLang={() => setLang((prev) => (prev === 'en' ? 'ta' : 'en'))}
           guestName={guestName}
           team={team}
           onUpdateGuest={handleUpdateGuest}

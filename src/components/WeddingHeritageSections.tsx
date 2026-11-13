@@ -42,6 +42,7 @@ import {
   downloadOriginalPatrikaImage,
   downloadPersonalizedInvitationPdf,
   downloadPersonalizedInvitationPng,
+  generateVenueMapQrDataUrl,
   generateWebsiteQrDataUrl,
   shareInvitationToInstagram,
   shareInvitationToWhatsApp,
@@ -78,6 +79,7 @@ export function HeritageUpperSections({
   const [isExporting, setIsExporting] = useState(false);
   const [shareFeedback, setShareFeedback] = useState('');
   const [qrDataUrl, setQrDataUrl] = useState<string>('');
+  const [venueQrDataUrl, setVenueQrDataUrl] = useState<string>('');
 
   useEffect(() => {
     let active = true;
@@ -86,6 +88,13 @@ export function HeritageUpperSections({
         if (active) setQrDataUrl(url);
       })
       .catch(() => undefined);
+
+    void generateVenueMapQrDataUrl(220)
+      .then((url) => {
+        if (active) setVenueQrDataUrl(url);
+      })
+      .catch(() => undefined);
+
     return () => {
       active = false;
     };
@@ -1155,21 +1164,41 @@ export function HeritageUpperSections({
                     </div>
                   </div>
 
-                  {/* Compact QR Code anchored strictly inside free bottom parchment space */}
-                  <div className="mt-1 flex w-full flex-col items-center justify-center gap-0.5 border-t border-[#c9932d]/45 pt-1.5">
-                    {qrDataUrl && (
-                      <img
-                        src={qrDataUrl}
-                        alt="Website QR Code"
-                        className="h-12 w-12 rounded border border-[#c9932d]/60 bg-white p-0.5 sm:h-16 sm:w-16"
-                      />
-                    )}
-                    <p className="text-[8px] font-bold text-[#631226] sm:text-[9.5px]">
-                      {lang === 'ta' ? 'திருமண அழைப்பிதழ் தளம்' : 'Wedding Website'}
-                    </p>
-                    <p className="w-full truncate font-mono-num text-[7px] font-semibold text-[#3a0815] sm:text-[8.5px]">
-                      thirumoorthi-gourps-family-wedding.vercel.app
-                    </p>
+                  {/* Dual QR Codes anchored strictly inside free bottom parchment space */}
+                  <div className="mt-1 flex w-full items-center justify-around gap-2 border-t border-[#c9932d]/45 pt-1.5">
+                    {/* Left: Venue Google Maps QR */}
+                    <div className="flex flex-col items-center">
+                      {venueQrDataUrl && (
+                        <img
+                          src={venueQrDataUrl}
+                          alt="Venue Maps QR Code"
+                          className="h-11 w-11 rounded border border-[#c9932d]/60 bg-white p-0.5 sm:h-14 sm:w-14"
+                        />
+                      )}
+                      <p className="text-[7.5px] font-bold text-[#631226] sm:text-[9px]">
+                        {lang === 'ta' ? '📍 மண்டபம் வழி' : '📍 Venue Map'}
+                      </p>
+                      <p className="font-mono-num text-[6.5px] text-[#4e2318] sm:text-[8px]">
+                        MATD Vadipatti
+                      </p>
+                    </div>
+
+                    {/* Right: Wedding Website QR */}
+                    <div className="flex flex-col items-center">
+                      {qrDataUrl && (
+                        <img
+                          src={qrDataUrl}
+                          alt="Website QR Code"
+                          className="h-11 w-11 rounded border border-[#c9932d]/60 bg-white p-0.5 sm:h-14 sm:w-14"
+                        />
+                      )}
+                      <p className="text-[7.5px] font-bold text-[#631226] sm:text-[9px]">
+                        {lang === 'ta' ? '📲 திருமண தளம்' : '📲 Web Invite'}
+                      </p>
+                      <p className="font-mono-num text-[6.5px] text-[#4e2318] sm:text-[8px]">
+                        Live Songs & RSVP
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1245,30 +1274,67 @@ export function HeritageUpperSections({
                   </div>
                 </div>
 
-                {/* Synced Score + Oracle Blessing + Live QR Preview */}
-                <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-[#c9932d]/55 bg-[#fff5db] p-4">
-                  <div className="min-w-0 flex-1 space-y-1">
-                    <div className="flex items-center gap-1.5 text-xs font-bold text-[#631226]">
-                      <QrCode className="h-4 w-4 text-[#8c5a12]" />
-                      <span>
-                        {lang === 'ta' ? 'அதிகாரப்பூர்வ இணையதள QR' : 'Official Wedding Website QR'}
-                      </span>
-                    </div>
-                    <p className="font-mono-num text-xs font-semibold break-all text-[#3a0815]">
-                      {WEDDING_CONFIG.websiteUrl}
-                    </p>
-                    <p className="text-[11px] text-[#6e463a]">
+                {/* Synced Score + Oracle Blessing + Live Dual QR Preview */}
+                <div className="rounded-2xl border border-[#c9932d]/55 bg-[#fff5db] p-4 space-y-3">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <p className="text-[11px] font-bold text-[#631226]">
                       👑 {royalTitle} ({totalScore} pts) · {selectedFortune.emoji}{' '}
                       {lang === 'ta' ? selectedFortune.ta : selectedFortune.en}
                     </p>
                   </div>
-                  {qrDataUrl && (
-                    <img
-                      src={qrDataUrl}
-                      alt="QR Code to thirumoorthi-gourps-family-wedding.vercel.app"
-                      className="h-24 w-24 shrink-0 rounded-xl border-2 border-[#c9932d] bg-white p-1.5 shadow"
-                    />
-                  )}
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 border-t border-[#c9932d]/30">
+                    {/* Venue Google Maps QR */}
+                    <div className="flex items-center gap-3 rounded-xl border border-[#c9932d]/40 bg-white/80 p-2.5">
+                      {venueQrDataUrl && (
+                        <img
+                          src={venueQrDataUrl}
+                          alt="Venue Maps QR Code"
+                          className="h-16 w-16 shrink-0 rounded-lg border border-[#c9932d] bg-white p-1 shadow"
+                        />
+                      )}
+                      <div className="min-w-0 flex-1">
+                        <p className="flex items-center gap-1 text-xs font-bold text-[#631226]">
+                          <MapPin className="h-3.5 w-3.5 text-[#c9932d]" />
+                          <span>{lang === 'ta' ? 'மண்டபம் கூகுள் மேப்' : 'Venue Google Maps'}</span>
+                        </p>
+                        <p className="mt-0.5 text-[11px] text-[#4e2318] line-clamp-1">
+                          MATD Mahal, Vadipatti
+                        </p>
+                        <a
+                          href={WEDDING_CONFIG.mapsUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-1 inline-flex text-[10px] font-bold text-[#8c5a12] underline hover:text-[#631226]"
+                        >
+                          {lang === 'ta' ? 'வழித்தடத்தைக் காண்க →' : 'View GPS Route →'}
+                        </a>
+                      </div>
+                    </div>
+
+                    {/* Wedding Website QR */}
+                    <div className="flex items-center gap-3 rounded-xl border border-[#c9932d]/40 bg-white/80 p-2.5">
+                      {qrDataUrl && (
+                        <img
+                          src={qrDataUrl}
+                          alt="Official Wedding Website QR"
+                          className="h-16 w-16 shrink-0 rounded-lg border border-[#c9932d] bg-white p-1 shadow"
+                        />
+                      )}
+                      <div className="min-w-0 flex-1">
+                        <p className="flex items-center gap-1 text-xs font-bold text-[#631226]">
+                          <QrCode className="h-3.5 w-3.5 text-[#8c5a12]" />
+                          <span>{lang === 'ta' ? 'இணையதள அழைப்பிதழ்' : 'Website Invite'}</span>
+                        </p>
+                        <p className="mt-0.5 text-[11px] text-[#4e2318] truncate font-mono-num">
+                          {WEDDING_CONFIG.websiteUrl.replace('https://', '')}
+                        </p>
+                        <span className="mt-1 inline-block text-[10px] font-semibold text-[#8c5a12]">
+                          {lang === 'ta' ? 'நேரலை பாடல்கள் & வாழ்த்துகள்' : 'Live Deck & RSVP'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Primary Download & Social Share Buttons */}
