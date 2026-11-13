@@ -153,3 +153,128 @@
     transform: none !important;
   }
 }
+
+
+/* Responsive layout pass — mobile-first (primary target: 360–430px phones) */
+*, *::before, *::after { box-sizing: border-box; }
+html { width: 100%; max-width: 100%; -webkit-text-size-adjust: 100%; }
+body { width: 100%; min-width: 320px; max-width: 100%; overflow-x: clip; }
+img, video, canvas, svg { max-width: 100%; }
+img, video { height: auto; }
+button, input, select, textarea { font: inherit; }
+button, [role="button"], a { -webkit-tap-highlight-color: transparent; }
+button, [role="button"] { touch-action: manipulation; }
+:focus-visible { outline: 3px solid #c9932d; outline-offset: 3px; }
+
+/* Avoid accidental fixed-width children forcing horizontal scrolling. */
+#root, main, section, header, footer { max-width: 100%; }
+section { scroll-margin-top: 76px; }
+pre, code { overflow-wrap: anywhere; }
+.break-words { overflow-wrap: anywhere; }
+
+/* Mid-size devices and tablets */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .patrika-gold-paper { border-width: 5px; }
+}
+
+/* Phones: compact spacing, readable type, full-width controls and stable media. */
+@media (max-width: 639px) {
+  html { scroll-padding-top: 64px; }
+  body {
+    background-attachment: scroll;
+    background-position: center top;
+    background-size: auto 100vh;
+  }
+  section { scroll-margin-top: 64px; }
+  h1 { line-height: 1.12; overflow-wrap: anywhere; }
+  h2 { line-height: 1.18; }
+  h3 { line-height: 1.22; }
+  p { overflow-wrap: break-word; }
+  .scroll-progress-bar { height: 3px; }
+
+  /* Consistent side gutters and less oversized vertical whitespace. */
+  .mx-auto.max-w-6xl, .mx-auto.max-w-7xl, .mx-auto.max-w-5xl,
+  .mx-auto.max-w-4xl, .mx-auto.max-w-3xl {
+    width: 100%;
+    max-width: 100%;
+  }
+  .px-4 { padding-left: 16px; padding-right: 16px; }
+  .py-20 { padding-top: 44px; padding-bottom: 44px; }
+  .py-16 { padding-top: 36px; padding-bottom: 36px; }
+  .mb-10 { margin-bottom: 24px; }
+  .gap-8 { gap: 20px; }
+
+  /* Two-column layouts become single-column unless explicitly designed as compact grids. */
+  .grid.md\:grid-cols-2 { grid-template-columns: minmax(0, 1fr); }
+  .grid.lg\:grid-cols-3, .grid.md\:grid-cols-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grid > * { min-width: 0; }
+  .flex { min-width: 0; }
+  .overflow-x-auto { max-width: 100%; -webkit-overflow-scrolling: touch; }
+
+  /* Cards, invitation paper and photos scale naturally to the viewport. */
+  article, .patrika-gold-paper { max-width: 100%; }
+  .patrika-gold-paper {
+    border-width: 4px;
+    padding: 18px !important;
+    box-shadow: 0 12px 28px rgba(58, 12, 20, .22);
+  }
+  .patrika-gold-paper::before { inset: 6px; }
+  .rounded-3xl { border-radius: 20px; }
+  .shadow-2xl { box-shadow: 0 12px 28px rgba(45, 12, 20, .18); }
+
+  /* Inputs and actions should be easy to tap with one hand. */
+  button, a.inline-flex, input, select, textarea {
+    min-height: 42px;
+  }
+  input, select, textarea {
+    max-width: 100%;
+    font-size: 16px; /* prevents iOS Safari auto-zoom */
+  }
+  button { max-width: 100%; }
+  .fixed.top-20.right-2\\.5 {
+    top: max(12px, env(safe-area-inset-top));
+    right: 10px;
+    transform: scale(.94);
+    transform-origin: top right;
+  }
+
+  /* Keep long names, Tamil copy and buttons from pushing beyond the screen. */
+  .tracking-\\[0\\.22em\\] { letter-spacing: .12em; }
+  .tracking-\\[0\\.18em\\] { letter-spacing: .1em; }
+  .text-5xl { font-size: clamp(2rem, 9vw, 2.7rem); }
+  .text-4xl { font-size: clamp(1.8rem, 8vw, 2.35rem); }
+  .text-3xl { font-size: clamp(1.55rem, 7vw, 2rem); }
+  .text-2xl { font-size: clamp(1.3rem, 6vw, 1.65rem); }
+  .leading-relaxed { line-height: 1.65; }
+
+  /* Overlays and dialogs stay inside the phone viewport. */
+  [role="dialog"], [aria-modal="true"] {
+    max-width: calc(100vw - 20px);
+    max-height: calc(100dvh - 20px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .fixed.inset-0 { padding: 10px; }
+  .petal-3d-item { opacity: .45; }
+  .card-3d-tilt:hover { transform: none !important; }
+}
+
+/* Small phones (320–359px): use a single content column everywhere. */
+@media (max-width: 359px) {
+  .px-4 { padding-left: 12px; padding-right: 12px; }
+  .grid.lg\\:grid-cols-3, .grid.md\\:grid-cols-3 { grid-template-columns: minmax(0, 1fr); }
+  .fixed.top-20.right-2\\.5 { transform: scale(.86); }
+  .patrika-gold-paper { padding: 14px !important; }
+}
+
+/* Desktop: preserve generous reading width without stretching text lines. */
+@media (min-width: 1024px) {
+  body { overflow-x: hidden; }
+  main, section { min-width: 0; }
+}
+
+/* Respect reduced-motion preferences and avoid expensive mobile hover effects. */
+@media (hover: none) and (pointer: coarse) {
+  .card-3d-tilt:hover { transform: none !important; }
+  * { scroll-behavior: auto; }
+}

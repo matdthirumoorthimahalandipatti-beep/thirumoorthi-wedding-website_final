@@ -1542,14 +1542,8 @@ export function HeritageDirectoryAndAlbum({
             labelEn: 'Kalasalingam University · Mentors',
           },
           {
-            key: 'kalasalingam_seniors',
-            order: 3,
-            labelTa: 'கலசலிங்கம் பல்கலைக்கழகம் · சீனியர்கள்',
-            labelEn: 'Kalasalingam University · Seniors',
-          },
-          {
             key: 'kalasalingam_friends',
-            order: 4,
+            order: 3,
             labelTa: 'கலசலிங்கம் பல்கலைக்கழகம் · நண்பர்கள்',
             labelEn: 'Kalasalingam University · Friends',
           },
@@ -1571,9 +1565,9 @@ export function HeritageDirectoryAndAlbum({
             titleTa: 'மணமகள் சகோதரர் (M. தீபக்) நண்பர்கள் & வழிகாட்டிகள்',
             titleEn: "Bride's Brother's Friends & Mentors (M. Deepak)",
             subtitleTa:
-              'தாய் பள்ளி நண்பர்கள் மற்றும் கலசலிங்கம் பல்கலைக்கழக வழிகாட்டிகள், சீனியர்கள் & நண்பர்கள்',
+              'தாய் பள்ளி நண்பர்கள் மற்றும் கலசலிங்கம் பல்கலைக்கழக வழிகாட்டிகள் & நண்பர்கள்',
             subtitleEn:
-              'Thaai School friends along with Kalasalingam University mentors, seniors & friends',
+              'Thaai School friends along with Kalasalingam University mentors & friends',
             accentBorder: 'border-[#7a4b0c]/45',
             headerBg: 'bg-gradient-to-r from-[#4b1022] via-[#631226] to-[#7a4b0c] text-[#fff8eb]',
             tiers: brotherTiers,
