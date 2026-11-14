@@ -41,7 +41,6 @@ import {
   HeritageDirectoryAndAlbum,
   HeritageWishesAndFooter,
 } from './components/WeddingHeritageSections';
-import WeddingGamesArena from './components/WeddingGamesArena';
 import SacredOracle from './components/SacredOracle';
 import SangeetJukebox from './components/SangeetJukebox';
 
@@ -580,10 +579,10 @@ export default function App() {
               {lang === 'ta' ? 'அழைப்பிதழ்' : 'Invitation'}
             </a>
             <a
-              href="#games"
+              href="#oracle"
               className="whitespace-nowrap shrink-0 text-xs font-semibold tracking-wider text-[#f3d9ad] uppercase transition hover:text-[#f7df94]"
             >
-              {lang === 'ta' ? 'விளையாட்டு' : 'Games'}
+              {lang === 'ta' ? 'அதிர்ஷ்டம்' : 'Fortune'}
             </a>
             <a
               href="#sangeet"
@@ -788,11 +787,11 @@ export default function App() {
 
             <button
               type="button"
-              onClick={() => scrollToSection('games')}
+              onClick={() => scrollToSection('oracle')}
               className="inline-flex items-center gap-2 rounded-full border border-[#f7df94]/70 bg-[#3a0815]/90 px-6 py-3 text-sm font-bold text-[#f7df94] shadow-lg transition hover:bg-[#520d1f] cursor-pointer"
             >
               <Sparkles className="h-4 w-4" />
-              <span>{lang === 'ta' ? 'விளையாட்டு' : 'Play Wedding Games'}</span>
+              <span>{lang === 'ta' ? 'அதிர்ஷ்ட கணிப்பு' : 'Predict Fortune'}</span>
             </button>
 
             <a
@@ -814,7 +813,7 @@ export default function App() {
 
       {/* ====================================================================
           3D CONTINUITY MAIN FLOW
-          Upper Heritage -> People & Album -> Games -> Oracle -> DJ Jukebox -> Traditions & Wishes
+          Upper Heritage -> People & Album -> Oracle -> DJ Jukebox -> Traditions & Wishes
          ==================================================================== */}
       <main className="continuity-3d-stage">
         {/* 1. Authentic Madurai Heritage Upper Sections: Couple, Venue, Families, Gold Patrika, Personalized QR Invitation, Events */}
@@ -839,20 +838,7 @@ export default function App() {
           onOpenAdmin={() => setShowAdminModal(true)}
         />
 
-        {/* 3. Interactive Tamil Nadu Wedding Games Arena */}
-        <WeddingGamesArena
-          lang={lang}
-          guestName={guestName}
-          team={team}
-          totalScore={totalScore}
-          ponnuScore={ponnuScore}
-          mappillaiScore={mappillaiScore}
-          onAddPoints={handleAddPoints}
-          onSelectTeam={setTeam}
-          onProceedToOracle={() => scrollToSection('oracle')}
-        />
-
-        {/* 4. Sacred Wedding Oracle Finale (Right After Games) */}
+        {/* 3. Sacred Wedding Oracle ("உங்கள் அடுத்த அதிர்ஷ்டத்தை கணிப்போம் வாருங்கள்!") */}
         <SacredOracle
           lang={lang}
           guestName={guestName}
